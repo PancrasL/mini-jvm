@@ -1,8 +1,6 @@
 package indi.pancras.jvm.classpath.impl;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,13 +20,13 @@ public class CompositeEntry implements Entry {
     }
 
     @Override
-    public byte[] readClass(String classFile) throws IOException {
+    public byte[] readClass(String classFile) {
         for (Entry entry : entries) {
-            try {
-                return entry.readClass(classFile);
-            } catch (FileNotFoundException ignored) {
+            byte[] bytes = entry.readClass(classFile);
+            if (bytes != null) {
+                return bytes;
             }
         }
-        throw new FileNotFoundException("Class not found: " + classFile);
+        return null;
     }
 }

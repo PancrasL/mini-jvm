@@ -10,7 +10,7 @@ import indi.pancras.jvm.classpath.Classpath;
 public class MiniJvmBootstrap {
     public static void main(String[] args) throws IOException {
         Cmd cmd = Cmd.parseCmd(args);
-        if (cmd.isHelpFLag() || cmd.getMainClass() == null) {
+        if (cmd.isHelpFlag() || cmd.getMainClass() == null) {
             System.out.println("Usage: <main class> [-options] class [args...]");
         } else if (cmd.isVersionFlag()) {
             System.out.println("Version 0.1");
@@ -19,10 +19,9 @@ public class MiniJvmBootstrap {
         }
     }
 
-    private static void startJVM(Cmd cmd) throws IOException {
+    private static void startJVM(Cmd cmd) {
         Classpath classpath = Classpath.parse(cmd.getJreOption(), cmd.getClasspath());
-        String path = cmd.getMainClass().replace(".", "/");
-        byte[] bytes = classpath.readClass(path);
+        byte[] bytes = classpath.readClass(cmd.getMainClass());
         System.out.println(new String(bytes));
     }
 }

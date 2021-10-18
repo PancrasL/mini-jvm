@@ -1,6 +1,9 @@
 package indi.pancras.jvm.utils;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author PancrasL
@@ -26,11 +29,12 @@ public class FileUtil {
         return file.getPath();
     }
 
-    public static String[] list(String path) {
+    public static List<String> list(String path) {
         File file = new File(path);
-        if (file.isDirectory()) {
-            return file.list();
+        String[] files = file.list();
+        if (files == null) {
+            return new ArrayList<>(0);
         }
-        return null;
+        return Arrays.asList(files);
     }
 }

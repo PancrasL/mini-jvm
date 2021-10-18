@@ -1,7 +1,6 @@
 package indi.pancras.jvm.classpath;
 
 import java.io.File;
-import java.io.IOException;
 
 import indi.pancras.jvm.classpath.impl.WildcardEntry;
 import indi.pancras.jvm.utils.FileUtil;
@@ -24,7 +23,9 @@ public class Classpath {
         return classpath;
     }
 
-    public byte[] readClass(String className) throws IOException {
+    public byte[] readClass(String className) {
+        // 将形如java.lang.String的类全限定名转换为java/lang/String.class
+        className = className.replace(".", "/");
         className = className + ".class";
         byte[] data;
         data = bootClasspath.readClass(className);
@@ -55,7 +56,7 @@ public class Classpath {
 
     private void parseUserClasspath(String classpathOption) {
         if (classpathOption.isEmpty()) {
-            classpathOption = ".";
+            classpathOption = "";
         }
         userClasspath = EntryFactory.createEntry(classpathOption);
     }
