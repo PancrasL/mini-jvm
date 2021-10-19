@@ -16,32 +16,40 @@ import indi.pancras.jvm.classfile.pool.ConstantPool;
  * @author PancrasL
  */
 public abstract class AbstractAttribute {
-    public static AbstractAttribute readAttribute(ClassReader reader) {
+    public static AbstractAttribute[] readAttributes(ClassReader reader, ConstantPool pool) {
+        short cnt = reader.readShort();
+        AbstractAttribute[] attributes = new AbstractAttribute[cnt];
+        for (int i = 0; i < cnt; i++) {
+            attributes[i] = readAttribute(reader, pool);
+        }
+        return attributes;
+    }
+
+    private static AbstractAttribute readAttribute(ClassReader reader, ConstantPool pool) {
         short attrNameIndex = reader.readShort();
         int attrLength = reader.readInt();
-        ConstantPool pool = reader.getPool();
         String attrName = pool.getUtf8(attrNameIndex);
 
         switch (attrName) {
             case AttributeType.CODE:
-                return new CodeAttr();
+                return new CodeAttr(reader, pool);
             case AttributeType.CONSTANT_VALUE:
-                return new ConstantValueAttr();
+                return new ConstantValueAttr(reader);
             case AttributeType.EXCEPTIONS:
-                return new ExceptionAttr();
+                return new ExceptionAttr(reader);
             case AttributeType.LINE_NUMBER_TABLE:
-                return new LineNumberTableAttr();
+                return new LineNumberTableAttr(reader);
             case AttributeType.LOCAL_VARIABLE_TABLE:
-                return new LocalVariableTableAttr();
+                return new LocalVariableTableAttr(reader);
             case AttributeType.SOURCE_FILE:
-                return new SourceFileAttr();
+                return new SourceFileAttr(reader);
             case AttributeType.SYNTHETIC:
-                return new SyntheticAttr();
+                return new SyntheticAttr(reader);
             case AttributeType.DEPRECATED:
-                return new DeprecatedAttr();
+                return new DeprecatedAttr(reader);
             //不支持的属性
             default:
-                return new UnparsedAttr();
+                return new UnparsedAttr(attrName, attrLength, reader);
         }
     }
 }

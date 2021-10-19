@@ -8,38 +8,42 @@ import indi.pancras.jvm.classfile.pool.ConstantPool;
  * @author PancrasL
  */
 public class CodeAttr extends AbstractAttribute {
-    private int maxStack;
-    private int maxLocals;
-
+    private short maxStack;
+    private short maxLocals;
     private byte[] code;
-
+    private ExceptionTableEntry[] exceptionTable;
     private AbstractAttribute[] attributes;
 
+    private ClassReader reader;
     private ConstantPool pool;
-    private ExceptionTableEntry[] exceptionTable;
 
-    public CodeAttr()
+    public CodeAttr(ClassReader reader, ConstantPool pool) {
+        maxStack = reader.readShort();
+        maxLocals = reader.readShort();
+        int codeLength = reader.readInt();
+        code = reader.readBytes(codeLength);
+        exceptionTable = ExceptionTableEntry.readExceptionTable(reader);
+        attributes = AbstractAttribute.readAttributes(reader, pool);
 
-    public static CodeAttr readCodeAttr(ClassReader reader) {
-
+        this.reader = reader;
+        this.pool = pool;
     }
 
-    static class ExceptionTableEntry {
-
+    private static class ExceptionTableEntry {
         private int startPc;
         private int endPc;
         private int handlerPc;
         private int catchType;
 
         private ExceptionTableEntry(ClassReader reader) {
-            this.startPc = reader.nextU2ToInt();
-            this.endPc = reader.nextU2ToInt();
-            this.handlerPc = reader.nextU2ToInt();
-            this.catchType = reader.nextU2ToInt();
+            this.startPc = reader.readShort();
+            this.endPc = reader.readShort();
+            this.handlerPc = reader.readShort();
+            this.catchType = reader.readShort();
         }
 
         static ExceptionTableEntry[] readExceptionTable(ClassReader reader) {
-            int length = reader.nextU2ToInt();
+            int length = reader.readShort();
             ExceptionTableEntry[] exceptionTable = new ExceptionTableEntry[length];
 
             for (int i = 0; i < length; i++) {

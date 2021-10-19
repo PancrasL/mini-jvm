@@ -4,23 +4,12 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Arrays;
 
-import indi.pancras.jvm.classfile.pool.ConstantPool;
-import lombok.Getter;
-import lombok.Setter;
-
 /**
  * @author PancrasL
  */
 public class ClassReader {
     private final byte[] data;
     private int index;
-
-    /**
-     * 在解析完常量池后置入，供其他结构根据索引值查询具体的常量
-     */
-    @Getter
-    @Setter
-    private ConstantPool pool;
 
     public ClassReader(byte[] data) {
         this.data = data;

@@ -9,7 +9,7 @@ import indi.pancras.jvm.classfile.pool.ConstantPool;
  * @author PancrasL
  */
 public class ClassFile {
-    private ClassReader classReader;
+    private ClassReader reader;
 
     private int magic;
     private short minorVersion;
@@ -18,17 +18,13 @@ public class ClassFile {
     private short accessFlag;
     private short thisClassIndex;
     private short superClassIndex;
-    private short interfacesCount;
     private short[] interfaceIndexes;
-    private short fieldCount;
     private FieldInfo[] fields;
-    private short methodCount;
     private MethodInfo[] methods;
-    private short attributeCount;
     private AbstractAttribute[] attributes;
 
     public ClassFile(byte[] classData) {
-        classReader = new ClassReader(classData);
+        reader = new ClassReader(classData);
 
         readAndCheckMagic();
         readAndCheckVersion();
@@ -43,15 +39,15 @@ public class ClassFile {
     }
 
     private void readAndCheckMagic() {
-        magic = classReader.readInt();
+        magic = reader.readInt();
         if (magic != 0xCAFEBABE) {
             throw new ClassFormatError("magic num error!");
         }
     }
 
     private void readAndCheckVersion() {
-        minorVersion = classReader.readShort();
-        majorVersion = classReader.readShort();
+        minorVersion = reader.readShort();
+        majorVersion = reader.readShort();
 
         switch (majorVersion) {
             case 45:
@@ -73,52 +69,38 @@ public class ClassFile {
     }
 
     private void readConstantPool() {
-        pool = ConstantPool.readConstantPool(classReader);
-        classReader.setPool(pool);
+        pool = ConstantPool.readConstantPool(reader);
     }
 
     private void readAccessFlag() {
-        accessFlag = classReader.readShort();
+        accessFlag = reader.readShort();
     }
 
     private void readClassNameIndex() {
-        thisClassIndex = classReader.readShort();
+        thisClassIndex = reader.readShort();
     }
 
     private void readSuperClassNameIndex() {
-        superClassIndex = classReader.readShort();
+        superClassIndex = reader.readShort();
     }
 
     private void readInterfaceIndexes() {
-        interfacesCount = classReader.readShort();
-        short cnt = interfacesCount;
+        int cnt = reader.readShort();
         interfaceIndexes = new short[cnt];
         for (int i = 0; i < cnt; i++) {
-            interfaceIndexes[i] = classReader.readShort();
+            interfaceIndexes[i] = reader.readShort();
         }
     }
 
     private void readFields() {
-        fieldCount = classReader.readShort();
-        fields = new FieldInfo[fieldCount];
-        for (int i = 0; i < fieldCount; i++) {
-            fields[i] = FieldInfo.readField(classReader);
-        }
+        fields = FieldInfo.readFields(reader, pool);
     }
 
     private void readMethods() {
-        methodCount = classReader.readShort();
-        methods = new MethodInfo[methodCount];
-        for (int i = 0; i < methodCount; i++) {
-            methods[i] = MethodInfo.readMethod(classReader);
-        }
+        methods = MethodInfo.readMethods(reader, pool);
     }
 
     private void readAttributes() {
-        attributeCount = classReader.readShort();
-        attributes = new AbstractAttribute[attributeCount];
-        for (int i = 0; i < attributeCount; i++) {
-            attributes[i] = AbstractAttribute.readAttribute(classReader);
-        }
+        attributes = AbstractAttribute.readAttributes(reader, pool);
     }
 }
