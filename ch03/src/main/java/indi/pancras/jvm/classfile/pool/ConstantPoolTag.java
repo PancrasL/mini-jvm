@@ -3,7 +3,7 @@ package indi.pancras.jvm.classfile.pool;
 /**
  * @author PancrasL
  */
-public class TagCode {
+public class ConstantPoolTag {
     public static final int CONSTANT_TAG_UTF8 = 1;
     public static final int CONSTANT_TAG_INTEGER = 3;
     public static final int CONSTANT_TAG_FLOAT = 4;

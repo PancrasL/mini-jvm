@@ -1,38 +1,34 @@
 package indi.pancras.jvm.classfile.pool;
 
 import indi.pancras.jvm.classfile.ClassReader;
-import indi.pancras.jvm.classfile.pool.poolinfo.AbstractConstantInfo;
-import indi.pancras.jvm.classfile.pool.poolinfo.ConstantInfoFactory;
 
 /**
  * @author PancrasL
  */
 public class ConstantPool {
     private int poolSize;
-    private ClassReader reader;
     private AbstractConstantInfo[] abstractConstantInfos;
 
-    public ConstantPool(int poolSize, ClassReader reader) {
+    public ConstantPool(int poolSize, AbstractConstantInfo[] abstractConstantInfos) {
         this.poolSize = poolSize;
-        this.reader = reader;
-        abstractConstantInfos = new AbstractConstantInfo[this.poolSize];
-        readPoolInfos();
+        this.abstractConstantInfos = abstractConstantInfos;
     }
 
-    /**
-     * 常量池索引从1开始
-     */
-    private void readPoolInfos() {
+    public static ConstantPool readConstantPool(ClassReader reader) {
+        short poolSize = reader.readShort();
+        AbstractConstantInfo[] infos = new AbstractConstantInfo[poolSize];
         for (int i = 1; i < poolSize; i++) {
-            byte tag = reader.readByte();
-            abstractConstantInfos[i] = ConstantInfoFactory.createConstantInfo(tag, reader);
-            if (tag == TagCode.CONSTANT_TAG_DOUBLE || tag == TagCode.CONSTANT_TAG_LONG) {
+            infos[i] = AbstractConstantInfo.readConstantInfo(reader);
+            int tag = infos[i].tag;
+            if (tag == ConstantPoolTag.CONSTANT_TAG_DOUBLE || tag == ConstantPoolTag.CONSTANT_TAG_LONG) {
                 i++;
             }
         }
+
+        return new ConstantPool(poolSize, infos);
     }
 
     public String getUtf8(int index) {
-        return "";
+        return abstractConstantInfos[index].toString();
     }
 }

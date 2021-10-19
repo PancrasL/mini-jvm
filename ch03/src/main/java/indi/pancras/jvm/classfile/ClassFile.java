@@ -1,6 +1,6 @@
 package indi.pancras.jvm.classfile;
 
-import indi.pancras.jvm.classfile.attribute.Attribute;
+import indi.pancras.jvm.classfile.attribute.AbstractAttribute;
 import indi.pancras.jvm.classfile.field.FieldInfo;
 import indi.pancras.jvm.classfile.method.MethodInfo;
 import indi.pancras.jvm.classfile.pool.ConstantPool;
@@ -14,7 +14,6 @@ public class ClassFile {
     private int magic;
     private short minorVersion;
     private short majorVersion;
-    private short constantPoolCount;
     private ConstantPool pool;
     private short accessFlag;
     private short thisClassIndex;
@@ -26,7 +25,7 @@ public class ClassFile {
     private short methodCount;
     private MethodInfo[] methods;
     private short attributeCount;
-    private Attribute[] attributes;
+    private AbstractAttribute[] attributes;
 
     public ClassFile(byte[] classData) {
         classReader = new ClassReader(classData);
@@ -74,8 +73,8 @@ public class ClassFile {
     }
 
     private void readConstantPool() {
-        constantPoolCount = classReader.readShort();
-        pool = new ConstantPool(constantPoolCount, classReader);
+        pool = ConstantPool.readConstantPool(classReader);
+        classReader.setPool(pool);
     }
 
     private void readAccessFlag() {
@@ -102,14 +101,24 @@ public class ClassFile {
     private void readFields() {
         fieldCount = classReader.readShort();
         fields = new FieldInfo[fieldCount];
+        for (int i = 0; i < fieldCount; i++) {
+            fields[i] = FieldInfo.readField(classReader);
+        }
     }
 
     private void readMethods() {
         methodCount = classReader.readShort();
         methods = new MethodInfo[methodCount];
+        for (int i = 0; i < methodCount; i++) {
+            methods[i] = MethodInfo.readMethod(classReader);
+        }
     }
 
     private void readAttributes() {
         attributeCount = classReader.readShort();
+        attributes = new AbstractAttribute[attributeCount];
+        for (int i = 0; i < attributeCount; i++) {
+            attributes[i] = AbstractAttribute.readAttribute(classReader);
+        }
     }
 }
