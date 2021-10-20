@@ -1,11 +1,11 @@
 package indi.pancras.jvm.classfile.pool.poolinfo;
 
-import indi.pancras.jvm.classfile.pool.AbstractConstantInfo;
+import indi.pancras.jvm.classfile.pool.BaseConstantInfo;
 
 /**
  * @author PancrasL
  */
-public class IntegerInfo extends AbstractConstantInfo {
+public class IntegerInfo extends BaseConstantInfo {
     public final int value;
 
     public IntegerInfo(int tag, int value) {

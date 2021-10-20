@@ -18,14 +18,14 @@ import indi.pancras.jvm.classfile.pool.poolinfo.Utf8Info;
 /**
  * @author PancrasL
  */
-public abstract class AbstractConstantInfo {
+public abstract class BaseConstantInfo {
     public final int tag;
 
-    public AbstractConstantInfo(int tag) {
+    public BaseConstantInfo(int tag) {
         this.tag = tag;
     }
 
-    public static AbstractConstantInfo readConstantInfo(ClassReader reader) {
+    public static BaseConstantInfo readConstantInfo(ClassReader reader) {
         byte tag = reader.readByte();
         switch (tag) {
             case ConstantPoolTag.CONSTANT_TAG_UTF8: {

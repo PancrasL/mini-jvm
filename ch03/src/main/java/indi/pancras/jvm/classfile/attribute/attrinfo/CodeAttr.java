@@ -1,18 +1,18 @@
 package indi.pancras.jvm.classfile.attribute.attrinfo;
 
 import indi.pancras.jvm.classfile.ClassReader;
-import indi.pancras.jvm.classfile.attribute.AbstractAttribute;
+import indi.pancras.jvm.classfile.attribute.BaseAttr;
 import indi.pancras.jvm.classfile.pool.ConstantPool;
 
 /**
  * @author PancrasL
  */
-public class CodeAttr extends AbstractAttribute {
+public class CodeAttr extends BaseAttr {
     private short maxStack;
     private short maxLocals;
     private byte[] code;
     private ExceptionTableEntry[] exceptionTable;
-    private AbstractAttribute[] attributes;
+    private BaseAttr[] attributes;
 
     private ClassReader reader;
     private ConstantPool pool;
@@ -23,7 +23,7 @@ public class CodeAttr extends AbstractAttribute {
         int codeLength = reader.readInt();
         code = reader.readBytes(codeLength);
         exceptionTable = ExceptionTableEntry.readExceptionTable(reader);
-        attributes = AbstractAttribute.readAttributes(reader, pool);
+        attributes = BaseAttr.readAttributes(reader, pool);
 
         this.reader = reader;
         this.pool = pool;

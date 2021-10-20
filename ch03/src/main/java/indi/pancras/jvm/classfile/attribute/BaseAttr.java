@@ -15,20 +15,20 @@ import indi.pancras.jvm.classfile.pool.ConstantPool;
 /**
  * @author PancrasL
  */
-public abstract class AbstractAttribute {
-    public static AbstractAttribute[] readAttributes(ClassReader reader, ConstantPool pool) {
+public abstract class BaseAttr {
+    public static BaseAttr[] readAttributes(ClassReader reader, ConstantPool pool) {
         short cnt = reader.readShort();
-        AbstractAttribute[] attributes = new AbstractAttribute[cnt];
+        BaseAttr[] attributes = new BaseAttr[cnt];
         for (int i = 0; i < cnt; i++) {
             attributes[i] = readAttribute(reader, pool);
         }
         return attributes;
     }
 
-    private static AbstractAttribute readAttribute(ClassReader reader, ConstantPool pool) {
+    private static BaseAttr readAttribute(ClassReader reader, ConstantPool pool) {
         short attrNameIndex = reader.readShort();
         int attrLength = reader.readInt();
-        String attrName = pool.getUtf8(attrNameIndex);
+        String attrName = pool.getUTF8(attrNameIndex);
 
         switch (attrName) {
             case AttributeType.CODE:

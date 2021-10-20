@@ -1,11 +1,11 @@
 package indi.pancras.jvm.classfile.pool.poolinfo;
 
-import indi.pancras.jvm.classfile.pool.AbstractConstantInfo;
+import indi.pancras.jvm.classfile.pool.BaseConstantInfo;
 
 /**
  * @author PancrasL
  */
-public class FieldRefInfo extends AbstractConstantInfo {
+public class FieldRefInfo extends BaseConstantInfo {
     private short classIndex;
     private short nameAndTypeIndex;
 

@@ -1,17 +1,19 @@
 package indi.pancras.jvm.classfile.method;
 
 import indi.pancras.jvm.classfile.ClassReader;
-import indi.pancras.jvm.classfile.attribute.AbstractAttribute;
+import indi.pancras.jvm.classfile.attribute.BaseAttr;
 import indi.pancras.jvm.classfile.pool.ConstantPool;
+import lombok.Getter;
 
 /**
  * @author PancrasL
  */
+@Getter
 public class MethodInfo {
     private short accessFlags;
     private short nameIndex;
     private short descriptorIndex;
-    private AbstractAttribute[] attributes;
+    private BaseAttr[] attributes;
 
     private ClassReader reader;
     private ConstantPool pool;
@@ -20,7 +22,7 @@ public class MethodInfo {
         accessFlags = reader.readShort();
         nameIndex = reader.readShort();
         descriptorIndex = reader.readShort();
-        attributes = AbstractAttribute.readAttributes(reader, pool);
+        attributes = BaseAttr.readAttributes(reader, pool);
 
         this.reader = reader;
         this.pool = pool;

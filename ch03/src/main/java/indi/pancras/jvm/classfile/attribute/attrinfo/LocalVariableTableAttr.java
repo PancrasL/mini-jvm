@@ -1,12 +1,12 @@
 package indi.pancras.jvm.classfile.attribute.attrinfo;
 
 import indi.pancras.jvm.classfile.ClassReader;
-import indi.pancras.jvm.classfile.attribute.AbstractAttribute;
+import indi.pancras.jvm.classfile.attribute.BaseAttr;
 
 /**
  * @author PancrasL
  */
-public class LocalVariableTableAttr extends AbstractAttribute {
+public class LocalVariableTableAttr extends BaseAttr {
     private LocalVariableTableEntry[] localVariableTbl;
 
     public LocalVariableTableAttr(ClassReader reader) {

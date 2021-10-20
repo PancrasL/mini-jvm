@@ -22,17 +22,17 @@ public class ClassReader {
 
     public short readShort() {
         byte[] bytes = read(2);
-        return (short) (bytes[0] | bytes[1] << 8);
+        return ByteBuffer.wrap(bytes).order(ByteOrder.BIG_ENDIAN).getShort();
     }
 
     public int readInt() {
         byte[] bytes = read(4);
-        return bytes[0] | bytes[1] << 8 | bytes[2] << 16 | bytes[3] << 24;
+        return ByteBuffer.wrap(bytes).order(ByteOrder.BIG_ENDIAN).getInt();
     }
 
     public float readFloat() {
-        int intBits = readInt();
-        return Float.intBitsToFloat(intBits);
+        byte[] bytes = read(4);
+        return ByteBuffer.wrap(bytes).order(ByteOrder.BIG_ENDIAN).getFloat();
     }
 
     public long readLong() {

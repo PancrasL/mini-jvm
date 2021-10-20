@@ -1,12 +1,12 @@
 package indi.pancras.jvm.classfile.attribute.attrinfo;
 
 import indi.pancras.jvm.classfile.ClassReader;
-import indi.pancras.jvm.classfile.attribute.AbstractAttribute;
+import indi.pancras.jvm.classfile.attribute.BaseAttr;
 
 /**
  * @author PancrasL
  */
-public class UnparsedAttr extends AbstractAttribute {
+public class UnparsedAttr extends BaseAttr {
     private String name;
     private int length;
     private byte[] data;

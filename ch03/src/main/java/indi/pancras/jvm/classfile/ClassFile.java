@@ -1,27 +1,30 @@
 package indi.pancras.jvm.classfile;
 
-import indi.pancras.jvm.classfile.attribute.AbstractAttribute;
+import indi.pancras.jvm.classfile.attribute.BaseAttr;
 import indi.pancras.jvm.classfile.field.FieldInfo;
 import indi.pancras.jvm.classfile.method.MethodInfo;
 import indi.pancras.jvm.classfile.pool.ConstantPool;
+import lombok.Getter;
 
 /**
  * @author PancrasL
  */
+@Getter
 public class ClassFile {
+    private static final int MAGIC_NUM = 0xCAFEBABE;
     private ClassReader reader;
 
     private int magic;
     private short minorVersion;
     private short majorVersion;
-    private ConstantPool pool;
+    private ConstantPool constantPool;
     private short accessFlag;
     private short thisClassIndex;
     private short superClassIndex;
     private short[] interfaceIndexes;
     private FieldInfo[] fields;
     private MethodInfo[] methods;
-    private AbstractAttribute[] attributes;
+    private BaseAttr[] attributes;
 
     public ClassFile(byte[] classData) {
         reader = new ClassReader(classData);
@@ -40,8 +43,8 @@ public class ClassFile {
 
     private void readAndCheckMagic() {
         magic = reader.readInt();
-        if (magic != 0xCAFEBABE) {
-            throw new ClassFormatError("magic num error!");
+        if (magic != MAGIC_NUM) {
+            throw new ClassFormatError("Magic num error!");
         }
     }
 
@@ -69,7 +72,7 @@ public class ClassFile {
     }
 
     private void readConstantPool() {
-        pool = ConstantPool.readConstantPool(reader);
+        constantPool = ConstantPool.readConstantPool(reader);
     }
 
     private void readAccessFlag() {
@@ -93,14 +96,14 @@ public class ClassFile {
     }
 
     private void readFields() {
-        fields = FieldInfo.readFields(reader, pool);
+        fields = FieldInfo.readFields(reader, constantPool);
     }
 
     private void readMethods() {
-        methods = MethodInfo.readMethods(reader, pool);
+        methods = MethodInfo.readMethods(reader, constantPool);
     }
 
     private void readAttributes() {
-        attributes = AbstractAttribute.readAttributes(reader, pool);
+        attributes = BaseAttr.readAttributes(reader, constantPool);
     }
 }

@@ -1,11 +1,11 @@
 package indi.pancras.jvm.classfile.pool.poolinfo;
 
-import indi.pancras.jvm.classfile.pool.AbstractConstantInfo;
+import indi.pancras.jvm.classfile.pool.BaseConstantInfo;
 
 /**
  * @author PancrasL
  */
-public class Utf8Info extends AbstractConstantInfo {
+public class Utf8Info extends BaseConstantInfo {
     private String value;
 
     public Utf8Info(int tag, byte[] bytes) {
