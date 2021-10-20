@@ -12,7 +12,7 @@ import lombok.Getter;
 @Getter
 public class ClassFile {
     private static final int MAGIC_NUM = 0xCAFEBABE;
-    private ClassReader reader;
+    private final ClassReader reader;
 
     private int magic;
     private short minorVersion;
