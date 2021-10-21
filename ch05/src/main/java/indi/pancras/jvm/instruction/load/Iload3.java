@@ -1,12 +1,12 @@
 package indi.pancras.jvm.instruction.load;
 
-import indi.pancras.jvm.instruction.BaseIndex8;
+import indi.pancras.jvm.instruction.BaseNoOperands;
 import indi.pancras.jvm.rtda.Frame;
 
 /**
  * @author PancrasL
  */
-public class Iload3 extends BaseIndex8 {
+public class Iload3 extends BaseNoOperands {
     @Override
     public byte getOpCode() {
         return 0x1d;

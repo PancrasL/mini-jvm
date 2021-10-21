@@ -1,12 +1,12 @@
 package indi.pancras.jvm.instruction.constant;
 
-import indi.pancras.jvm.instruction.BaseNop;
+import indi.pancras.jvm.instruction.BaseNoOperands;
 import indi.pancras.jvm.rtda.Frame;
 
 /**
  * @author PancrasL
  */
-public class Lconst0 extends BaseNop {
+public class Lconst0 extends BaseNoOperands {
     @Override
     public byte getOpCode() {
         return 0x09;

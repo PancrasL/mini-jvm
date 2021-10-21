@@ -5,7 +5,7 @@ package indi.pancras.jvm.instruction;
  *
  * @author PancrasL
  */
-public abstract class BaseNop implements Instruction {
+public abstract class BaseNoOperands implements Instruction {
     @Override
     public void fetchOperands(BytecodeReader reader) {
         // Do nothing
