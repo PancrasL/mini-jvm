@@ -1,0 +1,22 @@
+package indi.pancras.jvm.instruction.store;
+
+import indi.pancras.jvm.instruction.BaseIndex8;
+import indi.pancras.jvm.rtda.Frame;
+
+public class Dstore extends BaseIndex8 {
+    @Override
+    public byte getOpCode() {
+        return 0x39;
+    }
+
+    @Override
+    public String getOpName() {
+        return "dstore";
+    }
+
+    @Override
+    public void execute(Frame frame) {
+        double val = frame.getOperandStack().popDouble();
+        frame.getLocalVars().setDouble(index, val);
+    }
+}

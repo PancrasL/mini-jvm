@@ -17,16 +17,16 @@ class LocalVarsTest {
         localVars.setInt(1, -100);
         localVars.setLong(2, -100L);
         localVars.setLong(4, -200L);
-        localVars.setDouble(6, -200.1D);
-        localVars.setRef(6, null);
-        localVars.setRef(7, new Reference("abc"));
+        localVars.setDouble(6, -200.5D);
+        localVars.setRef(8, null);
+        localVars.setRef(9, new Reference("abc"));
 
         assertEquals(100, localVars.getInt(0));
         assertEquals(-100, localVars.getInt(1));
         assertEquals(-100L, localVars.getLong(2));
         assertEquals(-200L, localVars.getLong(4));
-        assertEquals(-200.1D, localVars.getDouble(6));
-        assertNull(localVars.getRef(6));
-        assertEquals("abc", localVars.getRef(7).getValue());
+        assertEquals(-200.5D, localVars.getDouble(6));
+        assertNull(localVars.getRef(8));
+        assertEquals("abc", localVars.getRef(9).getValue());
     }
 }

@@ -10,17 +10,16 @@ public class OperandStack {
     public OperandStack(int maxStack) {
         slots = new Slot[maxStack];
         top = 0;
-        for (int i = 0; i < slots.length; i++) {
-            slots[i] = new Slot();
-        }
     }
 
     public void pushInt(int value) {
-        slots[top++].val = value;
+        slots[top++] = new Slot(value);
     }
 
     public int popInt() {
-        return slots[--top].val;
+        int val = slots[--top].val;
+        slots[top] = null;
+        return val;
     }
 
     public void pushFloat(float value) {
@@ -36,14 +35,17 @@ public class OperandStack {
     public void pushLong(long val) {
         // 采用大端存储，高字节存放低地址处
         // high
-        slots[top++].val = (int) (val >> 32);
+        slots[top++] = new Slot((int) (val >> 32));
         // low
-        slots[top++].val = (int) (val);
+        slots[top++] = new Slot((int) (val));
     }
 
     public long popLong() {
-        int low = slots[--top].val;
-        int high = slots[--top].val;
+        int low = slots[top - 1].val;
+        int high = slots[top - 2].val;
+        slots[top - 1] = null;
+        slots[top - 2] = null;
+        top -= 2;
         return (((long) high) << 32) | ((long) low & 0x0ffffffffL);
     }
 
@@ -58,12 +60,22 @@ public class OperandStack {
     }
 
     public void pushRef(Reference ref) {
-        slots[top++].ref = ref;
+        slots[top++] = new Slot(ref);
     }
 
     public Reference popRef() {
-        Reference ref = slots[top].ref;
-        slots[top].ref = null;
+        Reference ref = slots[--top].ref;
+        slots[top] = null;
         return ref;
+    }
+
+    public void pushSlot(Slot slot) {
+        slots[top++] = slot;
+    }
+
+    public Slot popSlot() {
+        Slot slot = slots[--top];
+        slots[top] = null;
+        return slot;
     }
 }
