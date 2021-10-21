@@ -18,7 +18,7 @@ public class Iconst3 extends BaseNop {
     }
 
     @Override
-    public void excute(Frame frame) {
+    public void execute(Frame frame) {
         frame.getOperandStack().pushInt(3);
     }
 }

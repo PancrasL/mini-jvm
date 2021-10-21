@@ -19,7 +19,7 @@ public class Aload0 extends BaseIndex8 {
     }
 
     @Override
-    public void excute(Frame frame) {
+    public void execute(Frame frame) {
         Reference ref = frame.getLocalVars().getRef(0);
         frame.getOperandStack().pushRef(ref);
     }

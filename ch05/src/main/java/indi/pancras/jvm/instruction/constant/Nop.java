@@ -19,7 +19,7 @@ public class Nop extends BaseNop {
     }
 
     @Override
-    public void excute(Frame frame) {
+    public void execute(Frame frame) {
         // Do nothing
     }
 }

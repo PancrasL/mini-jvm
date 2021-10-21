@@ -26,7 +26,7 @@ public class BIpush extends BaseNop {
     }
 
     @Override
-    public void excute(Frame frame) {
+    public void execute(Frame frame) {
         frame.getOperandStack().pushInt(val);
     }
 }

@@ -18,7 +18,7 @@ public class FAload extends BaseIndex8 {
     }
 
     @Override
-    public void excute(Frame frame) {
+    public void execute(Frame frame) {
         // TODO
     }
 }

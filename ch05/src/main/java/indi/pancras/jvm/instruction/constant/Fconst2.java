@@ -18,7 +18,7 @@ public class Fconst2 extends BaseNop {
     }
 
     @Override
-    public void excute(Frame frame) {
+    public void execute(Frame frame) {
         frame.getOperandStack().pushFloat(2.0f);
     }
 }

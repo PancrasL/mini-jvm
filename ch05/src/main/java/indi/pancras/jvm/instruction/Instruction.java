@@ -32,5 +32,5 @@ public interface Instruction {
      *
      * @param frame 当前栈帧
      */
-    void excute(Frame frame);
+    void execute(Frame frame);
 }

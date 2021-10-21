@@ -18,7 +18,7 @@ public class Iload3 extends BaseIndex8 {
     }
 
     @Override
-    public void excute(Frame frame) {
+    public void execute(Frame frame) {
         int val = frame.getLocalVars().getInt(3);
         frame.getOperandStack().pushInt(val);
     }

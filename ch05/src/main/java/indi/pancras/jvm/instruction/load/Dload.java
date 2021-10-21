@@ -18,7 +18,7 @@ public class Dload extends BaseIndex8 {
     }
 
     @Override
-    public void excute(Frame frame) {
+    public void execute(Frame frame) {
         double val = frame.getLocalVars().getDouble(index);
         frame.getOperandStack().pushDouble(val);
     }

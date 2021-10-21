@@ -18,7 +18,7 @@ public class Fload3 extends BaseIndex8 {
     }
 
     @Override
-    public void excute(Frame frame) {
+    public void execute(Frame frame) {
         float val = frame.getLocalVars().getFloat(3);
         frame.getOperandStack().pushFloat(val);
     }

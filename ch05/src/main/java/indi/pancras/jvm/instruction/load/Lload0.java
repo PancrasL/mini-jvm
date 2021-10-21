@@ -18,7 +18,7 @@ public class Lload0 extends BaseIndex8 {
     }
 
     @Override
-    public void excute(Frame frame) {
+    public void execute(Frame frame) {
         long val = frame.getLocalVars().getLong(0);
         frame.getOperandStack().pushLong(val);
     }
