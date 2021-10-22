@@ -8,7 +8,7 @@ import indi.pancras.jvm.rtda.Frame;
  */
 public class LAstore extends BaseIndex8 {
     @Override
-    public byte getOpCode() {
+    public int getOpCode() {
         return 0x50;
     }
 

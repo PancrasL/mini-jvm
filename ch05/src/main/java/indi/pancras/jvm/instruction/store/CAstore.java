@@ -8,7 +8,7 @@ import indi.pancras.jvm.rtda.Frame;
  */
 public class CAstore extends BaseIndex8 {
     @Override
-    public byte getOpCode() {
+    public int getOpCode() {
         return 0x55;
     }
 

@@ -10,7 +10,7 @@ import indi.pancras.jvm.rtda.Slot;
  */
 public class Dupx2 extends BaseNoOperands {
     @Override
-    public byte getOpCode() {
+    public int getOpCode() {
         return 0x5b;
     }
 

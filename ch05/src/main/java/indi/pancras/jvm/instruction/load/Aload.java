@@ -9,7 +9,7 @@ import indi.pancras.jvm.rtda.Reference;
  */
 public class Aload extends BaseIndex8 {
     @Override
-    public byte getOpCode() {
+    public int getOpCode() {
         return 0x19;
     }
 

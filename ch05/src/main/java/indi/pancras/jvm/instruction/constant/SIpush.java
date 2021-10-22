@@ -11,7 +11,7 @@ public class SIpush extends BaseNoOperands {
     private int val;
 
     @Override
-    public byte getOpCode() {
+    public int getOpCode() {
         return 0x11;
     }
 

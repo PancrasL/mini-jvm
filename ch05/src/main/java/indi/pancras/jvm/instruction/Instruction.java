@@ -11,7 +11,7 @@ public interface Instruction {
      *
      * @return 指令值
      */
-    byte getOpCode();
+    int getOpCode();
 
     /**
      * 获取指令助记符

@@ -8,7 +8,7 @@ import indi.pancras.jvm.rtda.Frame;
  */
 public class Iload3 extends BaseNoOperands {
     @Override
-    public byte getOpCode() {
+    public int getOpCode() {
         return 0x1d;
     }
 

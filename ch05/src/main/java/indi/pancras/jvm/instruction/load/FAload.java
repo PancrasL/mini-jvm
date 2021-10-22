@@ -8,7 +8,7 @@ import indi.pancras.jvm.rtda.Frame;
  */
 public class FAload extends BaseIndex8 {
     @Override
-    public byte getOpCode() {
+    public int getOpCode() {
         return 0x30;
     }
 

@@ -5,7 +5,7 @@ import indi.pancras.jvm.rtda.Frame;
 
 public class Istore0 extends BaseNoOperands {
     @Override
-    public byte getOpCode() {
+    public int getOpCode() {
         return 0x3b;
     }
 
