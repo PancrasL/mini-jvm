@@ -11,7 +11,7 @@ public class Thread {
     @Setter
     private int pc;
 
-    private Stack<Frame> stack;
+    private final Stack<Frame> stack;
 
     public Thread(int maxStack) {
         this.stack = new Stack<>(maxStack);

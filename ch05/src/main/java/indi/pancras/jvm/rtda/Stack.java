@@ -4,13 +4,14 @@ package indi.pancras.jvm.rtda;
  * @author PancrasL
  */
 public class Stack<T> {
-    private int maxSize;
+    private final int maxSize;
     private int size;
-    private T[] data;
+    private final Object[] data;
 
     public Stack(int maxSize) {
         this.maxSize = maxSize;
-        size = 0;
+        this.data = new Object[maxSize];
+        this.size = 0;
     }
 
     public void push(T val) {
@@ -25,13 +26,13 @@ public class Stack<T> {
             throw new IllegalStateException("Java stack is empty");
         }
         size--;
-        return data[size];
+        return (T) data[size];
     }
 
     public T peek() {
         if (size == 0) {
             throw new IllegalStateException("Java stack is empty");
         }
-        return data[size - 1];
+        return (T) data[size - 1];
     }
 }
