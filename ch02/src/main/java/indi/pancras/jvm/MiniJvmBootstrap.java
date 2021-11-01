@@ -4,9 +4,7 @@ import java.io.IOException;
 
 import indi.pancras.jvm.classpath.Classpath;
 
-/**
- * @author PancrasL
- */
+
 public class MiniJvmBootstrap {
     public static void main(String[] args) throws IOException {
         Cmd cmd = Cmd.parseCmd(args);

@@ -12,9 +12,7 @@ import indi.pancras.jvm.classfile.attribute.attrinfo.SyntheticAttr;
 import indi.pancras.jvm.classfile.attribute.attrinfo.UnparsedAttr;
 import indi.pancras.jvm.classfile.pool.ConstantPool;
 
-/**
- * @author PancrasL
- */
+
 public abstract class BaseAttr {
     public static BaseAttr[] readAttributes(ClassReader reader, ConstantPool pool) {
         short cnt = reader.readShort();

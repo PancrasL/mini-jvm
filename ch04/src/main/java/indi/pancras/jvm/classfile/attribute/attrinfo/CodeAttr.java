@@ -4,9 +4,7 @@ import indi.pancras.jvm.classfile.ClassReader;
 import indi.pancras.jvm.classfile.attribute.BaseAttr;
 import indi.pancras.jvm.classfile.pool.ConstantPool;
 
-/**
- * @author PancrasL
- */
+
 public class CodeAttr extends BaseAttr {
     private short maxStack;
     private short maxLocals;

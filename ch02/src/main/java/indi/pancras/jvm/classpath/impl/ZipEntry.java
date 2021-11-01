@@ -9,9 +9,7 @@ import java.nio.file.Paths;
 import indi.pancras.jvm.classpath.Entry;
 import indi.pancras.jvm.utils.FileUtil;
 
-/**
- * @author PancrasL
- */
+
 public class ZipEntry implements Entry {
     private final String absPath;
 

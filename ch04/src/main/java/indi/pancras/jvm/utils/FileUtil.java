@@ -5,9 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * @author PancrasL
- */
+
 public class FileUtil {
     public static boolean fileExists(String path) {
         File file = new File(path);

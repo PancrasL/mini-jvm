@@ -3,9 +3,7 @@ package indi.pancras.jvm.classfile.pool;
 import indi.pancras.jvm.classfile.ClassReader;
 import lombok.Getter;
 
-/**
- * @author PancrasL
- */
+
 @Getter
 public class ConstantPool {
     private int poolSize;

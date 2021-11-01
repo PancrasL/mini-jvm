@@ -6,9 +6,7 @@ import java.util.List;
 import indi.pancras.jvm.classpath.Entry;
 import indi.pancras.jvm.utils.FileUtil;
 
-/**
- * @author PancrasL
- */
+
 public class WildcardEntry implements Entry {
     private final List<Entry> entries = new ArrayList<>();
 

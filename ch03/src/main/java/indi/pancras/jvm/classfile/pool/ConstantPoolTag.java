@@ -1,8 +1,6 @@
 package indi.pancras.jvm.classfile.pool;
 
-/**
- * @author PancrasL
- */
+
 public class ConstantPoolTag {
     public static final int CONSTANT_TAG_UTF8 = 1;
     public static final int CONSTANT_TAG_INTEGER = 3;

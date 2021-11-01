@@ -1,8 +1,6 @@
 package indi.pancras.jvm.classpath;
 
-/**
- * @author PancrasL
- */
+
 public interface Entry {
     /**
      * 读取classFile文件，该文件以.class结尾

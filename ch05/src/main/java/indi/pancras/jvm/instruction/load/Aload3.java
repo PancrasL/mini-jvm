@@ -4,9 +4,7 @@ import indi.pancras.jvm.instruction.BaseNoOperands;
 import indi.pancras.jvm.rtda.Frame;
 import indi.pancras.jvm.rtda.Reference;
 
-/**
- * @author PancrasL
- */
+
 public class Aload3 extends BaseNoOperands {
     @Override
     public int getOpCode() {

@@ -3,9 +3,7 @@ package indi.pancras.jvm.instruction.constant;
 import indi.pancras.jvm.instruction.BaseNoOperands;
 import indi.pancras.jvm.rtda.Frame;
 
-/**
- * @author PancrasL
- */
+
 public class Iconst3 extends BaseNoOperands {
     @Override
     public int getOpCode() {

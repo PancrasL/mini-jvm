@@ -1,8 +1,6 @@
 package indi.pancras.jvm.rtda;
 
-/**
- * @author PancrasL
- */
+
 public class Stack<T> {
     private int maxSize;
     private int size;

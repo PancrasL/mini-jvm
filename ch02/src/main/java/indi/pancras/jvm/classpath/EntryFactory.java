@@ -7,9 +7,7 @@ import indi.pancras.jvm.classpath.impl.DirEntry;
 import indi.pancras.jvm.classpath.impl.WildcardEntry;
 import indi.pancras.jvm.classpath.impl.ZipEntry;
 
-/**
- * @author PancrasL
- */
+
 public class EntryFactory {
     public static Entry createEntry(String path) {
         Entry entry;

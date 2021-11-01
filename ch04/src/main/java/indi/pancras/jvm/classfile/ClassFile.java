@@ -6,9 +6,7 @@ import indi.pancras.jvm.classfile.method.MethodInfo;
 import indi.pancras.jvm.classfile.pool.ConstantPool;
 import lombok.Getter;
 
-/**
- * @author PancrasL
- */
+
 @Getter
 public class ClassFile {
     private static final int MAGIC_NUM = 0xCAFEBABE;

@@ -4,9 +4,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Arrays;
 
-/**
- * @author PancrasL
- */
+
 public class ClassReader {
     private final byte[] data;
     private int index;

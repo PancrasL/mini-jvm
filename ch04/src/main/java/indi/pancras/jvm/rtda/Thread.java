@@ -3,9 +3,7 @@ package indi.pancras.jvm.rtda;
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * @author PancrasL
- */
+
 public class Thread {
     @Getter
     @Setter

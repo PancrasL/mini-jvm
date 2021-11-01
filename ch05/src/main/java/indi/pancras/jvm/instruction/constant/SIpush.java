@@ -4,9 +4,7 @@ import indi.pancras.jvm.instruction.BaseNoOperands;
 import indi.pancras.jvm.instruction.BytecodeReader;
 import indi.pancras.jvm.rtda.Frame;
 
-/**
- * @author PancrasL
- */
+
 public class SIpush extends BaseNoOperands {
     private int val;
 

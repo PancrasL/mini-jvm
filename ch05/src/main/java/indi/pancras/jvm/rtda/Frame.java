@@ -3,16 +3,14 @@ package indi.pancras.jvm.rtda;
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * @author PancrasL
- */
+
 @Getter
 public class Frame {
-    private LocalVars localVars;
+    private final LocalVars localVars;
 
-    private OperandStack operandStack;
+    private final OperandStack operandStack;
 
-    private Thread thread;
+    private final Thread thread;
 
     @Setter
     private int nextPc;

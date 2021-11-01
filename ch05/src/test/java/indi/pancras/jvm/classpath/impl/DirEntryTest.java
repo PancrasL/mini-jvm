@@ -8,9 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-/**
- * @author PancrasL
- */
+
 class DirEntryTest {
     @Test
     void testReadClass() {

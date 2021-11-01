@@ -2,9 +2,7 @@ package indi.pancras.jvm.classfile.pool.poolinfo;
 
 import indi.pancras.jvm.classfile.pool.BaseConstantInfo;
 
-/**
- * @author PancrasL
- */
+
 public class Utf8Info extends BaseConstantInfo {
     private String value;
 

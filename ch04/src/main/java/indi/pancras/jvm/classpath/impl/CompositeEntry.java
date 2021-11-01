@@ -7,9 +7,7 @@ import java.util.List;
 import indi.pancras.jvm.classpath.Entry;
 import indi.pancras.jvm.classpath.EntryFactory;
 
-/**
- * @author PancrasL
- */
+
 public class CompositeEntry implements Entry {
     private final List<Entry> entries = new ArrayList<>();
 

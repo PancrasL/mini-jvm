@@ -4,9 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-/**
- * @author PancrasL
- */
+
 public class IOUtil {
     public static byte[] readFile(String filename) {
         File file = new File(filename);

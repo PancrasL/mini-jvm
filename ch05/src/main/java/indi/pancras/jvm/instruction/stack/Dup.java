@@ -5,9 +5,7 @@ import indi.pancras.jvm.rtda.Frame;
 import indi.pancras.jvm.rtda.OperandStack;
 import indi.pancras.jvm.rtda.Slot;
 
-/**
- * @author PancrasL
- */
+
 public class Dup extends BaseNoOperands {
     @Override
     public int getOpCode() {

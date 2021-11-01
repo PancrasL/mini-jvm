@@ -3,9 +3,7 @@ package indi.pancras.jvm.instruction;
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * @author PancrasL
- */
+
 @Getter
 @Setter
 public class BytecodeReader {

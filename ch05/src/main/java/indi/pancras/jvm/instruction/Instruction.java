@@ -2,9 +2,7 @@ package indi.pancras.jvm.instruction;
 
 import indi.pancras.jvm.rtda.Frame;
 
-/**
- * @author PancrasL
- */
+
 public interface Instruction {
     /**
      * 获取指令值

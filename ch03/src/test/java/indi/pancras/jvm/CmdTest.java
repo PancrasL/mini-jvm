@@ -9,9 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/**
- * @author PancrasL
- */
+
 class CmdTest {
 
     @Test

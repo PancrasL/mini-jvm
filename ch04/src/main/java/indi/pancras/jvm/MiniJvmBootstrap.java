@@ -7,9 +7,7 @@ import indi.pancras.jvm.classfile.pool.BaseConstantInfo;
 import indi.pancras.jvm.classfile.pool.ConstantPool;
 import indi.pancras.jvm.classpath.Classpath;
 
-/**
- * @author PancrasL
- */
+
 public class MiniJvmBootstrap {
     public static void main(String[] args) {
         Cmd cmd = Cmd.parseCmd(args);

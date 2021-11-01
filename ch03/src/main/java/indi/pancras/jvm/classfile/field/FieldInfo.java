@@ -5,9 +5,7 @@ import indi.pancras.jvm.classfile.attribute.BaseAttr;
 import indi.pancras.jvm.classfile.pool.ConstantPool;
 import lombok.Getter;
 
-/**
- * @author PancrasL
- */
+
 @Getter
 public class FieldInfo {
     private short accessFlags;

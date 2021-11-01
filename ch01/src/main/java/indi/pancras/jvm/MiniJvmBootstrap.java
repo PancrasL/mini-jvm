@@ -1,8 +1,6 @@
 package indi.pancras.jvm;
 
-/**
- * @author PancrasL
- */
+
 public class MiniJvmBootstrap {
     public static void main(String[] args) {
         Cmd cmd = Cmd.parseCmd(args);

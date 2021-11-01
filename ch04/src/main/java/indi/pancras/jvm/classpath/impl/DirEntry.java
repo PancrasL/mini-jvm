@@ -4,9 +4,7 @@ import indi.pancras.jvm.classpath.Entry;
 import indi.pancras.jvm.utils.FileUtil;
 import indi.pancras.jvm.utils.IOUtil;
 
-/**
- * @author PancrasL
- */
+
 public class DirEntry implements Entry {
     private final String absPath;
 

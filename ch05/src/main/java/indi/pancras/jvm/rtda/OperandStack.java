@@ -1,8 +1,6 @@
 package indi.pancras.jvm.rtda;
 
-/**
- * @author PancrasL
- */
+
 public class OperandStack {
     private final Slot[] slots;
     private int top;

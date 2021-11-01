@@ -6,9 +6,7 @@ import indi.pancras.jvm.classpath.impl.WildcardEntry;
 import indi.pancras.jvm.utils.FileUtil;
 import indi.pancras.jvm.utils.SystemUtil;
 
-/**
- * @author PancrasL
- */
+
 public class Classpath {
     private Entry bootClasspath;
 

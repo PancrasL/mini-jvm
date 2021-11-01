@@ -2,9 +2,7 @@ package indi.pancras.jvm.classfile.pool.poolinfo;
 
 import indi.pancras.jvm.classfile.pool.BaseConstantInfo;
 
-/**
- * @author PancrasL
- */
+
 public class MethodHandleInfo extends BaseConstantInfo {
     private byte referenceKind;
     private short referenceIndex;

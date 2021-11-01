@@ -2,9 +2,7 @@ package indi.pancras.jvm.rtda;
 
 import java.lang.ref.Reference;
 
-/**
- * @author PancrasL
- */
+
 public class OperandStack {
     private final Slot[] slots;
     private int top;

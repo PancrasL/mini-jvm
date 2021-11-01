@@ -15,9 +15,7 @@ import indi.pancras.jvm.classfile.pool.poolinfo.NameAndTypeInfo;
 import indi.pancras.jvm.classfile.pool.poolinfo.StringInfo;
 import indi.pancras.jvm.classfile.pool.poolinfo.Utf8Info;
 
-/**
- * @author PancrasL
- */
+
 public abstract class BaseConstantInfo {
     public final int tag;
 

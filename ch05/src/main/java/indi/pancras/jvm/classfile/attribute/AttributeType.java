@@ -1,8 +1,6 @@
 package indi.pancras.jvm.classfile.attribute;
 
-/**
- * @author PancrasL
- */
+
 public class AttributeType {
     public static final String CODE = "Code";
     public static final String CONSTANT_VALUE = "ConstantValue";
