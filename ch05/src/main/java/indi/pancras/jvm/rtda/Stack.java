@@ -3,8 +3,8 @@ package indi.pancras.jvm.rtda;
 
 public class Stack<T> {
     private final int maxSize;
-    private int size;
     private final Object[] data;
+    private int size;
 
     public Stack(int maxSize) {
         this.maxSize = maxSize;

@@ -1,15 +1,7 @@
 package indi.pancras.jvm.classfile.attribute;
 
 import indi.pancras.jvm.classfile.ClassReader;
-import indi.pancras.jvm.classfile.attribute.attrinfo.CodeAttr;
-import indi.pancras.jvm.classfile.attribute.attrinfo.ConstantValueAttr;
-import indi.pancras.jvm.classfile.attribute.attrinfo.DeprecatedAttr;
-import indi.pancras.jvm.classfile.attribute.attrinfo.ExceptionAttr;
-import indi.pancras.jvm.classfile.attribute.attrinfo.LineNumberTableAttr;
-import indi.pancras.jvm.classfile.attribute.attrinfo.LocalVariableTableAttr;
-import indi.pancras.jvm.classfile.attribute.attrinfo.SourceFileAttr;
-import indi.pancras.jvm.classfile.attribute.attrinfo.SyntheticAttr;
-import indi.pancras.jvm.classfile.attribute.attrinfo.UnparsedAttr;
+import indi.pancras.jvm.classfile.attribute.attrinfo.*;
 import indi.pancras.jvm.classfile.pool.ConstantPool;
 
 

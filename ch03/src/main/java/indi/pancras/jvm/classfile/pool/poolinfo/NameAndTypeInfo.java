@@ -3,7 +3,6 @@ package indi.pancras.jvm.classfile.pool.poolinfo;
 import indi.pancras.jvm.classfile.pool.BaseConstantInfo;
 
 
-
 public class NameAndTypeInfo extends BaseConstantInfo {
     private short nameIndex;
     private short descriptorIndex;

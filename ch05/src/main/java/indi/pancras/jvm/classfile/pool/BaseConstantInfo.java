@@ -1,19 +1,7 @@
 package indi.pancras.jvm.classfile.pool;
 
 import indi.pancras.jvm.classfile.ClassReader;
-import indi.pancras.jvm.classfile.pool.poolinfo.ClassInfo;
-import indi.pancras.jvm.classfile.pool.poolinfo.DoubleInfo;
-import indi.pancras.jvm.classfile.pool.poolinfo.FieldRefInfo;
-import indi.pancras.jvm.classfile.pool.poolinfo.FloatInfo;
-import indi.pancras.jvm.classfile.pool.poolinfo.IntegerInfo;
-import indi.pancras.jvm.classfile.pool.poolinfo.InterfaceMethodRefInfo;
-import indi.pancras.jvm.classfile.pool.poolinfo.InvokeDynamicInfo;
-import indi.pancras.jvm.classfile.pool.poolinfo.LongInfo;
-import indi.pancras.jvm.classfile.pool.poolinfo.MethodRefInfo;
-import indi.pancras.jvm.classfile.pool.poolinfo.MethodTypeInfo;
-import indi.pancras.jvm.classfile.pool.poolinfo.NameAndTypeInfo;
-import indi.pancras.jvm.classfile.pool.poolinfo.StringInfo;
-import indi.pancras.jvm.classfile.pool.poolinfo.Utf8Info;
+import indi.pancras.jvm.classfile.pool.poolinfo.*;
 
 
 public abstract class BaseConstantInfo {

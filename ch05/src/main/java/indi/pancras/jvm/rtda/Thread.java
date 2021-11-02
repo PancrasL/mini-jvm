@@ -5,11 +5,10 @@ import lombok.Setter;
 
 
 public class Thread {
+    private final Stack<Frame> stack;
     @Getter
     @Setter
     private int pc;
-
-    private final Stack<Frame> stack;
 
     public Thread(int maxStack) {
         this.stack = new Stack<>(maxStack);
