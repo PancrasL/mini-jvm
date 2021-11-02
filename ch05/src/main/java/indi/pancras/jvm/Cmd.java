@@ -9,7 +9,10 @@ import java.util.List;
 import lombok.Getter;
 import lombok.ToString;
 
-
+/**
+ * 使用： ① 指定jre目录： -jre D:\Programmes\Java\JavaSE8\jdk\jre java.lang.String ②
+ * 指定classpath（从项目根目录的test文件夹下加载类）： -cp test DirEntry
+ */
 @Getter
 @ToString
 public class Cmd {

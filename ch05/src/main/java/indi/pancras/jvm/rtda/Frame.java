@@ -15,9 +15,9 @@ public class Frame {
     @Setter
     private int nextPc;
 
-    public Frame(LocalVars localVars, OperandStack operandStack, Thread thread) {
-        this.localVars = localVars;
-        this.operandStack = operandStack;
+    public Frame(Thread thread, int maxLocals, int maxStack) {
         this.thread = thread;
+        this.localVars = new LocalVars(maxLocals);
+        this.operandStack = new OperandStack(maxStack);
     }
 }

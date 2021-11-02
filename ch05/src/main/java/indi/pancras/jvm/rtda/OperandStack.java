@@ -1,6 +1,5 @@
 package indi.pancras.jvm.rtda;
 
-
 public class OperandStack {
     private final Slot[] slots;
     private int top;
@@ -75,5 +74,20 @@ public class OperandStack {
         Slot slot = slots[--top];
         slots[top] = null;
         return slot;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append('[');
+        for (int i = 0; i < top; i++) {
+            sb.append(slots[i]);
+            if (i != top - 1) {
+                sb.append(", ");
+            }
+        }
+        sb.append(']');
+
+        return sb.toString();
     }
 }

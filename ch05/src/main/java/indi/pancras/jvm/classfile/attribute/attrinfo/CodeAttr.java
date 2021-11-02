@@ -3,8 +3,9 @@ package indi.pancras.jvm.classfile.attribute.attrinfo;
 import indi.pancras.jvm.classfile.ClassReader;
 import indi.pancras.jvm.classfile.attribute.BaseAttr;
 import indi.pancras.jvm.classfile.pool.ConstantPool;
+import lombok.Getter;
 
-
+@Getter
 public class CodeAttr extends BaseAttr {
     private short maxStack;
     private short maxLocals;

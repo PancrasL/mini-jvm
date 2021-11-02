@@ -1,6 +1,8 @@
 package indi.pancras.jvm.rtda;
 
+import lombok.ToString;
 
+@ToString
 public class LocalVars {
     private final Slot[] slots;
 
@@ -13,9 +15,7 @@ public class LocalVars {
     }
 
     public int getInt(int index) {
-        int val = slots[index].val;
-        slots[index] = null;
-        return val;
+        return slots[index].val;
     }
 
     public void setFloat(int index, float val) {
@@ -35,8 +35,6 @@ public class LocalVars {
     public long getLong(int index) {
         int high = slots[index].val;
         int low = slots[index + 1].val;
-        slots[index] = null;
-        slots[index + 1] = null;
         return (((long) high) << 32) | ((long) low & 0x0ffffffffL);
     }
 
@@ -55,8 +53,6 @@ public class LocalVars {
     }
 
     public Reference getRef(int index) {
-        Reference ref = slots[index].ref;
-        slots[index] = null;
-        return ref;
+        return slots[index].ref;
     }
 }

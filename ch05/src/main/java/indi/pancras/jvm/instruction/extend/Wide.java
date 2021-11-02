@@ -93,7 +93,7 @@ public class Wide extends BaseBranch {
                 modifiedInstruction = k;
                 break;
             case 0xa9:
-                throw new RuntimeException("not support ret");
+                throw new RuntimeException("Not support ret");
             default:
                 throw new RuntimeException("Not support code: " + opcode);
         }
