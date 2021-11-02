@@ -63,6 +63,11 @@ public class InstructionFactory {
         putInstruction(new Lload0());
         putInstruction(new Lload1());
         putInstruction(new Lload2());
+        putInstruction(new Lload3());
+        putInstruction(new Fload0());
+        putInstruction(new Fload1());
+        putInstruction(new Fload2());
+        putInstruction(new Fload3());
         putInstruction(new Dload0());
         putInstruction(new Dload1());
         putInstruction(new Dload2());
@@ -75,11 +80,6 @@ public class InstructionFactory {
         putInstruction(new LAload());
         putInstruction(new FAload());
         putInstruction(new DAload());
-        putInstruction(new Lload3());
-        putInstruction(new Fload0());
-        putInstruction(new Fload1());
-        putInstruction(new Fload2());
-        putInstruction(new Fload3());
         putInstruction(new AAload());
         putInstruction(new BAload());
         putInstruction(new CAload());

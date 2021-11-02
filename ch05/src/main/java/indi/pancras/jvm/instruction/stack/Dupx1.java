@@ -14,7 +14,7 @@ public class Dupx1 extends BaseNoOperands {
 
     @Override
     public String getOpName() {
-        return "dupx1";
+        return "dup_x1";
     }
 
     @Override

@@ -21,7 +21,7 @@ public class IfAcmpeq extends BaseBranch {
         OperandStack operandStack = frame.getOperandStack();
         Reference v2 = operandStack.popRef();
         Reference v1 = operandStack.popRef();
-        if (v2.equals(v1)) {
+        if (v1.equals(v2)) {
             branch(frame, offset);
         }
     }

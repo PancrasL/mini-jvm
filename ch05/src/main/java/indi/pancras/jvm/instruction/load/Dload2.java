@@ -12,7 +12,7 @@ public class Dload2 extends BaseNoOperands {
 
     @Override
     public String getOpName() {
-        return "dload2";
+        return "dload_2";
     }
 
     @Override

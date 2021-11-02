@@ -19,7 +19,7 @@ public class Ifle extends BaseBranch {
     public void execute(Frame frame) {
         OperandStack operandStack = frame.getOperandStack();
         int i = operandStack.popInt();
-        if (i >= 0) {
+        if (i <= 0) {
             branch(frame, offset);
         }
     }
