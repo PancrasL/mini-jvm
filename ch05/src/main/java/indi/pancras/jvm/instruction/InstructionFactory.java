@@ -69,6 +69,12 @@ import indi.pancras.jvm.instruction.conversion.I2S;
 import indi.pancras.jvm.instruction.conversion.L2D;
 import indi.pancras.jvm.instruction.conversion.L2F;
 import indi.pancras.jvm.instruction.conversion.L2I;
+import indi.pancras.jvm.instruction.extend.Gotow;
+import indi.pancras.jvm.instruction.extend.Ifnonnull;
+import indi.pancras.jvm.instruction.extend.Ifnull;
+import indi.pancras.jvm.instruction.extend.Jsrw;
+import indi.pancras.jvm.instruction.extend.Multianewarray;
+import indi.pancras.jvm.instruction.extend.Wide;
 import indi.pancras.jvm.instruction.load.AAload;
 import indi.pancras.jvm.instruction.load.Aload;
 import indi.pancras.jvm.instruction.load.Aload0;
@@ -139,6 +145,9 @@ import indi.pancras.jvm.instruction.math.Lshr;
 import indi.pancras.jvm.instruction.math.Lsub;
 import indi.pancras.jvm.instruction.math.Lushr;
 import indi.pancras.jvm.instruction.math.Lxor;
+import indi.pancras.jvm.instruction.reserved.Breakpoint;
+import indi.pancras.jvm.instruction.reserved.Impdep1;
+import indi.pancras.jvm.instruction.reserved.Impdep2;
 import indi.pancras.jvm.instruction.stack.Dup;
 import indi.pancras.jvm.instruction.stack.Dup2;
 import indi.pancras.jvm.instruction.stack.Dup2x1;
@@ -382,34 +391,41 @@ public class InstructionFactory {
         putInstruction(new Areturn());
         putInstruction(new Return());
 
+        // References
+        // TODO
 
-        putInstruction(new gotow());
-        putInstruction(new ifnotnull());
-        putInstruction(new ifnull());
-        putInstruction(new wide());
+        // Extended
+        putInstruction(new Wide());
+        putInstruction(new Multianewarray());
+        putInstruction(new Ifnull());
+        putInstruction(new Ifnonnull());
+        putInstruction(new Gotow());
+        putInstruction(new Jsrw());
 
-
+        // Reserved
+        putInstruction(new Breakpoint());
+        putInstruction(new Impdep1());
+        putInstruction(new Impdep2());
     }
 
-    public static Instruction getByOpcode(int opcode) throws Exception {
+    public static Instruction getByOpcode(int opcode) {
         Instruction instruction = codeMap.get(opcode);
         if (instruction == null) {
-            throw new Exception("no operation code");
+            throw new RuntimeException("no operation code");
         }
         return instruction;
     }
 
-    public static Instruction getByOpcode(String name) throws Exception {
+    public static Instruction getByOpcode(String name) {
         Instruction instruction = codeMap.get(name);
         if (instruction == null) {
-            throw new Exception("no operation code");
+            throw new RuntimeException("no operation code");
         }
         return instruction;
     }
 
     private static void putInstruction(Instruction instruction) {
         codeMap.put(instruction.getOpCode(), instruction);
-        nameMap.put(instruction.getReName(), instruction);
+        nameMap.put(instruction.getOpName(), instruction);
     }
-
 }

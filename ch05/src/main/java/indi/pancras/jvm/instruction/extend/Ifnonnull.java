@@ -5,7 +5,7 @@ import indi.pancras.jvm.rtda.Frame;
 import indi.pancras.jvm.rtda.OperandStack;
 import indi.pancras.jvm.rtda.Reference;
 
-public class Ifnotnull extends BaseBranch {
+public class Ifnonnull extends BaseBranch {
     @Override
     public int getOpCode() {
         return 0xc7;
@@ -13,7 +13,7 @@ public class Ifnotnull extends BaseBranch {
 
     @Override
     public String getOpName() {
-        return "ifnotnull";
+        return "ifnonnull";
     }
 
     @Override

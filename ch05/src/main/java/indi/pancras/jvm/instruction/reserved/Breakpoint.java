@@ -1,28 +1,27 @@
-package indi.pancras.jvm.instruction.extend;
+package indi.pancras.jvm.instruction.reserved;
 
-import indi.pancras.jvm.instruction.BaseBranch;
 import indi.pancras.jvm.instruction.BytecodeReader;
+import indi.pancras.jvm.instruction.Instruction;
 import indi.pancras.jvm.rtda.Frame;
 
-public class Gotow extends BaseBranch {
-
+public class Breakpoint implements Instruction {
     @Override
     public int getOpCode() {
-        return 0xc8;
+        return 0xca;
     }
 
     @Override
     public String getOpName() {
-        return "goto_w";
+        return "breakpoint";
     }
 
     @Override
     public void fetchOperands(BytecodeReader reader) {
-        offset = reader.read32();
+
     }
 
     @Override
     public void execute(Frame frame) {
-        branch(frame, offset);
+        // TODO
     }
 }
