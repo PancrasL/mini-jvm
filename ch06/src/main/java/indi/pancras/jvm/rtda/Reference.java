@@ -2,7 +2,6 @@ package indi.pancras.jvm.rtda;
 
 import lombok.Getter;
 
-
 @Getter
 public class Reference {
     private final Object value;

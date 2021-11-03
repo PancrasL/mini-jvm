@@ -22,8 +22,10 @@ public class Method {
         this.name = info.getName();
         this.descriptor = info.getDescriptor();
         CodeAttr codeAttr = info.getCodeAttr();
-        this.maxStack = codeAttr.getMaxStack();
-        this.maxLocals = codeAttr.getMaxLocals();
-        this.code = codeAttr.getCode();
+        if (codeAttr != null) {
+            this.maxStack = codeAttr.getMaxStack();
+            this.maxLocals = codeAttr.getMaxLocals();
+            this.code = codeAttr.getCode();
+        }
     }
 }

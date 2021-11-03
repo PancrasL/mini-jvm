@@ -37,11 +37,11 @@ public class MethodInfo {
     }
 
     public String getName() {
-        return pool.getUTF8(nameIndex);
+        return pool.getUtf8(nameIndex);
     }
 
     public String getDescriptor() {
-        return pool.getUTF8(descriptorIndex);
+        return pool.getUtf8(descriptorIndex);
     }
 
     public CodeAttr getCodeAttr() {

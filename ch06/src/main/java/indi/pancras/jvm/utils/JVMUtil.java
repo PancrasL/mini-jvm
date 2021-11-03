@@ -21,19 +21,19 @@ public class JVMUtil {
         }
 
         System.out.format("access flags: 0x%x\n", classFile.getAccessFlag());
-        System.out.println("this class: " + constantPool.getUTF8(classFile.getThisClassIndex()));
-        System.out.println("super class: " + constantPool.getUTF8(classFile.getSuperClassIndex()));
+        System.out.println("this class: " + constantPool.getUtf8(classFile.getThisClassIndex()));
+        System.out.println("super class: " + constantPool.getUtf8(classFile.getSuperClassIndex()));
         System.out.println("interfaces: " + classFile.getInterfaceIndexes().length);
         FieldInfo[] fields = classFile.getFields();
         System.out.println("fields count: " + fields.length);
         for (FieldInfo field : fields) {
-            System.out.format("  %s\n", constantPool.getUTF8(field.getNameIndex()));
+            System.out.format("  %s\n", constantPool.getUtf8(field.getNameIndex()));
         }
 
         MethodInfo[] methods = classFile.getMethods();
         System.out.println("methods count: " + methods.length);
         for (MethodInfo m : methods) {
-            System.out.format("  %s\n", constantPool.getUTF8(m.getNameIndex()));
+            System.out.format("  %s\n", constantPool.getUtf8(m.getNameIndex()));
         }
     }
 }

@@ -7,6 +7,7 @@ import indi.pancras.jvm.classfile.attribute.BaseAttr;
 import indi.pancras.jvm.classfile.field.FieldInfo;
 import indi.pancras.jvm.classfile.method.MethodInfo;
 import indi.pancras.jvm.classfile.pool.ConstantPool;
+import indi.pancras.jvm.classfile.pool.poolinfo.ClassInfo;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -45,17 +46,19 @@ public class ClassFile {
     }
 
     public String getClassName() {
-        return constantPool.getUTF8(thisClassIndex);
+        return constantPool.getUtf8(thisClassIndex);
     }
 
     public String getSuperClassName() {
-        return constantPool.getUTF8(superClassIndex);
+        return constantPool.getUtf8(superClassIndex);
     }
 
     public List<String> getInterfaceNames() {
         ArrayList<String> list = new ArrayList<>();
         for (int i : interfaceIndexes) {
-            list.add(constantPool.getUTF8(interfaceIndexes[i]));
+            ClassInfo info = (ClassInfo) constantPool.getConstantInfo(i);
+            short nameIndex = info.getClassNameIndex();
+            list.add(constantPool.getUtf8(nameIndex));
         }
         return list;
     }

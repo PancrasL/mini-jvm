@@ -1,5 +1,6 @@
 package indi.pancras.jvm.rtda.heap;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import indi.pancras.jvm.classfile.ClassFile;
@@ -15,11 +16,11 @@ public class JClass {
     private int accessFlags;
     private String name;
     private String superClassName;
-    private JClass superJClass;
-    private List<String> interfaceNames;
-    private List<JClass> interfaces;
-    private List<Field> fields;
-    private List<Method> methods;
+    private JClass superClass;
+    private List<String> interfaceNames = new ArrayList<>();
+    private List<JClass> interfaces = new ArrayList<>();
+    private List<Field> fields = new ArrayList<>();
+    private List<Method> methods = new ArrayList<>();
     private int instanceSlotCount;
     private int staticSlotCount;
 

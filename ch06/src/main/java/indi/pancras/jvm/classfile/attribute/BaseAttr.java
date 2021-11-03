@@ -18,7 +18,7 @@ public abstract class BaseAttr {
     private static BaseAttr readAttribute(ClassReader reader, ConstantPool pool) {
         short attrNameIndex = reader.readShort();
         int attrLength = reader.readInt();
-        String attrName = pool.getUTF8(attrNameIndex);
+        String attrName = pool.getUtf8(attrNameIndex);
 
         switch (attrName) {
             case AttributeType.CODE:

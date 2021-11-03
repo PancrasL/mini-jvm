@@ -6,13 +6,13 @@ import lombok.Getter;
 
 @Getter
 public class ConstantPool {
-    private int poolSize;
-    private BaseConstantInfo[] constantInfos;
+    private final int poolSize;
+    private final BaseConstantInfo[] constantInfos;
 
     /**
      * 常量池项个数，因CONSTANT_DOUBLE和CONSTANT_LONG常量占用两个槽，因此poolCount和poolSize不一定相等。
      */
-    private int poolCount;
+    private final int poolCount;
 
     public ConstantPool(int poolSize, int poolCount, BaseConstantInfo[] constantInfos) {
         this.poolSize = poolSize;
@@ -36,7 +36,11 @@ public class ConstantPool {
         return new ConstantPool(poolSize, cnt, infos);
     }
 
-    public String getUTF8(int index) {
+    public String getUtf8(int index) {
         return constantInfos[index].toString();
+    }
+
+    public BaseConstantInfo getConstantInfo(int index) {
+        return constantInfos[index];
     }
 }
