@@ -3,7 +3,8 @@ package indi.pancras.jvm.rtda.heap;
 import java.util.List;
 
 import indi.pancras.jvm.classfile.ClassFile;
-import indi.pancras.jvm.classfile.pool.ConstantPool;
+import indi.pancras.jvm.classfile.field.FieldInfo;
+import indi.pancras.jvm.classfile.method.MethodInfo;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,7 +24,7 @@ public class Class {
     private int staticSlotCount;
 
     private ClassLoader classLoader;
-    private ConstantPool constantPool;
+    private RuntimeConstantPool constantPool;
 
     public Class(ClassFile classFile) {
         this.classFile = classFile;
@@ -31,7 +32,18 @@ public class Class {
         this.name = classFile.getClassName();
         this.superClassName = classFile.getSuperClassName();
         this.interfaceNames = classFile.getInterfaceNames();
+        // 接口信息
 
-        this.constantPool = classFile.getConstantPool();
+        // 属性信息
+        FieldInfo[] fieldInfos = classFile.getFields();
+        for (FieldInfo info : fieldInfos) {
+            fields.add(new Field(this, info));
+        }
+        // 方法信息
+        MethodInfo[] methodsInfos = classFile.getMethods();
+        for (MethodInfo info : methodsInfos) {
+            methods.add(new Method(this, info));
+        }
+        this.constantPool = new RuntimeConstantPool(classFile.getConstantPool());
     }
 }

@@ -16,6 +16,15 @@ public class FieldInfo {
     private ClassReader reader;
     private ConstantPool pool;
 
+    public static FieldInfo[] readFields(ClassReader reader, ConstantPool pool) {
+        short cnt = reader.readShort();
+        FieldInfo[] fields = new FieldInfo[cnt];
+        for (int i = 0; i < cnt; i++) {
+            fields[i] = new FieldInfo(reader, pool);
+        }
+        return fields;
+    }
+
     public FieldInfo(ClassReader reader, ConstantPool pool) {
         accessFlags = reader.readShort();
         nameIndex = reader.readShort();
@@ -26,12 +35,11 @@ public class FieldInfo {
         this.pool = pool;
     }
 
-    public static FieldInfo[] readFields(ClassReader reader, ConstantPool pool) {
-        short cnt = reader.readShort();
-        FieldInfo[] fields = new FieldInfo[cnt];
-        for (int i = 0; i < cnt; i++) {
-            fields[i] = new FieldInfo(reader, pool);
-        }
-        return fields;
+    public String getName() {
+        return pool.getUTF8(nameIndex);
+    }
+
+    public String getDescriptor() {
+        return pool.getUTF8(descriptorIndex);
     }
 }
