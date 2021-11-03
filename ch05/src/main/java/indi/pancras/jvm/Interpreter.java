@@ -38,14 +38,12 @@ public class Interpreter {
             opCode = reader.read8();
             Instruction instruction = InstructionFactory.getByOpcode(opCode);
             instruction.fetchOperands(reader);
-            System.out.println(String.format("pc: %d, opName: %s", frame.getNextPc(), instruction.getOpName()));
+            System.out.printf("pc: %d, opName: %s%n", frame.getNextPc(), instruction.getOpName());
             frame.setNextPc(reader.getPc());
 
             // execute
             instruction.execute(frame);
-            System.out.println("LocalVars: " + frame.getLocalVars());
-            System.out.println("OperandStack: " + frame.getOperandStack());
-            System.out.println("---");
+            System.out.println(frame);
         } while (opCode != 0xb1);
     }
 }

@@ -1,8 +1,5 @@
 package indi.pancras.jvm.rtda;
 
-import lombok.ToString;
-
-@ToString
 public class LocalVars {
     private final Slot[] slots;
 
@@ -54,5 +51,18 @@ public class LocalVars {
 
     public Reference getRef(int index) {
         return slots[index].ref;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("\n");
+        // Slot[]结构
+        sb.append("  Slot:\n");
+        for (int i = 0; i < slots.length; i++) {
+            String s = slots[i] == null ? "null" : slots[i].toString();
+            sb.append(String.format("    %2d, %5s\n", i, s));
+        }
+        return sb.toString();
     }
 }

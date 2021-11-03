@@ -39,7 +39,7 @@ public class Cmd {
 
     public String getMainClass() {
         if (mainClassAndArgs.isEmpty()) {
-            return "";
+            return null;
         }
         return mainClassAndArgs.get(0);
     }

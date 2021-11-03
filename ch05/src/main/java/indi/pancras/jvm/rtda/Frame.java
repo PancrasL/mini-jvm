@@ -20,4 +20,10 @@ public class Frame {
         this.localVars = new LocalVars(maxLocals);
         this.operandStack = new OperandStack(maxStack);
     }
+
+    @Override
+    public String toString() {
+        return "LocalVars: " + localVars +
+                "OperandStack: " + operandStack + "\n";
+    }
 }

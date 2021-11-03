@@ -14,7 +14,7 @@ class DirEntryTest {
     void testReadClass() {
         String resourcePath = Objects.requireNonNull(DirEntry.class.getClassLoader().getResource("")).getPath();
         DirEntry dirEntry = new DirEntry(resourcePath);
-        byte[] bytes = dirEntry.readClass("test.txt");
+        byte[] bytes = dirEntry.readClass("test/helloworld.txt");
         assertNotNull(bytes);
         assertArrayEquals("hello world!".getBytes(), bytes);
 
