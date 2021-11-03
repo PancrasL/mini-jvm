@@ -1,4 +1,7 @@
-package indi.pancras.jvm.rtda;
+package indi.pancras.jvm.rtda.stack;
+
+import indi.pancras.jvm.rtda.base.Reference;
+import indi.pancras.jvm.rtda.base.Slot;
 
 public class LocalVars {
     private final Slot[] slots;

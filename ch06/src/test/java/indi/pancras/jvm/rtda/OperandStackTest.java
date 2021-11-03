@@ -3,6 +3,8 @@ package indi.pancras.jvm.rtda;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import indi.pancras.jvm.rtda.stack.OperandStack;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 

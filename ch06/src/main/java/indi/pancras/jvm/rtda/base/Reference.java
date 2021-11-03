@@ -1,4 +1,4 @@
-package indi.pancras.jvm.rtda;
+package indi.pancras.jvm.rtda.base;
 
 import lombok.Getter;
 

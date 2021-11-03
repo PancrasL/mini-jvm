@@ -1,30 +1,88 @@
 package indi.pancras.jvm.rtda.heap;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import indi.pancras.jvm.classfile.pool.BaseConstantInfo;
 import indi.pancras.jvm.classfile.pool.ConstantPool;
+import indi.pancras.jvm.classfile.pool.ConstantPoolTag;
+import indi.pancras.jvm.classfile.pool.poolinfo.ClassInfo;
+import indi.pancras.jvm.classfile.pool.poolinfo.DoubleInfo;
+import indi.pancras.jvm.classfile.pool.poolinfo.FloatInfo;
+import indi.pancras.jvm.classfile.pool.poolinfo.IntegerInfo;
+import indi.pancras.jvm.classfile.pool.poolinfo.LongInfo;
+import indi.pancras.jvm.classfile.pool.poolinfo.NameAndTypeInfo;
+import indi.pancras.jvm.classfile.pool.poolinfo.Utf8Info;
 
 /**
  * 运行时常量池
  */
 public class RuntimeConstantPool {
 
-    private List<ConstantEntry> constants = new ArrayList<>();
+    private final ConstantPool pool;
 
     public RuntimeConstantPool(ConstantPool pool) {
-        BaseConstantInfo[] infos = pool.getConstantInfos();
-        for (BaseConstantInfo info : infos) {
-            constants.add(createConstantEntry(info));
+        this.pool = pool;
+    }
+
+    public int getInt(int index) {
+        BaseConstantInfo info = pool.getConstantInfo(index);
+        if (info instanceof IntegerInfo) {
+            return ((IntegerInfo) info).getValue();
         }
+        throw new RuntimeException("Illegal index, info is not IntegerInfo");
     }
 
-    public ConstantEntry getConstantEntryByIndex(int index) {
-        return constants.get(index);
+    public float getFloat(int index) {
+        BaseConstantInfo info = pool.getConstantInfo(index);
+        if (info instanceof FloatInfo) {
+            return ((FloatInfo) info).getValue();
+        }
+        throw new RuntimeException("Illegal index, info is not FloatInfo");
     }
 
-    private ConstantEntry createConstantEntry(BaseConstantInfo constantInfo) {
+    public long getLong(int index) {
+        BaseConstantInfo info = pool.getConstantInfo(index);
+        if (info instanceof LongInfo) {
+            return ((LongInfo) info).getValue();
+        }
+        throw new RuntimeException("Illegal index, info is not LongInfo");
+    }
+
+    public double getDouble(int index) {
+        BaseConstantInfo info = pool.getConstantInfo(index);
+        if (info instanceof DoubleInfo) {
+            return ((DoubleInfo) info).getValue();
+        }
+        throw new RuntimeException("Illegal index, info is not DoubleInfo");
+    }
+
+    public String getUtf8(int index) {
+        BaseConstantInfo info = pool.getConstantInfo(index);
+        if (info instanceof Utf8Info) {
+            return info.toString();
+        }
+        throw new RuntimeException("Illegal index, info is not Utf8Info");
+    }
+
+    public String getClassName(int index) {
+        BaseConstantInfo info = pool.getConstantInfo(index);
+        if (info instanceof ClassInfo) {
+            return getUtf8(((ClassInfo) info).getClassNameIndex());
+        }
+        throw new RuntimeException("Illegal index, info is not ClassInfo");
+    }
+
+    public String[] getNameAndType(int index) {
+        BaseConstantInfo info = pool.getConstantInfo(index);
+        if (info instanceof NameAndTypeInfo) {
+            NameAndTypeInfo nameAndTypeInfo = (NameAndTypeInfo) info;
+            String[] ss = new String[2];
+            ss[0] = getUtf8(nameAndTypeInfo.getNameIndex());
+            ss[1] = getUtf8(nameAndTypeInfo.getDescriptorIndex());
+            return ss;
+        }
+        throw new RuntimeException("Illegal index, info is not NameAndTypeInfo");
+    }
+//
+//    private ConstantEntry createConstantEntry(BaseConstantInfo constantInfo) {
 //        ConstantEntry constant = new ConstantEntry();
 //        switch (constantInfo.tag) {
 //            case ConstantPoolTag.CONSTANT_TAG_UTF8: {
@@ -73,6 +131,7 @@ public class RuntimeConstantPool {
 //                break;
 //        }
 //        return constant;
-        return null;
-    }
+//        return null;
+//    }
+
 }

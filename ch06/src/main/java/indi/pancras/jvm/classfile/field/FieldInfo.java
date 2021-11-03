@@ -2,19 +2,19 @@ package indi.pancras.jvm.classfile.field;
 
 import indi.pancras.jvm.classfile.ClassReader;
 import indi.pancras.jvm.classfile.attribute.BaseAttr;
+import indi.pancras.jvm.classfile.attribute.attrinfo.ConstantValueAttr;
 import indi.pancras.jvm.classfile.pool.ConstantPool;
 import lombok.Getter;
 
-
 @Getter
 public class FieldInfo {
-    private short accessFlags;
-    private short nameIndex;
-    private short descriptorIndex;
-    private BaseAttr[] attributes;
+    private final short accessFlags;
+    private final short nameIndex;
+    private final short descriptorIndex;
+    private final BaseAttr[] attributes;
 
-    private ClassReader reader;
-    private ConstantPool pool;
+    private final ClassReader reader;
+    private final ConstantPool pool;
 
     public static FieldInfo[] readFields(ClassReader reader, ConstantPool pool) {
         short cnt = reader.readShort();
@@ -41,5 +41,15 @@ public class FieldInfo {
 
     public String getDescriptor() {
         return pool.getUtf8(descriptorIndex);
+    }
+
+    public int getConstValueIndex() {
+        for (BaseAttr attribute : attributes) {
+            if (attribute instanceof ConstantValueAttr) {
+                ConstantValueAttr attr = (ConstantValueAttr) attribute;
+                return attr.getConstantValueIndex();
+            }
+        }
+        return 0;
     }
 }

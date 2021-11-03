@@ -1,7 +1,7 @@
 package indi.pancras.jvm.instruction.control;
 
 import indi.pancras.jvm.instruction.BaseNoOperands;
-import indi.pancras.jvm.rtda.Frame;
+import indi.pancras.jvm.rtda.stack.Frame;
 
 public class Areturn extends BaseNoOperands {
     @Override

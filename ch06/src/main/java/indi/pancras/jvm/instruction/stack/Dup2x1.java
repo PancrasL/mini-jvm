@@ -1,9 +1,9 @@
 package indi.pancras.jvm.instruction.stack;
 
 import indi.pancras.jvm.instruction.BaseNoOperands;
-import indi.pancras.jvm.rtda.Frame;
-import indi.pancras.jvm.rtda.OperandStack;
-import indi.pancras.jvm.rtda.Slot;
+import indi.pancras.jvm.rtda.base.Slot;
+import indi.pancras.jvm.rtda.stack.Frame;
+import indi.pancras.jvm.rtda.stack.OperandStack;
 
 /**
  * 将栈顶的2个Slot的值复制并插入到栈顶的3个Slot的值下面

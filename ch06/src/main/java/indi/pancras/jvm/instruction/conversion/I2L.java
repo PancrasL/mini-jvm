@@ -1,8 +1,8 @@
 package indi.pancras.jvm.instruction.conversion;
 
 import indi.pancras.jvm.instruction.BaseNoOperands;
-import indi.pancras.jvm.rtda.Frame;
-import indi.pancras.jvm.rtda.OperandStack;
+import indi.pancras.jvm.rtda.stack.Frame;
+import indi.pancras.jvm.rtda.stack.OperandStack;
 
 public class I2L extends BaseNoOperands {
     @Override

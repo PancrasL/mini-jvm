@@ -2,6 +2,9 @@ package indi.pancras.jvm.rtda;
 
 import org.junit.jupiter.api.Test;
 
+import indi.pancras.jvm.rtda.base.Reference;
+import indi.pancras.jvm.rtda.stack.LocalVars;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 

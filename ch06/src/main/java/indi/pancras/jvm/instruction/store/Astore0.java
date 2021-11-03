@@ -1,8 +1,8 @@
 package indi.pancras.jvm.instruction.store;
 
 import indi.pancras.jvm.instruction.BaseNoOperands;
-import indi.pancras.jvm.rtda.Frame;
-import indi.pancras.jvm.rtda.Reference;
+import indi.pancras.jvm.rtda.base.Reference;
+import indi.pancras.jvm.rtda.stack.Frame;
 
 public class Astore0 extends BaseNoOperands {
     @Override

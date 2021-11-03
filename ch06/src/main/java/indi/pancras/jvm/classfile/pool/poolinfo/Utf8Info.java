@@ -4,7 +4,7 @@ import indi.pancras.jvm.classfile.pool.BaseConstantInfo;
 
 
 public class Utf8Info extends BaseConstantInfo {
-    private String value;
+    private final String value;
 
     public Utf8Info(int tag, byte[] bytes) {
         super(tag);

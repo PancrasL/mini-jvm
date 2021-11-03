@@ -5,8 +5,8 @@ import indi.pancras.jvm.classfile.method.MethodInfo;
 import indi.pancras.jvm.instruction.BytecodeReader;
 import indi.pancras.jvm.instruction.Instruction;
 import indi.pancras.jvm.instruction.InstructionFactory;
-import indi.pancras.jvm.rtda.Frame;
 import indi.pancras.jvm.rtda.JThread;
+import indi.pancras.jvm.rtda.stack.Frame;
 
 public class Interpreter {
     public static void execute(MethodInfo methodInfo) {

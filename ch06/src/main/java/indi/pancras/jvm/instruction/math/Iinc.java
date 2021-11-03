@@ -2,8 +2,8 @@ package indi.pancras.jvm.instruction.math;
 
 import indi.pancras.jvm.instruction.BaseIndex8;
 import indi.pancras.jvm.instruction.BytecodeReader;
-import indi.pancras.jvm.rtda.Frame;
-import indi.pancras.jvm.rtda.LocalVars;
+import indi.pancras.jvm.rtda.stack.Frame;
+import indi.pancras.jvm.rtda.stack.LocalVars;
 import lombok.Setter;
 
 public class Iinc extends BaseIndex8 {

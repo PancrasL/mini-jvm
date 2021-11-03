@@ -6,7 +6,6 @@ import indi.pancras.jvm.classpath.impl.WildcardEntry;
 import indi.pancras.jvm.utils.FileUtil;
 import indi.pancras.jvm.utils.SystemUtil;
 
-
 public class Classpath {
     private Entry bootClasspath;
 
@@ -38,7 +37,7 @@ public class Classpath {
         if (data != null) {
             return data;
         }
-        throw new RuntimeException("java.lang.NoClassDefFoundError!");
+        throw new RuntimeException("java.lang.NoClassDefFoundError: " + className);
     }
 
     private void parseBootAndExtClasspath(String jreOption) {

@@ -1,5 +1,6 @@
 package indi.pancras.jvm.classfile;
 
+import indi.pancras.jvm.classfile.pool.BaseConstantInfo;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +11,6 @@ import indi.pancras.jvm.classfile.pool.ConstantPool;
 import indi.pancras.jvm.classfile.pool.poolinfo.ClassInfo;
 import lombok.Getter;
 import lombok.Setter;
-
 
 @Getter
 @Setter
@@ -38,7 +38,7 @@ public class ClassFile {
     public MethodInfo getMainMethod() {
         for (MethodInfo method : methods) {
             if (method.getName().equals(MAIN_NAME) &&
-                    method.getDescriptor().equals(MAIN_DESCRIPTOR)) {
+                method.getDescriptor().equals(MAIN_DESCRIPTOR)) {
                 return method;
             }
         }
@@ -46,11 +46,13 @@ public class ClassFile {
     }
 
     public String getClassName() {
-        return constantPool.getUtf8(thisClassIndex);
+        ClassInfo info = (ClassInfo) constantPool.getConstantInfo(thisClassIndex);
+        return constantPool.getUtf8(info.getClassNameIndex());
     }
 
     public String getSuperClassName() {
-        return constantPool.getUtf8(superClassIndex);
+        ClassInfo info = (ClassInfo) constantPool.getConstantInfo(superClassIndex);
+        return constantPool.getUtf8(info.getClassNameIndex());
     }
 
     public List<String> getInterfaceNames() {
