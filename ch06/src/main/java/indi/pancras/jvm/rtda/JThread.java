@@ -4,13 +4,13 @@ import lombok.Getter;
 import lombok.Setter;
 
 
-public class Thread {
+public class JThread {
     private final Stack<Frame> stack;
     @Getter
     @Setter
     private int pc;
 
-    public Thread(int maxStack) {
+    public JThread(int maxStack) {
         this.stack = new Stack<>(maxStack);
     }
 

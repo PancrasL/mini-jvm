@@ -3,8 +3,8 @@ package indi.pancras.jvm.instruction.control;
 import indi.pancras.jvm.instruction.BaseBranch;
 import indi.pancras.jvm.instruction.BytecodeReader;
 import indi.pancras.jvm.rtda.Frame;
+import indi.pancras.jvm.rtda.JThread;
 import indi.pancras.jvm.rtda.OperandStack;
-import indi.pancras.jvm.rtda.Thread;
 
 
 public class Lookupswitch extends BaseBranch {
@@ -35,15 +35,15 @@ public class Lookupswitch extends BaseBranch {
     @Override
     public void execute(Frame frame) {
         OperandStack operandStack = frame.getOperandStack();
-        Thread thread = frame.getThread();
+        JThread JThread = frame.getJThread();
         int key = operandStack.popInt();
         for (int i = 0; i < npairs * 2; i += 2) {
             if (matchOffsets[i] == key) {
                 offset = matchOffsets[i + 1];
-                thread.setPc(offset);
+                JThread.setPc(offset);
                 return;
             }
         }
-        thread.setPc(defaultOffset);
+        JThread.setPc(defaultOffset);
     }
 }

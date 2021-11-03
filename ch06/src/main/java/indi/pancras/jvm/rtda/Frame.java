@@ -10,13 +10,13 @@ public class Frame {
 
     private final OperandStack operandStack;
 
-    private final Thread thread;
+    private final JThread JThread;
 
     @Setter
     private int nextPc;
 
-    public Frame(Thread thread, int maxLocals, int maxStack) {
-        this.thread = thread;
+    public Frame(JThread JThread, int maxLocals, int maxStack) {
+        this.JThread = JThread;
         this.localVars = new LocalVars(maxLocals);
         this.operandStack = new OperandStack(maxStack);
     }

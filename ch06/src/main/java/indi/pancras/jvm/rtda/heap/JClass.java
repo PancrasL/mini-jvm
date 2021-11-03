@@ -10,14 +10,14 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Class {
+public class JClass {
     private ClassFile classFile;
     private int accessFlags;
     private String name;
     private String superClassName;
-    private Class superClass;
+    private JClass superJClass;
     private List<String> interfaceNames;
-    private List<Class> interfaces;
+    private List<JClass> interfaces;
     private List<Field> fields;
     private List<Method> methods;
     private int instanceSlotCount;
@@ -26,7 +26,7 @@ public class Class {
     private ClassLoader classLoader;
     private RuntimeConstantPool constantPool;
 
-    public Class(ClassFile classFile) {
+    public JClass(ClassFile classFile) {
         this.classFile = classFile;
         this.accessFlags = classFile.getAccessFlag();
         this.name = classFile.getClassName();

@@ -16,7 +16,7 @@ public abstract class BaseBranch implements Instruction {
     }
 
     public void branch(Frame frame, int offset) {
-        int pc = frame.getThread().getPc();
+        int pc = frame.getJThread().getPc();
         frame.setNextPc(pc + offset);
     }
 }

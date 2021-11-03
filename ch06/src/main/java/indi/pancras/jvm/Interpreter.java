@@ -6,7 +6,7 @@ import indi.pancras.jvm.instruction.BytecodeReader;
 import indi.pancras.jvm.instruction.Instruction;
 import indi.pancras.jvm.instruction.InstructionFactory;
 import indi.pancras.jvm.rtda.Frame;
-import indi.pancras.jvm.rtda.Thread;
+import indi.pancras.jvm.rtda.JThread;
 
 public class Interpreter {
     public static void execute(MethodInfo methodInfo) {
@@ -18,20 +18,20 @@ public class Interpreter {
         int maxStack = code.getMaxStack();
         byte[] byteCode = code.getCode();
 
-        Thread thread = new Thread(maxStack);
-        Frame frame = new Frame(thread, maxLocals, maxStack);
-        thread.pushFrame(frame);
+        JThread JThread = new JThread(maxStack);
+        Frame frame = new Frame(JThread, maxLocals, maxStack);
+        JThread.pushFrame(frame);
 
-        executeCode(thread, byteCode);
+        executeCode(JThread, byteCode);
     }
 
-    private static void executeCode(Thread thread, byte[] byteCode) {
-        Frame frame = thread.popFrame();
+    private static void executeCode(JThread JThread, byte[] byteCode) {
+        Frame frame = JThread.popFrame();
         BytecodeReader reader = new BytecodeReader(byteCode, frame.getNextPc());
         int opCode;
         do {
             int pc = frame.getNextPc();
-            thread.setPc(pc);
+            JThread.setPc(pc);
 
             // decode
             reader.reset(byteCode, pc);

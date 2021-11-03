@@ -3,8 +3,8 @@ package indi.pancras.jvm.instruction.control;
 import indi.pancras.jvm.instruction.BaseBranch;
 import indi.pancras.jvm.instruction.BytecodeReader;
 import indi.pancras.jvm.rtda.Frame;
+import indi.pancras.jvm.rtda.JThread;
 import indi.pancras.jvm.rtda.OperandStack;
-import indi.pancras.jvm.rtda.Thread;
 
 
 public class Tableswitch extends BaseBranch {
@@ -43,7 +43,7 @@ public class Tableswitch extends BaseBranch {
         } else {
             offset = defaultOffset;
         }
-        Thread thread = frame.getThread();
-        thread.setPc(offset);
+        JThread JThread = frame.getJThread();
+        JThread.setPc(offset);
     }
 }

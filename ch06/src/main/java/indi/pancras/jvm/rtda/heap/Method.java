@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Getter
 public class Method {
-    private Class clazz;
+    private JClass clazz;
 
     private short accessFlags;
     private String name;
@@ -16,7 +16,7 @@ public class Method {
     private int maxLocals;
     private byte[] code;
 
-    public Method(Class clazz, MethodInfo info) {
+    public Method(JClass clazz, MethodInfo info) {
         this.clazz = clazz;
         this.accessFlags = info.getAccessFlags();
         this.name = info.getName();

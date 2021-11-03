@@ -5,13 +5,13 @@ import lombok.Getter;
 
 @Getter
 public class Field {
-    private Class clazz;
+    private JClass clazz;
 
     private short accessFlags;
     private String name;
     private String descriptor;
 
-    public Field(Class clazz, FieldInfo info) {
+    public Field(JClass clazz, FieldInfo info) {
         this.clazz = clazz;
         this.accessFlags = info.getAccessFlags();
         this.name = info.getName();
