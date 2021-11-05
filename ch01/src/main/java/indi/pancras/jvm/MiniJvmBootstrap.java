@@ -4,7 +4,7 @@ package indi.pancras.jvm;
 public class MiniJvmBootstrap {
     public static void main(String[] args) {
         Cmd cmd = Cmd.parseCmd(args);
-        if (cmd.isHelpFLag() || cmd.getMainClass() == null) {
+        if (cmd.isHelpFLag() || cmd.getMainClass().isEmpty()) {
             System.out.println("Usage: <main class> [-options] class [args...]");
         } else if (cmd.isVersionFlag()) {
             System.out.println("Version 0.1");

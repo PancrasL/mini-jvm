@@ -15,6 +15,7 @@ import indi.pancras.jvm.instruction.extend.Multianewarray;
 import indi.pancras.jvm.instruction.extend.Wide;
 import indi.pancras.jvm.instruction.load.*;
 import indi.pancras.jvm.instruction.math.*;
+import indi.pancras.jvm.instruction.references.*;
 import indi.pancras.jvm.instruction.reserved.Breakpoint;
 import indi.pancras.jvm.instruction.reserved.Impdep1;
 import indi.pancras.jvm.instruction.reserved.Impdep2;
@@ -222,7 +223,24 @@ public class InstructionFactory {
         putInstruction(new Return());
 
         // References
-        // TODO
+        putInstruction(new Getstatic());
+        putInstruction(new Putstatic());
+        putInstruction(new Getfield());
+        putInstruction(new Putfield());
+        putInstruction(new Invokevirtual());
+        putInstruction(new Invokespecial());
+        putInstruction(new Invokestatic());
+        putInstruction(new Invokeinterface());
+        putInstruction(new Invokedynamic());
+        putInstruction(new New());
+        putInstruction(new Newarray());
+        putInstruction(new Anewarray());
+        putInstruction(new Arraylength());
+        putInstruction(new Athrow());
+        putInstruction(new Checkcast());
+        putInstruction(new Instanceof());
+        putInstruction(new Monitorenter());
+        putInstruction(new Monitorexit());
 
         // Extended
         putInstruction(new Wide());

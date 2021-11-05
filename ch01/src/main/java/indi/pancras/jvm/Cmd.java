@@ -35,7 +35,7 @@ public class Cmd {
 
     public String getMainClass() {
         if (mainClassAndArgs == null || mainClassAndArgs.isEmpty()) {
-            return null;
+            return "";
         }
         return mainClassAndArgs.get(0);
     }

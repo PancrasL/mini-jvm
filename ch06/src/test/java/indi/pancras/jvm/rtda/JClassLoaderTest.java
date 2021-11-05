@@ -11,16 +11,9 @@ class JClassLoaderTest {
 
     @Test
     void testLoadClass() {
-        Classpath classpath = Classpath.parse("", "");
-        JClassLoader loader = new JClassLoader(classpath);
-        JClass jClass = loader.loadClass("java.lang.String");
-        assertNotNull(jClass);
-    }
-
-    @Test
-    void testLoadClass1() {
         Classpath classpath = Classpath.parse("", JClassLoaderTest.class.getClassLoader().getResource("").getPath());
         JClassLoader loader = new JClassLoader(classpath);
-        JClass jClass = loader.loadClass("indi.pancras.jvm.testclass.StaticFieldTest");
+        JClass clazz = loader.loadClass("indi.pancras.jvm.testclass.StaticFieldTest");
+        assertNotNull(clazz);
     }
 }

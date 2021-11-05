@@ -13,7 +13,7 @@ import indi.pancras.jvm.classpath.Classpath;
 public class MiniJvmBootstrap {
     public static void main(String[] args) throws IOException {
         Cmd cmd = Cmd.parseCmd(args);
-        if (cmd.isHelpFlag() || cmd.getMainClass() == null) {
+        if (cmd.isHelpFlag() || cmd.getMainClass().isEmpty()) {
             System.out.println("Usage: <main class> [-options] class [args...]");
         } else if (cmd.isVersionFlag()) {
             System.out.println("Version 0.1");

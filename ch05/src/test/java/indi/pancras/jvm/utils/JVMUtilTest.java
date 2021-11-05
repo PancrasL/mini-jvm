@@ -12,7 +12,7 @@ class JVMUtilTest {
 
     @Test
     void testPrintClassInfo() {
-        Classpath classpath = Classpath.parse("", "test");
+        Classpath classpath = Classpath.parse("", "");
         byte[] bytes = classpath.readClass("java.lang.String");
         assertNotNull(bytes);
         ClassReader reader = new ClassReader(bytes);

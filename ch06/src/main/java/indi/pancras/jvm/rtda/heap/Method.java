@@ -7,15 +7,18 @@ import lombok.Getter;
 
 @Getter
 public class Method {
-    private short accessFlags;
-    private String name;
-    private String descriptor;
+    private final JClass clazz;
+
+    private final short accessFlags;
+    private final String name;
+    private final String descriptor;
 
     private int maxStack;
     private int maxLocals;
     private byte[] code;
 
     public Method(JClass clazz, MethodInfo info) {
+        this.clazz = clazz;
         this.accessFlags = info.getAccessFlags();
         this.name = info.getName();
         this.descriptor = info.getDescriptor();

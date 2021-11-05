@@ -1,8 +1,8 @@
 package indi.pancras.jvm.instruction.store;
 
 import indi.pancras.jvm.instruction.BaseIndex8;
+import indi.pancras.jvm.rtda.Frame;
 import indi.pancras.jvm.rtda.base.Reference;
-import indi.pancras.jvm.rtda.stack.Frame;
 
 
 public class Astore extends BaseIndex8 {
@@ -18,7 +18,7 @@ public class Astore extends BaseIndex8 {
 
     @Override
     public void execute(Frame frame) {
-        Reference reference = frame.getOperandStack().popRef();
-        frame.getLocalVars().setRef(index, reference);
+        Reference ref = frame.getOperandStack().popRef();
+        frame.getLocalVars().setRef(index, ref);
     }
 }

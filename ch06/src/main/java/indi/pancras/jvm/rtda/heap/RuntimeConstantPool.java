@@ -2,7 +2,6 @@ package indi.pancras.jvm.rtda.heap;
 
 import indi.pancras.jvm.classfile.pool.BaseConstantInfo;
 import indi.pancras.jvm.classfile.pool.ConstantPool;
-import indi.pancras.jvm.classfile.pool.ConstantPoolTag;
 import indi.pancras.jvm.classfile.pool.poolinfo.ClassInfo;
 import indi.pancras.jvm.classfile.pool.poolinfo.DoubleInfo;
 import indi.pancras.jvm.classfile.pool.poolinfo.FloatInfo;
@@ -10,16 +9,23 @@ import indi.pancras.jvm.classfile.pool.poolinfo.IntegerInfo;
 import indi.pancras.jvm.classfile.pool.poolinfo.LongInfo;
 import indi.pancras.jvm.classfile.pool.poolinfo.NameAndTypeInfo;
 import indi.pancras.jvm.classfile.pool.poolinfo.Utf8Info;
+import indi.pancras.jvm.rtda.heap.symbolref.ClassRef;
 
 /**
  * 运行时常量池
  */
 public class RuntimeConstantPool {
 
+    private final JClass clazz;
     private final ConstantPool pool;
 
-    public RuntimeConstantPool(ConstantPool pool) {
+    public RuntimeConstantPool(JClass clazz, ConstantPool pool) {
+        this.clazz = clazz;
         this.pool = pool;
+    }
+
+    public JClass getJClass() {
+        return clazz;
     }
 
     public int getInt(int index) {
@@ -81,57 +87,12 @@ public class RuntimeConstantPool {
         }
         throw new RuntimeException("Illegal index, info is not NameAndTypeInfo");
     }
-//
-//    private ConstantEntry createConstantEntry(BaseConstantInfo constantInfo) {
-//        ConstantEntry constant = new ConstantEntry();
-//        switch (constantInfo.tag) {
-//            case ConstantPoolTag.CONSTANT_TAG_UTF8: {
-//                return
-//            }
-//            case ConstantPoolTag.CONSTANT_TAG_INTEGER: {
-//
-//            }
-//            case ConstantPoolTag.CONSTANT_TAG_FLOAT: {
-//
-//            }
-//            case ConstantPoolTag.CONSTANT_TAG_LONG: {
-//
-//            }
-//            case ConstantPoolTag.CONSTANT_TAG_DOUBLE: {
-//
-//            }
-//            case ConstantPoolTag.CONSTANT_TAG_CLASS: {
-//
-//            }
-//            case ConstantPoolTag.CONSTANT_TAG_STRING: {
-//
-//            }
-//            case ConstantPoolTag.CONSTANT_TAG_FIELDREF: {
-//
-//            }
-//            case ConstantPoolTag.CONSTANT_TAG_METHODREF: {
-//
-//            }
-//            case ConstantPoolTag.CONSTANT_TAG_INTERFACEMETHODREF: {
-//
-//            }
-//            case ConstantPoolTag.CONSTANT_TAG_NAMEANDTYPE: {
-//
-//            }
-//            case ConstantPoolTag.CONSTANT_TAG_METHODHANDLE: {
-//
-//            }
-//            case ConstantPoolTag.CONSTANT_TAG_METHODTYPE: {
-//
-//            }
-//            case ConstantPoolTag.CONSTANT_TAG_INVOKEDYNAMIC: {
-//
-//            }
-//            default:
-//                break;
-//        }
-//        return constant;
-//        return null;
-//    }
 
+    public ClassRef getClassRef(int index) {
+        BaseConstantInfo info = pool.getConstantInfo(index);
+        if (info instanceof ClassInfo) {
+            return new ClassRef(this, (ClassInfo) info);
+        }
+        throw new RuntimeException("Illegal index, info is not ClassInfo");
+    }
 }

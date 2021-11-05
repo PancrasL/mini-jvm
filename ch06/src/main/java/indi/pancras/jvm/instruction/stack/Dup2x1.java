@@ -1,8 +1,8 @@
 package indi.pancras.jvm.instruction.stack;
 
 import indi.pancras.jvm.instruction.BaseNoOperands;
+import indi.pancras.jvm.rtda.Frame;
 import indi.pancras.jvm.rtda.base.Slot;
-import indi.pancras.jvm.rtda.stack.Frame;
 import indi.pancras.jvm.rtda.stack.OperandStack;
 
 /**

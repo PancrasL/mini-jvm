@@ -6,7 +6,8 @@ package indi.pancras.jvm.instruction;
  * @author PancrasL
  */
 public abstract class BaseIndex16 implements Instruction {
-    private int index;
+
+    protected int index;
 
     @Override
     public void fetchOperands(BytecodeReader reader) {

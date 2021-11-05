@@ -1,6 +1,6 @@
 package indi.pancras.jvm.instruction;
 
-import indi.pancras.jvm.rtda.stack.Frame;
+import indi.pancras.jvm.rtda.Frame;
 
 
 public interface Instruction {

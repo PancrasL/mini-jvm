@@ -8,6 +8,8 @@ import lombok.Setter;
 
 @Getter
 public class Field {
+    private final JClass clazz;
+
     private final short accessFlags;
     private final String name;
     private final String descriptor;
@@ -16,11 +18,27 @@ public class Field {
     @Setter
     private int slotId;
 
-    public Field(JClass jClass, FieldInfo info) {
+    public Field(JClass clazz, FieldInfo info) {
+        this.clazz = clazz;
         this.accessFlags = info.getAccessFlags();
         this.name = info.getName();
         this.descriptor = info.getDescriptor();
         this.constValueIndex = info.getConstValueIndex();
+    }
+
+    public boolean canBeAccessedBy(JClass other) {
+        if (isPublic()) {
+            return true;
+        }
+        if (isProtected()) {
+            return clazz == other ||
+                    clazz.getPackageName().equals(other.getPackageName()) ||
+                    other.isSubClassOf(clazz);
+        }
+        if (isPrivate()) {
+            return clazz == other;
+        }
+        return clazz.getPackageName().equals(other.getPackageName());
     }
 
     public boolean isPublic() {

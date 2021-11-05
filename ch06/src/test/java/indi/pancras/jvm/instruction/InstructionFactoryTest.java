@@ -14,6 +14,7 @@ import indi.pancras.jvm.instruction.extend.Multianewarray;
 import indi.pancras.jvm.instruction.extend.Wide;
 import indi.pancras.jvm.instruction.load.*;
 import indi.pancras.jvm.instruction.math.*;
+import indi.pancras.jvm.instruction.references.*;
 import indi.pancras.jvm.instruction.reserved.Breakpoint;
 import indi.pancras.jvm.instruction.reserved.Impdep1;
 import indi.pancras.jvm.instruction.reserved.Impdep2;
@@ -220,7 +221,24 @@ class InstructionFactoryTest {
         assertEquals(Return.class, InstructionFactory.getByOpcode(0xb1).getClass());
 
         // References
-        // TODO
+        assertEquals(Getstatic.class, InstructionFactory.getByOpcode(0xb2).getClass());
+        assertEquals(Putstatic.class, InstructionFactory.getByOpcode(0xb3).getClass());
+        assertEquals(Getfield.class, InstructionFactory.getByOpcode(0xb4).getClass());
+        assertEquals(Putfield.class, InstructionFactory.getByOpcode(0xb5).getClass());
+        assertEquals(Invokevirtual.class, InstructionFactory.getByOpcode(0xb6).getClass());
+        assertEquals(Invokespecial.class, InstructionFactory.getByOpcode(0xb7).getClass());
+        assertEquals(Invokestatic.class, InstructionFactory.getByOpcode(0xb8).getClass());
+        assertEquals(Invokeinterface.class, InstructionFactory.getByOpcode(0xb9).getClass());
+        assertEquals(Invokedynamic.class, InstructionFactory.getByOpcode(0xba).getClass());
+        assertEquals(New.class, InstructionFactory.getByOpcode(0xbb).getClass());
+        assertEquals(Newarray.class, InstructionFactory.getByOpcode(0xbc).getClass());
+        assertEquals(Anewarray.class, InstructionFactory.getByOpcode(0xbd).getClass());
+        assertEquals(Arraylength.class, InstructionFactory.getByOpcode(0xbe).getClass());
+        assertEquals(Athrow.class, InstructionFactory.getByOpcode(0xbf).getClass());
+        assertEquals(Checkcast.class, InstructionFactory.getByOpcode(0xc0).getClass());
+        assertEquals(Instanceof.class, InstructionFactory.getByOpcode(0xc1).getClass());
+        assertEquals(Monitorenter.class, InstructionFactory.getByOpcode(0xc2).getClass());
+        assertEquals(Monitorexit.class, InstructionFactory.getByOpcode(0xc3).getClass());
 
         // Extended
         assertEquals(Wide.class, InstructionFactory.getByOpcode(0xc4).getClass());
@@ -433,7 +451,24 @@ class InstructionFactoryTest {
         assertEquals(Return.class, InstructionFactory.getByOpName("return").getClass());
 
         // References
-        // TODO
+        assertEquals(Getstatic.class, InstructionFactory.getByOpName("getstatic").getClass());
+        assertEquals(Putstatic.class, InstructionFactory.getByOpName("putstatic").getClass());
+        assertEquals(Getfield.class, InstructionFactory.getByOpName("getfield").getClass());
+        assertEquals(Putfield.class, InstructionFactory.getByOpName("putfield").getClass());
+        assertEquals(Invokevirtual.class, InstructionFactory.getByOpName("invokevirtual").getClass());
+        assertEquals(Invokespecial.class, InstructionFactory.getByOpName("invokespecial").getClass());
+        assertEquals(Invokestatic.class, InstructionFactory.getByOpName("invokestatic").getClass());
+        assertEquals(Invokeinterface.class, InstructionFactory.getByOpName("invokeinterface").getClass());
+        assertEquals(Invokedynamic.class, InstructionFactory.getByOpName("invokedynamic").getClass());
+        assertEquals(New.class, InstructionFactory.getByOpName("new").getClass());
+        assertEquals(Newarray.class, InstructionFactory.getByOpName("newarray").getClass());
+        assertEquals(Anewarray.class, InstructionFactory.getByOpName("anewarray").getClass());
+        assertEquals(Arraylength.class, InstructionFactory.getByOpName("arraylength").getClass());
+        assertEquals(Athrow.class, InstructionFactory.getByOpName("athrow").getClass());
+        assertEquals(Checkcast.class, InstructionFactory.getByOpName("checkcase").getClass());
+        assertEquals(Instanceof.class, InstructionFactory.getByOpName("instanceof").getClass());
+        assertEquals(Monitorenter.class, InstructionFactory.getByOpName("monitorenter").getClass());
+        assertEquals(Monitorexit.class, InstructionFactory.getByOpName("monitorexit").getClass());
 
         // Extended
         assertEquals(Wide.class, InstructionFactory.getByOpName("wide").getClass());

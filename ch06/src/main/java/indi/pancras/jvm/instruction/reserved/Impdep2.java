@@ -2,7 +2,7 @@ package indi.pancras.jvm.instruction.reserved;
 
 import indi.pancras.jvm.instruction.BytecodeReader;
 import indi.pancras.jvm.instruction.Instruction;
-import indi.pancras.jvm.rtda.stack.Frame;
+import indi.pancras.jvm.rtda.Frame;
 
 public class Impdep2 implements Instruction {
     @Override

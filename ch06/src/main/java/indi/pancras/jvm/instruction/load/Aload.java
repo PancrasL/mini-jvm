@@ -1,8 +1,8 @@
 package indi.pancras.jvm.instruction.load;
 
 import indi.pancras.jvm.instruction.BaseIndex8;
+import indi.pancras.jvm.rtda.Frame;
 import indi.pancras.jvm.rtda.base.Reference;
-import indi.pancras.jvm.rtda.stack.Frame;
 
 
 public class Aload extends BaseIndex8 {

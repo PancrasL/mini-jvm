@@ -1,7 +1,7 @@
 package indi.pancras.jvm.instruction.store;
 
 import indi.pancras.jvm.instruction.BaseIndex8;
-import indi.pancras.jvm.rtda.stack.Frame;
+import indi.pancras.jvm.rtda.Frame;
 
 
 public class IAstore extends BaseIndex8 {

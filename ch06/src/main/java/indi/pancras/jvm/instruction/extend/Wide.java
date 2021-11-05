@@ -16,7 +16,7 @@ import indi.pancras.jvm.instruction.store.Dstore;
 import indi.pancras.jvm.instruction.store.Fstore;
 import indi.pancras.jvm.instruction.store.Istore;
 import indi.pancras.jvm.instruction.store.Lstore;
-import indi.pancras.jvm.rtda.stack.Frame;
+import indi.pancras.jvm.rtda.Frame;
 
 public class Wide extends BaseBranch {
 

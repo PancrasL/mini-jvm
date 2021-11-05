@@ -3,10 +3,12 @@ package indi.pancras.jvm.rtda.heap.symbolref;
 import indi.pancras.jvm.classfile.pool.poolinfo.InterfaceMethodRefInfo;
 import indi.pancras.jvm.rtda.heap.Method;
 import indi.pancras.jvm.rtda.heap.RuntimeConstantPool;
+import lombok.Getter;
 
+@Getter
 public class InterfaceMethodRef extends SymbolRef {
-    private String methodName;
-    private String descriptor;
+    private final String methodName;
+    private final String descriptor;
     private Method method;
 
     public InterfaceMethodRef(RuntimeConstantPool pool, InterfaceMethodRefInfo info) {

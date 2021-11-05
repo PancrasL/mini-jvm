@@ -1,7 +1,7 @@
 package indi.pancras.jvm.instruction.load;
 
 import indi.pancras.jvm.instruction.BaseNoOperands;
-import indi.pancras.jvm.rtda.stack.Frame;
+import indi.pancras.jvm.rtda.Frame;
 
 
 public class Fload2 extends BaseNoOperands {

@@ -1,6 +1,5 @@
 package indi.pancras.jvm.rtda;
 
-import indi.pancras.jvm.rtda.base.DescriptorFlag;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,6 +8,7 @@ import java.util.Map;
 import indi.pancras.jvm.classfile.ClassFile;
 import indi.pancras.jvm.classfile.ClassReader;
 import indi.pancras.jvm.classpath.Classpath;
+import indi.pancras.jvm.rtda.base.DescriptorFlag;
 import indi.pancras.jvm.rtda.base.Slot;
 import indi.pancras.jvm.rtda.heap.Field;
 import indi.pancras.jvm.rtda.heap.JClass;
@@ -35,21 +35,21 @@ public class JClassLoader {
         if (classMap.containsKey(className)) {
             return classMap.get(className);
         }
-        JClass jClass = loadNonArrayClass(className);
-        return jClass;
+        JClass clazz = loadNonArrayClass(className);
+        return clazz;
     }
 
     private JClass loadNonArrayClass(String className) {
         // 读取class文件
         byte[] bytes = readClass(className);
         // 加载
-        JClass jClass = defineClass(bytes);
+        JClass clazz = defineClass(bytes);
         // 链接
         if (className.contains("Static")) {
             int a = 1;
         }
-        link(jClass);
-        return jClass;
+        link(clazz);
+        return clazz;
     }
 
     /**
@@ -71,45 +71,45 @@ public class JClassLoader {
     private JClass defineClass(byte[] data) {
         ClassReader reader = new ClassReader(data);
         ClassFile classFile = reader.parseClassFile();
-        JClass jClass = new JClass(classFile);
-        jClass.setClassLoader(this);
-        resolveSuperClass(jClass);
-        resolveInterfaceClass(jClass);
-        classMap.put(jClass.getName(), jClass);
-        return jClass;
+        JClass clazz = new JClass(classFile);
+        clazz.setClassLoader(this);
+        resolveSuperClass(clazz);
+        resolveInterfaceClass(clazz);
+        classMap.put(clazz.getName(), clazz);
+        return clazz;
     }
 
     /**
      * 链接：包含类的验证、准备和解析
      *
-     * @param jClass 需要进行链接的类变量
+     * @param clazz 需要进行链接的类变量
      */
-    private void link(JClass jClass) {
-        verify(jClass);
-        prepare(jClass);
+    private void link(JClass clazz) {
+        verify(clazz);
+        prepare(clazz);
     }
 
-    private void verify(JClass jClass) {
+    private void verify(JClass clazz) {
         // do verify
     }
 
-    private void prepare(JClass jClass) {
-        processInstanceFieldSlotId(jClass);
-        processStaticFieldSlotId(jClass);
-        allocAndInitStaticVars(jClass);
+    private void prepare(JClass clazz) {
+        processInstanceFieldSlotId(clazz);
+        processStaticFieldSlotId(clazz);
+        allocAndInitStaticVars(clazz);
     }
 
     /**
      * 处理实例字段的编号和个数数
      *
-     * @param jClass 待处理的类变量
+     * @param clazz 待处理的类变量
      */
-    private void processInstanceFieldSlotId(JClass jClass) {
+    private void processInstanceFieldSlotId(JClass clazz) {
         int slotId = 0;
-        if (jClass.getSuperClass() != null) {
-            slotId = jClass.getSuperClass().getInstanceSlotCount();
+        if (clazz.getSuperClass() != null) {
+            slotId = clazz.getSuperClass().getInstanceSlotCount();
         }
-        List<Field> fields = jClass.getFields();
+        List<Field> fields = clazz.getFields();
         for (Field field : fields) {
             if (!field.isStatic()) {
                 field.setSlotId(slotId);
@@ -119,17 +119,17 @@ public class JClassLoader {
                 }
             }
         }
-        jClass.setInstanceSlotCount(slotId);
+        clazz.setInstanceSlotCount(slotId);
     }
 
     /**
      * 处理静态字段的编号和个数
      *
-     * @param jClass 待处理的类变量
+     * @param clazz 待处理的类变量
      */
-    private void processStaticFieldSlotId(JClass jClass) {
+    private void processStaticFieldSlotId(JClass clazz) {
         int slotId = 0;
-        for (Field field : jClass.getFields()) {
+        for (Field field : clazz.getFields()) {
             if (field.isStatic()) {
                 field.setSlotId(slotId);
                 slotId++;
@@ -138,18 +138,18 @@ public class JClassLoader {
                 }
             }
         }
-        jClass.setStaticSlotCount(slotId);
+        clazz.setStaticSlotCount(slotId);
     }
 
     /**
      * 链接的准备阶段，为类变量分配空间，并给他们赋初始值
      *
-     * @param jClass 待处理的类变量
+     * @param clazz 待处理的类变量
      */
-    private void allocAndInitStaticVars(JClass jClass) {
-        List<Slot> staticSlots = new ArrayList<>(jClass.getStaticSlotCount());
-        List<Field> fields = jClass.getFields();
-        RuntimeConstantPool pool = jClass.getConstantPool();
+    private void allocAndInitStaticVars(JClass clazz) {
+        List<Slot> staticSlots = new ArrayList<>(clazz.getStaticSlotCount());
+        List<Field> fields = clazz.getFields();
+        RuntimeConstantPool pool = clazz.getConstantPool();
         for (Field field : fields) {
             if (field.isStatic() && field.isFinal()) {
                 int index = field.getConstValueIndex();
@@ -190,22 +190,23 @@ public class JClassLoader {
                 }
             }
         }
+        clazz.setStaticSlots(staticSlots);
     }
 
-    private void resolveInterfaceClass(JClass jClass) {
-        List<String> interfaceNames = jClass.getInterfaceNames();
+    private void resolveInterfaceClass(JClass clazz) {
+        List<String> interfaceNames = clazz.getInterfaceNames();
         List<JClass> interfaces = new ArrayList<>(interfaceNames.size());
         for (String interfaceName : interfaceNames) {
-            JClass c = jClass.getClassLoader().loadClass(interfaceName);
+            JClass c = clazz.getClassLoader().loadClass(interfaceName);
             interfaces.add(c);
         }
-        jClass.setInterfaces(interfaces);
+        clazz.setInterfaces(interfaces);
     }
 
-    private void resolveSuperClass(JClass jClass) {
-        if (!jClass.getSuperClassName().equals(OBJECT_CLASS_NAME)) {
-            JClass c = jClass.getClassLoader().loadClass(jClass.getSuperClassName());
-            jClass.setSuperClass(c);
+    private void resolveSuperClass(JClass clazz) {
+        if (!clazz.getSuperClassName().equals(OBJECT_CLASS_NAME)) {
+            JClass c = clazz.getClassLoader().loadClass(clazz.getSuperClassName());
+            clazz.setSuperClass(c);
         }
     }
 }

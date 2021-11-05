@@ -7,6 +7,7 @@ import indi.pancras.jvm.classfile.ClassFile;
 import indi.pancras.jvm.classfile.field.FieldInfo;
 import indi.pancras.jvm.classfile.method.MethodInfo;
 import indi.pancras.jvm.rtda.JClassLoader;
+import indi.pancras.jvm.rtda.base.AccessFlag;
 import indi.pancras.jvm.rtda.base.Slot;
 import lombok.Getter;
 import lombok.Setter;
@@ -60,6 +61,58 @@ public class JClass {
         for (MethodInfo info : methodsInfos) {
             methods.add(new Method(this, info));
         }
-        this.constantPool = new RuntimeConstantPool(classFile.getConstantPool());
+        this.constantPool = new RuntimeConstantPool(this, classFile.getConstantPool());
     }
+
+    public boolean canBeAccessedBy(JClass other) {
+        // 类是共有的 or 类在同一个包下
+        return isPublic() || (getPackageName().equals(other.getPackageName()));
+    }
+
+    public String getPackageName() {
+        int i = name.lastIndexOf('/');
+        return i == -1 ? "" : name.substring(0, i);
+    }
+
+    public boolean isSubClassOf(JClass other) {
+        for (JClass c = this.superClass; c != null; c = c.superClass) {
+            if (c == other) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isPublic() {
+        return (accessFlags & AccessFlag.ACC_PUBLIC) != 0;
+    }
+
+    public boolean isFinal() {
+        return (accessFlags & AccessFlag.ACC_FINAL) != 0;
+    }
+
+    public boolean isSuper() {
+        return (accessFlags & AccessFlag.ACC_SUPER) != 0;
+    }
+
+    public boolean isInterface() {
+        return (accessFlags & AccessFlag.ACC_INTERFACE) != 0;
+    }
+
+    public boolean isAbstract() {
+        return (accessFlags & AccessFlag.ACC_ABSTRACT) != 0;
+    }
+
+    public boolean isSynthetic() {
+        return (accessFlags & AccessFlag.ACC_SYNTHETIC) != 0;
+    }
+
+    public boolean isAnnotation() {
+        return (accessFlags & AccessFlag.ACC_ANNOTATION) != 0;
+    }
+
+    public boolean isEnum() {
+        return (accessFlags & AccessFlag.ACC_ENUM) != 0;
+    }
+
 }

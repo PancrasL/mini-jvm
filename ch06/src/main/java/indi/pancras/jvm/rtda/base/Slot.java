@@ -1,13 +1,15 @@
 package indi.pancras.jvm.rtda.base;
 
+import indi.pancras.jvm.rtda.heap.JObject;
+
 public class Slot {
     public int val;
     public Reference ref;
-    private boolean isRef;
+    private final boolean isRef;
 
-    public Slot(Reference ref) {
+    public Slot(JObject ref) {
         this.val = 0;
-        this.ref = ref;
+        this.ref = new Reference(ref);
         this.isRef = true;
     }
 
@@ -15,6 +17,12 @@ public class Slot {
         this.val = val;
         this.ref = null;
         this.isRef = false;
+    }
+
+    public Slot(Reference ref) {
+        this.val = 0;
+        this.ref = ref;
+        this.isRef = true;
     }
 
     @Override

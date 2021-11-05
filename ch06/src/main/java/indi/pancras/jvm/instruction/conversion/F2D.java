@@ -1,7 +1,7 @@
 package indi.pancras.jvm.instruction.conversion;
 
 import indi.pancras.jvm.instruction.BaseNoOperands;
-import indi.pancras.jvm.rtda.stack.Frame;
+import indi.pancras.jvm.rtda.Frame;
 import indi.pancras.jvm.rtda.stack.OperandStack;
 
 public class F2D extends BaseNoOperands {

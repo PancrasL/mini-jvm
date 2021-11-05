@@ -1,11 +1,9 @@
 package indi.pancras.jvm.instruction;
 
-import indi.pancras.jvm.rtda.stack.Frame;
+import indi.pancras.jvm.rtda.Frame;
 
 /**
  * 跳转指令的基类，offset字段存放跳转偏移量
- *
- * @author PancrasL
  */
 public abstract class BaseBranch implements Instruction {
     protected int offset;

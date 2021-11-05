@@ -2,14 +2,13 @@ package indi.pancras.jvm.rtda;
 
 import java.util.Stack;
 
-import indi.pancras.jvm.rtda.stack.Frame;
 import lombok.Getter;
 import lombok.Setter;
 
 
 public class JThread {
     private final Stack<Frame> stack;
-    private int maxStack;
+    private final int maxStack;
     @Getter
     @Setter
     private int pc;

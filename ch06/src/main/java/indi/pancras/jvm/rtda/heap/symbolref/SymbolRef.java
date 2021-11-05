@@ -16,10 +16,29 @@ public abstract class SymbolRef {
      * 解析后的类结构体指针
      */
     // TODO
-    protected JClass jClass;
+    protected JClass clazz;
 
     public SymbolRef(RuntimeConstantPool pool, String className) {
         this.pool = pool;
         this.className = className;
+    }
+
+    public JClass getResolvedClass() {
+        if (clazz == null) {
+            clazz = resolveClassRef();
+        }
+        return clazz;
+    }
+
+    private JClass resolveClassRef() {
+        //如果类D通过符号引用N引用类C的话，要解析N，
+        //先用D的类加载器加载C，然后检查D是否有权限访问C，如果没有,
+        //则抛出IllegalAccessError异常
+        JClass d = pool.getJClass();
+        JClass c = clazz.getClassLoader().loadClass(className);
+        if (!c.canBeAccessedBy(d)) {
+            throw new IllegalAccessError();
+        }
+        return c;
     }
 }
