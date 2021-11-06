@@ -75,7 +75,7 @@ public class JClassLoader {
         clazz.setClassLoader(this);
         resolveSuperClass(clazz);
         resolveInterfaceClass(clazz);
-        classMap.put(clazz.getName(), clazz);
+        classMap.put(clazz.getClassName(), clazz);
         return clazz;
     }
 
@@ -190,7 +190,7 @@ public class JClassLoader {
                 }
             }
         }
-        clazz.setStaticSlots(staticSlots);
+        clazz.setStaticFields(staticSlots);
     }
 
     private void resolveInterfaceClass(JClass clazz) {

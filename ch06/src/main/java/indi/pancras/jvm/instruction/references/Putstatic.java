@@ -1,10 +1,7 @@
 package indi.pancras.jvm.instruction.references;
 
-import java.util.List;
-
 import indi.pancras.jvm.instruction.BaseIndex16;
 import indi.pancras.jvm.rtda.Frame;
-import indi.pancras.jvm.rtda.base.Slot;
 import indi.pancras.jvm.rtda.heap.Field;
 import indi.pancras.jvm.rtda.heap.JClass;
 import indi.pancras.jvm.rtda.heap.Method;
@@ -19,6 +16,8 @@ import indi.pancras.jvm.rtda.stack.OperandStack;
  * </p>
  */
 public class Putstatic extends BaseIndex16 {
+    private static String CLINIT = "<clinit>";
+
     @Override
     public int getOpCode() {
         return 0xb3;
@@ -47,7 +46,7 @@ public class Putstatic extends BaseIndex16 {
         }
         // 2.2 解析后的字段是final字段，则只能在类初始化方法 <clinit> 中给它赋值
         if (field.isFinal()) {
-            if (!(currentClazz == clazz && currentMethod.getName().equals("<clinit>"))) {
+            if (!(currentClazz == clazz && currentMethod.getName().equals(CLINIT))) {
                 throw new IllegalAccessError();
             }
         }
@@ -55,7 +54,6 @@ public class Putstatic extends BaseIndex16 {
         // 3. 执行赋值操作
         String descriptor = field.getDescriptor();
         int slotId = field.getSlotId();
-        List<Slot> staticSlots = clazz.getStaticSlots();
         OperandStack operandStack = frame.getOperandStack();
         switch (descriptor.charAt(0)) {
             // 占用1个槽
@@ -64,18 +62,21 @@ public class Putstatic extends BaseIndex16 {
             case 'C':
             case 'S':
             case 'I':
+                clazz.setInt(slotId, operandStack.popInt());
+                break;
             case 'F':
+                clazz.setFloat(slotId, operandStack.popFloat());
+                break;
             case 'L':
             case '[':
-                staticSlots.set(slotId, operandStack.popSlot());
+                clazz.setRef(slotId, operandStack.popRef());
                 break;
-            // 占用两个槽
+            // 占用2个槽
             case 'J':
+                clazz.setLong(slotId, operandStack.popLong());
+                break;
             case 'D':
-                // low字节
-                staticSlots.set(slotId + 1, operandStack.popSlot());
-                // high字节
-                staticSlots.set(slotId, operandStack.popSlot());
+                clazz.setDouble(slotId, operandStack.popDouble());
                 break;
             default:
                 throw new RuntimeException("Illegal descriptor: " + descriptor);

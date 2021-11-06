@@ -17,7 +17,7 @@ public class OperandStack {
     }
 
     public int popInt() {
-        int val = slots[--top].val;
+        int val = slots[--top].getVal();
         slots[top] = null;
         return val;
     }
@@ -41,8 +41,8 @@ public class OperandStack {
     }
 
     public long popLong() {
-        int low = slots[top - 1].val;
-        int high = slots[top - 2].val;
+        int low = slots[top - 1].getVal();
+        int high = slots[top - 2].getVal();
         slots[top - 1] = null;
         slots[top - 2] = null;
         top -= 2;
@@ -64,7 +64,7 @@ public class OperandStack {
     }
 
     public Reference popRef() {
-        Reference ref = slots[--top].ref;
+        Reference ref = slots[--top].getRef();
         slots[top] = null;
         return ref;
     }

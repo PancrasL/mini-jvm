@@ -8,6 +8,7 @@ import indi.pancras.jvm.classfile.field.FieldInfo;
 import indi.pancras.jvm.classfile.method.MethodInfo;
 import indi.pancras.jvm.rtda.JClassLoader;
 import indi.pancras.jvm.rtda.base.AccessFlag;
+import indi.pancras.jvm.rtda.base.Reference;
 import indi.pancras.jvm.rtda.base.Slot;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,7 +20,7 @@ public class JClass {
      */
     private final ClassFile classFile;
     private final int accessFlags;
-    private final String name;
+    private final String className;
     private final String superClassName;
     private final List<String> interfaceNames;
     private final List<Field> fields;
@@ -40,12 +41,12 @@ public class JClass {
     @Setter
     private int staticSlotCount;
     @Setter
-    private List<Slot> staticSlots;
+    private List<Slot> staticFields;
 
     public JClass(ClassFile classFile) {
         this.classFile = classFile;
         this.accessFlags = classFile.getAccessFlag();
-        this.name = classFile.getClassName();
+        this.className = classFile.getClassName();
         this.superClassName = classFile.getSuperClassName();
         this.interfaceNames = classFile.getInterfaceNames();
 
@@ -70,10 +71,59 @@ public class JClass {
     }
 
     public String getPackageName() {
-        int i = name.lastIndexOf('/');
-        return i == -1 ? "" : name.substring(0, i);
+        int i = className.lastIndexOf('/');
+        return i == -1 ? "" : className.substring(0, i);
     }
 
+    // 静态属性赋值
+    public void setInt(int slotId, int val) {
+        staticFields.set(slotId, new Slot(val));
+    }
+
+    public int getInt(int slotId) {
+        return staticFields.get(slotId).getVal();
+    }
+
+    public void setFloat(int slotId, float val) {
+        setInt(slotId, Float.floatToIntBits(val));
+    }
+
+    public float getFloat(int slotId) {
+        int val = staticFields.get(slotId).getVal();
+        return Float.intBitsToFloat(val);
+    }
+
+    public void setLong(int slotId, long val) {
+        int low = (int) (val);
+        int high = (int) (val >> 32);
+        setInt(slotId, high);
+        setInt(slotId + 1, low);
+    }
+
+    public long getLong(int slotId) {
+        int high = staticFields.get(slotId).getVal();
+        int low = staticFields.get(slotId + 1).getVal();
+        return (((long) high) << 32) | ((long) low & 0x0ffffffffL);
+    }
+
+    public void setDouble(int slotId, double val) {
+        setLong(slotId, Double.doubleToLongBits(val));
+    }
+
+    public double getDouble(int slotId) {
+        long val = getLong(slotId);
+        return Double.longBitsToDouble(val);
+    }
+
+    public void setRef(int slotId, Reference ref) {
+        staticFields.set(slotId, new Slot(ref));
+    }
+
+    public Reference getRef(int slotId) {
+        return staticFields.get(slotId).getRef();
+    }
+
+    // 类属性判断
     public boolean isSubClassOf(JClass other) {
         for (JClass c = this.superClass; c != null; c = c.superClass) {
             if (c == other) {

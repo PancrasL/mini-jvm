@@ -1,10 +1,7 @@
 package indi.pancras.jvm.instruction.references;
 
-import java.util.List;
-
 import indi.pancras.jvm.instruction.BaseIndex16;
 import indi.pancras.jvm.rtda.Frame;
-import indi.pancras.jvm.rtda.base.Slot;
 import indi.pancras.jvm.rtda.heap.Field;
 import indi.pancras.jvm.rtda.heap.JClass;
 import indi.pancras.jvm.rtda.heap.RuntimeConstantPool;
@@ -45,7 +42,6 @@ public class Getstatic extends BaseIndex16 {
         // 3. 执行赋值操作
         String descriptor = field.getDescriptor();
         int slotId = field.getSlotId();
-        List<Slot> staticSlots = clazz.getStaticSlots();
         OperandStack operandStack = frame.getOperandStack();
         switch (descriptor.charAt(0)) {
             // 占用1个槽
@@ -54,18 +50,21 @@ public class Getstatic extends BaseIndex16 {
             case 'C':
             case 'S':
             case 'I':
+                operandStack.pushInt(clazz.getInt(slotId));
+                break;
             case 'F':
+                operandStack.pushFloat(clazz.getFloat(slotId));
+                break;
             case 'L':
             case '[':
-                operandStack.pushSlot(staticSlots.get(slotId));
+                operandStack.pushRef(clazz.getRef(slotId));
                 break;
-            // 占用两个槽
+            // 占用2个槽
             case 'J':
+                operandStack.pushLong(clazz.getLong(slotId));
+                break;
             case 'D':
-                // high字节
-                operandStack.pushSlot(staticSlots.get(slotId));
-                // low字节
-                operandStack.pushSlot(staticSlots.get(slotId + 1));
+                operandStack.pushDouble(clazz.getDouble(slotId));
                 break;
             default:
                 throw new RuntimeException("Illegal descriptor: " + descriptor);

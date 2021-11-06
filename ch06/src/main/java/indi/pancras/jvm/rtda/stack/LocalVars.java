@@ -15,7 +15,7 @@ public class LocalVars {
     }
 
     public int getInt(int index) {
-        return slots[index].val;
+        return slots[index].getVal();
     }
 
     public void setFloat(int index, float val) {
@@ -33,8 +33,8 @@ public class LocalVars {
     }
 
     public long getLong(int index) {
-        int high = slots[index].val;
-        int low = slots[index + 1].val;
+        int high = slots[index].getVal();
+        int low = slots[index + 1].getVal();
         return (((long) high) << 32) | ((long) low & 0x0ffffffffL);
     }
 
@@ -53,7 +53,7 @@ public class LocalVars {
     }
 
     public Reference getRef(int index) {
-        return slots[index].ref;
+        return slots[index].getRef();
     }
 
     @Override

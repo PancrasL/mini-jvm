@@ -1,8 +1,8 @@
 package indi.pancras.jvm.rtda.base;
 
 public class Slot {
-    public int val;
-    public Reference ref;
+    private final int val;
+    private final Reference ref;
     private final boolean isRef;
 
     public Slot(int val) {
@@ -17,8 +17,25 @@ public class Slot {
         this.isRef = true;
     }
 
+    public int getVal() {
+        if (!isRef) {
+            return val;
+        }
+        throw new RuntimeException("Slot value is Reference");
+    }
+
+    public Reference getRef() {
+        if (isRef) {
+            return ref;
+        }
+        throw new RuntimeException("Slot value is not Reference");
+    }
+
     @Override
     public String toString() {
-        return isRef ? ref.toString() : String.valueOf(val);
+        if (isRef) {
+            return ref == null ? "null" : ref.toString();
+        }
+        return String.valueOf(val);
     }
 }
