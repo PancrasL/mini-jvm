@@ -6,8 +6,8 @@ import indi.pancras.jvm.rtda.heap.JClass;
 import indi.pancras.jvm.rtda.heap.RuntimeConstantPool;
 
 public class FieldRef extends SymbolRef {
-    private String fieldName;
-    private String descriptor;
+    private final String fieldName;
+    private final String descriptor;
     private Field field;
 
     public FieldRef(RuntimeConstantPool pool, FieldRefInfo info) {
@@ -17,7 +17,7 @@ public class FieldRef extends SymbolRef {
         descriptor = ss[1];
     }
 
-    public Field getField() {
+    public Field getTargetField() {
         if (field == null) {
             field = resolveFieldRef();
         }
@@ -29,8 +29,8 @@ public class FieldRef extends SymbolRef {
         // 首先要解析符号引用得到类C，然后根据字段名和描述符查找字段。
         // 如果字段查找失败，则虚拟机抛出NoSuchFieldError异常。
         // 如果查找成功，但D没有足够的权限访问该字段，则虚拟机抛出IllegalAccessError异常。
-        JClass d = pool.getJClass();
-        JClass c = getResolvedClass();
+        JClass d = pool.getClazz();
+        JClass c = getTargetClazz();
         field = lookupField(c, fieldName, descriptor);
         if (field == null) {
             throw new NoSuchFieldError(fieldName + descriptor);

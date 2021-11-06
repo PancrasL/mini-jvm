@@ -1,17 +1,9 @@
 package indi.pancras.jvm.rtda.base;
 
-import indi.pancras.jvm.rtda.heap.JObject;
-
 public class Slot {
     public int val;
     public Reference ref;
     private final boolean isRef;
-
-    public Slot(JObject ref) {
-        this.val = 0;
-        this.ref = new Reference(ref);
-        this.isRef = true;
-    }
 
     public Slot(int val) {
         this.val = val;

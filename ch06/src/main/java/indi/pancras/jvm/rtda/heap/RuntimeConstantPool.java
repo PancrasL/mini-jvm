@@ -4,12 +4,14 @@ import indi.pancras.jvm.classfile.pool.BaseConstantInfo;
 import indi.pancras.jvm.classfile.pool.ConstantPool;
 import indi.pancras.jvm.classfile.pool.poolinfo.ClassInfo;
 import indi.pancras.jvm.classfile.pool.poolinfo.DoubleInfo;
+import indi.pancras.jvm.classfile.pool.poolinfo.FieldRefInfo;
 import indi.pancras.jvm.classfile.pool.poolinfo.FloatInfo;
 import indi.pancras.jvm.classfile.pool.poolinfo.IntegerInfo;
 import indi.pancras.jvm.classfile.pool.poolinfo.LongInfo;
 import indi.pancras.jvm.classfile.pool.poolinfo.NameAndTypeInfo;
 import indi.pancras.jvm.classfile.pool.poolinfo.Utf8Info;
 import indi.pancras.jvm.rtda.heap.symbolref.ClassRef;
+import indi.pancras.jvm.rtda.heap.symbolref.FieldRef;
 
 /**
  * 运行时常量池
@@ -24,7 +26,7 @@ public class RuntimeConstantPool {
         this.pool = pool;
     }
 
-    public JClass getJClass() {
+    public JClass getClazz() {
         return clazz;
     }
 
@@ -94,5 +96,13 @@ public class RuntimeConstantPool {
             return new ClassRef(this, (ClassInfo) info);
         }
         throw new RuntimeException("Illegal index, info is not ClassInfo");
+    }
+
+    public FieldRef getFieldRef(int index) {
+        BaseConstantInfo info = pool.getConstantInfo(index);
+        if (info instanceof FieldRefInfo) {
+            return new FieldRef(this, (FieldRefInfo) info);
+        }
+        throw new RuntimeException("Illegal index, info is not FieldRefInfo");
     }
 }

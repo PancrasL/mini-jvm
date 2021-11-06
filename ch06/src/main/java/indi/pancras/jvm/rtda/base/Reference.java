@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- *
+ * 对象引用，本质上应该是一个指针，但是由于Java不支持指针，因此使用该结构体进行模拟
  */
 @Getter
 @Setter
