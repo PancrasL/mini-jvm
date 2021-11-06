@@ -16,10 +16,9 @@ public class BytecodeReader {
         this.pc = pc;
     }
 
-    public BytecodeReader reset(byte[] code, int pc) {
+    public void reset(byte[] code, int pc) {
         this.code = code;
         this.pc = pc;
-        return this;
     }
 
     public int read8() {

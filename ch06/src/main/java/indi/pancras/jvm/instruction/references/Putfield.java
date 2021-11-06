@@ -58,14 +58,22 @@ public class Putfield extends BaseIndex16 {
             case 'B':
             case 'C':
             case 'S':
-            case 'I':
-            case 'F': {
+            case 'I': {
                 int val = operandStack.popInt();
                 Reference ref = operandStack.popRef();
                 if (ref.targetIsNull()) {
                     throw new NullPointerException();
                 }
                 ref.getTarget().setInt(slotId, val);
+            }
+            break;
+            case 'F': {
+                float val = operandStack.popFloat();
+                Reference ref = operandStack.popRef();
+                if (ref.targetIsNull()) {
+                    throw new NullPointerException();
+                }
+                ref.getTarget().setFloat(slotId, val);
             }
             break;
             case 'L':

@@ -24,8 +24,8 @@ import indi.pancras.jvm.instruction.store.*;
 
 
 public class InstructionFactory {
-    private static Map<Integer, Instruction> codeMap = new HashMap<>();
-    private static Map<String, Instruction> nameMap = new HashMap<>();
+    private static final Map<Integer, Instruction> codeMap = new HashMap<>();
+    private static final Map<String, Instruction> nameMap = new HashMap<>();
 
     static {
         // Constants

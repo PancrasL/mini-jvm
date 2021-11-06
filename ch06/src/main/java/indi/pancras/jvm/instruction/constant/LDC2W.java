@@ -1,10 +1,12 @@
 package indi.pancras.jvm.instruction.constant;
 
-import indi.pancras.jvm.instruction.BaseNoOperands;
+import indi.pancras.jvm.instruction.BaseIndex16;
 import indi.pancras.jvm.rtda.Frame;
+import indi.pancras.jvm.rtda.heap.RuntimeConstantPool;
+import indi.pancras.jvm.rtda.stack.OperandStack;
 
 
-public class LDC2W extends BaseNoOperands {
+public class LDC2W extends BaseIndex16 {
     @Override
     public int getOpCode() {
         return 0x14;
@@ -17,6 +19,18 @@ public class LDC2W extends BaseNoOperands {
 
     @Override
     public void execute(Frame frame) {
-        // TODO
+        OperandStack operandStack = frame.getOperandStack();
+        RuntimeConstantPool pool = frame.getMethod().getClazz().getConstantPool();
+        String type = pool.getConstantValueType(index);
+        switch (type) {
+            case "long":
+                operandStack.pushLong(pool.getLong(index));
+                break;
+            case "double":
+                operandStack.pushDouble(pool.getDouble(index));
+                break;
+            default:
+                throw new ClassFormatError();
+        }
     }
 }

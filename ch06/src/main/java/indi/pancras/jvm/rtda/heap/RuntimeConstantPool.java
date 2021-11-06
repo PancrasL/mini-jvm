@@ -2,14 +2,7 @@ package indi.pancras.jvm.rtda.heap;
 
 import indi.pancras.jvm.classfile.pool.BaseConstantInfo;
 import indi.pancras.jvm.classfile.pool.ConstantPool;
-import indi.pancras.jvm.classfile.pool.poolinfo.ClassInfo;
-import indi.pancras.jvm.classfile.pool.poolinfo.DoubleInfo;
-import indi.pancras.jvm.classfile.pool.poolinfo.FieldRefInfo;
-import indi.pancras.jvm.classfile.pool.poolinfo.FloatInfo;
-import indi.pancras.jvm.classfile.pool.poolinfo.IntegerInfo;
-import indi.pancras.jvm.classfile.pool.poolinfo.LongInfo;
-import indi.pancras.jvm.classfile.pool.poolinfo.NameAndTypeInfo;
-import indi.pancras.jvm.classfile.pool.poolinfo.Utf8Info;
+import indi.pancras.jvm.classfile.pool.poolinfo.*;
 import indi.pancras.jvm.rtda.heap.symbolref.ClassRef;
 import indi.pancras.jvm.rtda.heap.symbolref.FieldRef;
 
@@ -109,5 +102,23 @@ public class RuntimeConstantPool {
             return new FieldRef(this, (FieldRefInfo) info);
         }
         throw new RuntimeException("Illegal index, info is not FieldRefInfo");
+    }
+
+    public String getConstantValueType(int index) {
+        BaseConstantInfo constantInfo = pool.getConstantInfo(index);
+        if (constantInfo instanceof IntegerInfo) {
+            return "int";
+        } else if (constantInfo instanceof LongInfo) {
+            return "long";
+        } else if (constantInfo instanceof FloatInfo) {
+            return "float";
+        } else if (constantInfo instanceof DoubleInfo) {
+            return "double";
+        } else if (constantInfo instanceof StringInfo) {
+            return "string";
+        } else if (constantInfo instanceof ClassInfo) {
+            return "ref";
+        }
+        throw new RuntimeException("Not value type");
     }
 }

@@ -11,4 +11,5 @@ public class DescriptorFlag {
     public static final String LONG_FLAG = "J";
     public static final String DOUBLE_FLAG = "D";
     public static final String OBJECT_FLAG = "L";
+    public static final String ARRAY_FLAG = "[";
 }
