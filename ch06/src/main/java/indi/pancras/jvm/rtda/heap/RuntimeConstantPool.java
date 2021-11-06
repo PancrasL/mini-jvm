@@ -26,6 +26,11 @@ public class RuntimeConstantPool {
         this.pool = pool;
     }
 
+    /**
+     * 获取当前常量池所属的类变量
+     *
+     * @return clazz
+     */
     public JClass getClazz() {
         return clazz;
     }

@@ -1,10 +1,19 @@
 package indi.pancras.jvm.instruction.references;
 
-import indi.pancras.jvm.instruction.BytecodeReader;
-import indi.pancras.jvm.instruction.Instruction;
+import indi.pancras.jvm.instruction.BaseIndex16;
 import indi.pancras.jvm.rtda.Frame;
+import indi.pancras.jvm.rtda.base.Reference;
+import indi.pancras.jvm.rtda.heap.JClass;
+import indi.pancras.jvm.rtda.heap.RuntimeConstantPool;
+import indi.pancras.jvm.rtda.stack.OperandStack;
 
-public class Instanceof implements Instruction {
+/**
+ * 判断某个对象是某个类的实例，包含两个操作数：
+ * <p>
+ * 1. int16符号引用的索引（字节码） 2. 对象引用（操作数栈）
+ * </p>
+ */
+public class Instanceof extends BaseIndex16 {
     @Override
     public int getOpCode() {
         return 0xc1;
@@ -16,12 +25,22 @@ public class Instanceof implements Instruction {
     }
 
     @Override
-    public void fetchOperands(BytecodeReader reader) {
-
-    }
-
-    @Override
     public void execute(Frame frame) {
-        throw new RuntimeException("Not implement: " + getOpName());
+        // 弹出对象引用
+        OperandStack operandStack = frame.getOperandStack();
+        Reference ref = operandStack.popRef();
+        if (ref.targetIsNull()) {
+            operandStack.pushInt(0);
+            return;
+        }
+
+        // 进行判断
+        RuntimeConstantPool currentPool = frame.getMethod().getClazz().getConstantPool();
+        JClass clazz = currentPool.getClassRef(index).getTargetClazz();
+        if (ref.getTarget().isInstanceOf(clazz)) {
+            operandStack.pushInt(1);
+        } else {
+            operandStack.pushInt(0);
+        }
     }
 }

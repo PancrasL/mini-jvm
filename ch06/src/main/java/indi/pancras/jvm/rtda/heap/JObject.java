@@ -15,6 +15,16 @@ public class JObject {
         this.fields = new ArrayList<>(slotsCnt);
     }
 
+    /**
+     * 判断当前类是否是另一个类或接口的实例
+     *
+     * @param clazz the target class
+     * @return true or false
+     */
+    public boolean isInstanceOf(JClass clazz) {
+        return this.clazz.isAssignableFrom(clazz);
+    }
+
     public void setInt(int slotId, int val) {
         fields.set(slotId, new Slot(val));
     }

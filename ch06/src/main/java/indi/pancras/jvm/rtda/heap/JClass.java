@@ -70,6 +70,72 @@ public class JClass {
         return isPublic() || (getPackageName().equals(other.getPackageName()));
     }
 
+    /**
+     * 判断当前类是否可以转换为另一个类（该类的父类）或另一个接口（该类实现了接口）
+     *
+     * @param other the other clazz
+     * @return true or false
+     */
+    public boolean isAssignableFrom(JClass other) {
+        if (this.equals(other)) {
+            return true;
+        }
+        // 判断该类是否为某个类的子类
+        if (!this.isInterface()) {
+            return this.isSubClassOf(other);
+        }
+        // 判断该类是否实现了某个接口
+        else {
+            return this.isImplements(other);
+        }
+    }
+
+    /**
+     * 判断当前类是否直接或间接继承于other
+     *
+     * @param other the other class
+     * @return true or false
+     */
+    public boolean isSubClassOf(JClass other) {
+        for (JClass c = this.superClass; c != null; c = c.superClass) {
+            if (c.equals(other)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 判断当前类是否实现了接口otheriFace
+     *
+     * @param otheriFace the other interface
+     * @return true or false
+     */
+    public boolean isImplements(JClass otheriFace) {
+        // 从当前类的接口中、父类的接口中以及当前类的接口的父类接口中查找
+        for (JClass c = this; c != null; c = c.superClass) {
+            for (JClass iface : c.getInterfaces()) {
+                if (iface.equals(otheriFace) || iface.isSubInterfaceOf(otheriFace)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 判断当前接口是否直接或间接继承自otheriFace接口
+     *
+     * @param otheriFace the other interface
+     * @return true or false
+     */
+    public boolean isSubInterfaceOf(JClass otheriFace) {
+        for (JClass iface : interfaces) {
+            return iface.equals(otheriFace) || iface.isSubInterfaceOf(otheriFace);
+        }
+        return false;
+    }
+
     public String getPackageName() {
         int i = className.lastIndexOf('/');
         return i == -1 ? "" : className.substring(0, i);
@@ -123,16 +189,6 @@ public class JClass {
         return staticFields.get(slotId).getRef();
     }
 
-    // 类属性判断
-    public boolean isSubClassOf(JClass other) {
-        for (JClass c = this.superClass; c != null; c = c.superClass) {
-            if (c == other) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public boolean isPublic() {
         return (accessFlags & AccessFlag.ACC_PUBLIC) != 0;
     }
@@ -164,5 +220,6 @@ public class JClass {
     public boolean isEnum() {
         return (accessFlags & AccessFlag.ACC_ENUM) != 0;
     }
+
 
 }
