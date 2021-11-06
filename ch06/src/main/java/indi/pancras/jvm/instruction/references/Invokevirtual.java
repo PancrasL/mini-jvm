@@ -1,10 +1,9 @@
 package indi.pancras.jvm.instruction.references;
 
-import indi.pancras.jvm.instruction.BytecodeReader;
-import indi.pancras.jvm.instruction.Instruction;
+import indi.pancras.jvm.instruction.BaseIndex16;
 import indi.pancras.jvm.rtda.Frame;
 
-public class Invokevirtual implements Instruction {
+public class Invokevirtual extends BaseIndex16 {
     @Override
     public int getOpCode() {
         return 0xb6;
@@ -13,11 +12,6 @@ public class Invokevirtual implements Instruction {
     @Override
     public String getOpName() {
         return "invokevirtual";
-    }
-
-    @Override
-    public void fetchOperands(BytecodeReader reader) {
-
     }
 
     @Override

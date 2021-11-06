@@ -20,7 +20,7 @@ public class SIpush extends BaseNoOperands {
 
     @Override
     public void fetchOperands(BytecodeReader reader) {
-        reader.read16();
+        val = reader.read16();
     }
 
     @Override

@@ -1,8 +1,9 @@
 package indi.pancras.jvm;
 
-import indi.pancras.jvm.classfile.ClassFile;
-import indi.pancras.jvm.classfile.ClassReader;
 import indi.pancras.jvm.classpath.Classpath;
+import indi.pancras.jvm.rtda.JClassLoader;
+import indi.pancras.jvm.rtda.heap.JClass;
+import indi.pancras.jvm.rtda.heap.Method;
 
 
 public class MiniJvmBootstrap {
@@ -19,9 +20,10 @@ public class MiniJvmBootstrap {
 
     private static void startJVM(Cmd cmd) {
         Classpath classpath = Classpath.parse(cmd.getJreOption(), cmd.getClasspath());
-        byte[] bytes = classpath.readClass(cmd.getMainClass());
-        ClassReader reader = new ClassReader(bytes);
-        ClassFile classFile = reader.parseClassFile();
-        Interpreter.execute(classFile.getMainMethod());
+        JClassLoader classLoader = new JClassLoader(classpath);
+        JClass mainClass = classLoader.loadClass(cmd.getMainClass());
+        Method mainMethod = mainClass.getMainMethod();
+
+        Interpreter.execute(mainMethod);
     }
 }

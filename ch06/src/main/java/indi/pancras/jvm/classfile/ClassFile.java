@@ -1,6 +1,5 @@
 package indi.pancras.jvm.classfile;
 
-import indi.pancras.jvm.classfile.pool.BaseConstantInfo;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,8 +15,6 @@ import lombok.Setter;
 @Setter
 public class ClassFile {
     public static final int MAGIC_NUM = 0xCAFEBABE;
-    public static final String MAIN_NAME = "main";
-    public static final String MAIN_DESCRIPTOR = "([Ljava/lang/String;)V";
 
     private int magic;
     private short minorVersion;
@@ -34,16 +31,6 @@ public class ClassFile {
     private MethodInfo[] methods;
     private short attrCount;
     private BaseAttr[] attributes;
-
-    public MethodInfo getMainMethod() {
-        for (MethodInfo method : methods) {
-            if (method.getName().equals(MAIN_NAME) &&
-                method.getDescriptor().equals(MAIN_DESCRIPTOR)) {
-                return method;
-            }
-        }
-        return null;
-    }
 
     public String getClassName() {
         ClassInfo info = (ClassInfo) constantPool.getConstantInfo(thisClassIndex);

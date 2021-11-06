@@ -12,14 +12,14 @@ public class Frame {
     private final LocalVars localVars;
     private final OperandStack operandStack;
 
-    private final JThread JThread;
+    private final JThread jThread;
     private final Method method;
 
     @Setter
     private int nextPc;
 
     public Frame(JThread thread, Method method) {
-        this.JThread = thread;
+        this.jThread = thread;
         this.method = method;
         this.localVars = new LocalVars(method.getMaxLocals());
         this.operandStack = new OperandStack(method.getMaxStack());

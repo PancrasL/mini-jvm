@@ -6,7 +6,7 @@ import java.util.Date;
 /**
  * 测试类，共JClassLoaderTest使用
  */
-public class StaticFieldTest implements Closeable {
+public class StaticField implements Closeable {
     private static final boolean BOOL_VAL = true;
     private static final byte BYTE_VAL = 1;
     private static final char CHAR_VAL = 2;

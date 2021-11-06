@@ -147,7 +147,7 @@ public class JClassLoader {
      * @param clazz 待处理的类变量
      */
     private void allocAndInitStaticVars(JClass clazz) {
-        List<Slot> staticSlots = new ArrayList<>(clazz.getStaticSlotCount());
+        clazz.setStaticFields(new Slot[clazz.getStaticSlotCount()]);
         List<Field> fields = clazz.getFields();
         RuntimeConstantPool pool = clazz.getConstantPool();
         for (Field field : fields) {
@@ -160,27 +160,17 @@ public class JClassLoader {
                         case DescriptorFlag.BYTE_FLAG:
                         case DescriptorFlag.CHAR_FLAG:
                         case DescriptorFlag.SHORT_FLAG:
-                        case DescriptorFlag.INT_FLAG: {
-                            int val = pool.getInt(index);
-                            staticSlots.add(slotId, new Slot(val));
-                        }
-                        break;
-                        case DescriptorFlag.FLOAT_FLAG: {
-                            float val = pool.getFloat(index);
-                            staticSlots.add(slotId, new Slot(Float.floatToIntBits(val)));
-                        }
-                        break;
-                        case DescriptorFlag.LONG_FLAG: {
-                            long val = pool.getLong(index);
-                            staticSlots.add(slotId, new Slot((int) (val >> 32)));
-                            staticSlots.add(slotId + 1, new Slot((int) (val)));
-                        }
-                        break;
+                        case DescriptorFlag.INT_FLAG:
+                            clazz.setInt(slotId, pool.getInt(index));
+                            break;
+                        case DescriptorFlag.FLOAT_FLAG:
+                            clazz.setFloat(slotId, pool.getFloat(index));
+                            break;
+                        case DescriptorFlag.LONG_FLAG:
+                            clazz.setLong(slotId, pool.getLong(index));
+                            break;
                         case DescriptorFlag.DOUBLE_FLAG:
-                            double val = pool.getDouble(index);
-                            long bits = Double.doubleToLongBits(val);
-                            staticSlots.add(slotId, new Slot((int) (bits >> 32)));
-                            staticSlots.add(slotId + 1, new Slot((int) (bits)));
+                            clazz.setDouble(slotId, pool.getDouble(index));
                             break;
                         case DescriptorFlag.OBJECT_FLAG:
                             break;
@@ -190,7 +180,6 @@ public class JClassLoader {
                 }
             }
         }
-        clazz.setStaticFields(staticSlots);
     }
 
     private void resolveInterfaceClass(JClass clazz) {

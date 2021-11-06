@@ -40,7 +40,7 @@ public abstract class SymbolRef {
         //先用D的类加载器加载C，然后检查D是否有权限访问C，如果没有,
         //则抛出IllegalAccessError异常
         JClass d = pool.getClazz();
-        JClass c = clazz.getClassLoader().loadClass(className);
+        JClass c = d.getClassLoader().loadClass(className);
         if (!c.canBeAccessedBy(d)) {
             throw new IllegalAccessError();
         }

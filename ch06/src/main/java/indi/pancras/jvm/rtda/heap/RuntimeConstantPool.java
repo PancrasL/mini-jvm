@@ -5,6 +5,7 @@ import indi.pancras.jvm.classfile.pool.ConstantPool;
 import indi.pancras.jvm.classfile.pool.poolinfo.*;
 import indi.pancras.jvm.rtda.heap.symbolref.ClassRef;
 import indi.pancras.jvm.rtda.heap.symbolref.FieldRef;
+import indi.pancras.jvm.rtda.heap.symbolref.MethodRef;
 
 /**
  * 运行时常量池
@@ -102,6 +103,14 @@ public class RuntimeConstantPool {
             return new FieldRef(this, (FieldRefInfo) info);
         }
         throw new RuntimeException("Illegal index, info is not FieldRefInfo");
+    }
+
+    public MethodRef getMethodRef(int index) {
+        BaseConstantInfo info = pool.getConstantInfo(index);
+        if (info instanceof MethodRefInfo) {
+            return new MethodRef(this, (MethodRefInfo) info);
+        }
+        throw new RuntimeException("Illegal index, info is not MethodRefInfo");
     }
 
     public String getConstantValueType(int index) {

@@ -6,14 +6,13 @@ import indi.pancras.jvm.rtda.base.Reference;
 import indi.pancras.jvm.rtda.heap.Field;
 import indi.pancras.jvm.rtda.heap.JClass;
 import indi.pancras.jvm.rtda.heap.Method;
-import indi.pancras.jvm.rtda.heap.RuntimeConstantPool;
 import indi.pancras.jvm.rtda.heap.symbolref.FieldRef;
 import indi.pancras.jvm.rtda.stack.OperandStack;
 
 /**
  * 给示例变量赋值，包含3个操作数：
  * <p>
- * 1. 属性的常量池索引(从字节码文件获取) 2. 变量值(从操作数栈获取) 3. 对象引用(从操作数栈获取)
+ * 1. 属性的常量池索引(字节码) 2. 变量值(操作数栈) 3. 对象引用(操作数栈)
  * </p>
  */
 public class Putfield extends BaseIndex16 {
@@ -34,8 +33,7 @@ public class Putfield extends BaseIndex16 {
         // 1. 获取待赋值的属性及其类变量
         Method currentMethod = frame.getMethod();
         JClass currentClazz = currentMethod.getClazz();
-        RuntimeConstantPool currentPool = currentClazz.getConstantPool();
-        FieldRef fieldRef = currentPool.getFieldRef(index);
+        FieldRef fieldRef = currentClazz.getConstantPool().getFieldRef(index);
         Field field = fieldRef.getTargetField();
 
         // 2. 安全检查

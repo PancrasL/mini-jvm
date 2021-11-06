@@ -11,7 +11,7 @@ import indi.pancras.jvm.rtda.stack.OperandStack;
 /**
  * 取出类的某个静态变量赋值，放入栈顶，需要一个操作数：
  * <p>
- * 来自字节码的uint16常量池索引
+ * 1. 属性的常量池索引（字节码）
  * </p>
  */
 public class Getstatic extends BaseIndex16 {

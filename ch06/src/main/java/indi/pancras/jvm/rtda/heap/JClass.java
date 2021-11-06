@@ -41,7 +41,7 @@ public class JClass {
     @Setter
     private int staticSlotCount;
     @Setter
-    private List<Slot> staticFields;
+    private Slot[] staticFields;
 
     public JClass(ClassFile classFile) {
         this.classFile = classFile;
@@ -63,6 +63,33 @@ public class JClass {
             methods.add(new Method(this, info));
         }
         this.constantPool = new RuntimeConstantPool(this, classFile.getConstantPool());
+    }
+
+
+    public String getPackageName() {
+        int i = className.lastIndexOf('/');
+        return i == -1 ? "" : className.substring(0, i);
+    }
+
+    /**
+     * @return mainMethod or null
+     */
+    public Method getMainMethod() {
+        return getStaticMethod("main", "([Ljava/lang/String;)V");
+    }
+
+    /**
+     * @return static method or null
+     */
+    private Method getStaticMethod(String methodName, String descriptor) {
+        for (Method method : methods) {
+            if (method.isStatic()) {
+                if (method.getMethodName().equals(methodName) && method.getDescriptor().equals(descriptor)) {
+                    return method;
+                }
+            }
+        }
+        return null;
     }
 
     public boolean canBeAccessedBy(JClass other) {
@@ -136,18 +163,13 @@ public class JClass {
         return false;
     }
 
-    public String getPackageName() {
-        int i = className.lastIndexOf('/');
-        return i == -1 ? "" : className.substring(0, i);
-    }
-
     // 静态属性赋值
     public void setInt(int slotId, int val) {
-        staticFields.set(slotId, new Slot(val));
+        staticFields[slotId] = new Slot(val);
     }
 
     public int getInt(int slotId) {
-        return staticFields.get(slotId).getVal();
+        return staticFields[slotId].getVal();
     }
 
     public void setFloat(int slotId, float val) {
@@ -155,7 +177,7 @@ public class JClass {
     }
 
     public float getFloat(int slotId) {
-        int val = staticFields.get(slotId).getVal();
+        int val = staticFields[slotId].getVal();
         return Float.intBitsToFloat(val);
     }
 
@@ -167,8 +189,8 @@ public class JClass {
     }
 
     public long getLong(int slotId) {
-        int high = staticFields.get(slotId).getVal();
-        int low = staticFields.get(slotId + 1).getVal();
+        int high = staticFields[slotId].getVal();
+        int low = staticFields[slotId].getVal();
         return (((long) high) << 32) | ((long) low & 0x0ffffffffL);
     }
 
@@ -182,13 +204,14 @@ public class JClass {
     }
 
     public void setRef(int slotId, Reference ref) {
-        staticFields.set(slotId, new Slot(ref));
+        staticFields[slotId] = new Slot(ref);
     }
 
     public Reference getRef(int slotId) {
-        return staticFields.get(slotId).getRef();
+        return staticFields[slotId].getRef();
     }
 
+    //类属性判断
     public boolean isPublic() {
         return (accessFlags & AccessFlag.ACC_PUBLIC) != 0;
     }
@@ -220,6 +243,4 @@ public class JClass {
     public boolean isEnum() {
         return (accessFlags & AccessFlag.ACC_ENUM) != 0;
     }
-
-
 }

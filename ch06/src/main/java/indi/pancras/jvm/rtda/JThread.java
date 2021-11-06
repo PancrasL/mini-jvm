@@ -18,6 +18,10 @@ public class JThread {
         this.maxStack = maxStack;
     }
 
+    public JThread() {
+        this(1024);
+    }
+
     public void pushFrame(Frame frame) {
         if (stack.size() == maxStack) {
             throw new StackOverflowError();

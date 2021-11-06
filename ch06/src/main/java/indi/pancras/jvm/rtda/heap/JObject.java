@@ -1,18 +1,15 @@
 package indi.pancras.jvm.rtda.heap;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import indi.pancras.jvm.rtda.base.Reference;
 import indi.pancras.jvm.rtda.base.Slot;
 
 public class JObject {
     private final JClass clazz;
-    private final List<Slot> fields;
+    private final Slot[] fields;
 
-    public JObject(JClass clazz, int slotsCnt) {
+    public JObject(JClass clazz, int slotCount) {
         this.clazz = clazz;
-        this.fields = new ArrayList<>(slotsCnt);
+        this.fields = new Slot[slotCount];
     }
 
     /**
@@ -26,11 +23,11 @@ public class JObject {
     }
 
     public void setInt(int slotId, int val) {
-        fields.set(slotId, new Slot(val));
+        fields[slotId] = new Slot(val);
     }
 
     public int getInt(int slotId) {
-        return fields.get(slotId).getVal();
+        return fields[slotId].getVal();
     }
 
     public void setFloat(int slotId, float val) {
@@ -38,7 +35,7 @@ public class JObject {
     }
 
     public float getFloat(int slotId) {
-        int val = fields.get(slotId).getVal();
+        int val = fields[slotId].getVal();
         return Float.intBitsToFloat(val);
     }
 
@@ -50,8 +47,8 @@ public class JObject {
     }
 
     public long getLong(int slotId) {
-        int high = fields.get(slotId).getVal();
-        int low = fields.get(slotId + 1).getVal();
+        int high = fields[slotId].getVal();
+        int low = fields[slotId + 1].getVal();
         return (((long) high) << 32) | ((long) low & 0x0ffffffffL);
     }
 
@@ -65,10 +62,10 @@ public class JObject {
     }
 
     public void setRef(int slotId, Reference ref) {
-        fields.set(slotId, new Slot(ref));
+        fields[slotId] = new Slot(ref);
     }
 
     public Reference getRef(int slotId) {
-        return fields.get(slotId).getRef();
+        return fields[slotId].getRef();
     }
 }

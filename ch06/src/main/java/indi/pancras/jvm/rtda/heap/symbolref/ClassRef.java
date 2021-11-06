@@ -6,6 +6,6 @@ import indi.pancras.jvm.rtda.heap.RuntimeConstantPool;
 public class ClassRef extends SymbolRef {
 
     public ClassRef(RuntimeConstantPool pool, ClassInfo info) {
-        super(pool, pool.getClassName(info.getClassNameIndex()));
+        super(pool, pool.getUtf8(info.getClassNameIndex()));
     }
 }

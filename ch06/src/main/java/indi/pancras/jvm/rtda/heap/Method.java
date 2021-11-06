@@ -10,7 +10,7 @@ public class Method {
     private final JClass clazz;
 
     private final short accessFlags;
-    private final String name;
+    private final String methodName;
     private final String descriptor;
 
     private int maxStack;
@@ -20,7 +20,7 @@ public class Method {
     public Method(JClass clazz, MethodInfo info) {
         this.clazz = clazz;
         this.accessFlags = info.getAccessFlags();
-        this.name = info.getName();
+        this.methodName = info.getName();
         this.descriptor = info.getDescriptor();
         CodeAttr codeAttr = info.getCodeAttr();
         if (codeAttr != null) {

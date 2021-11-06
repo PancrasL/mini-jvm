@@ -1,20 +1,17 @@
 package indi.pancras.jvm.instruction.references;
 
 import indi.pancras.jvm.instruction.BaseIndex16;
-import indi.pancras.jvm.instruction.BytecodeReader;
 import indi.pancras.jvm.rtda.Frame;
 import indi.pancras.jvm.rtda.base.Reference;
 import indi.pancras.jvm.rtda.heap.Field;
 import indi.pancras.jvm.rtda.heap.JClass;
-import indi.pancras.jvm.rtda.heap.Method;
-import indi.pancras.jvm.rtda.heap.RuntimeConstantPool;
 import indi.pancras.jvm.rtda.heap.symbolref.FieldRef;
 import indi.pancras.jvm.rtda.stack.OperandStack;
 
 /**
  * 获取对象的实例变量值，然后放入操作数栈，需要两个操作数：
  * <p>
- * 1. int16索引（来自字节码） 2. 对象引用（来自操作数栈）
+ * 1. 属性的常量池索引（字节码） 2. 对象引用（操作数栈）
  * </p>
  */
 public class Getfield extends BaseIndex16 {
@@ -29,22 +26,15 @@ public class Getfield extends BaseIndex16 {
     }
 
     @Override
-    public void fetchOperands(BytecodeReader reader) {
-        throw new RuntimeException("Not implement: " + getOpName());
-    }
-
-    @Override
     public void execute(Frame frame) {
         // 1. 获取待赋值的属性及其类变量
-        Method currentMethod = frame.getMethod();
-        JClass currentClazz = currentMethod.getClazz();
-        RuntimeConstantPool currentPool = currentClazz.getConstantPool();
-        FieldRef fieldRef = currentPool.getFieldRef(index);
+        JClass currentClazz = frame.getMethod().getClazz();
+        FieldRef fieldRef = currentClazz.getConstantPool().getFieldRef(index);
         Field field = fieldRef.getTargetField();
 
         // 2. 安全验证
-        // 2.1 解析后的字段不是静态字段，抛出异常
-        if (!field.isStatic()) {
+        // 2.1 解析后的字段不是对象实例变量，抛出异常
+        if (field.isStatic()) {
             throw new IncompatibleClassChangeError();
         }
 

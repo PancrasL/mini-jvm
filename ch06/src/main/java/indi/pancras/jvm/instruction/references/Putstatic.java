@@ -12,7 +12,7 @@ import indi.pancras.jvm.rtda.stack.OperandStack;
 /**
  * 给类的某个静态变量赋值，包含两个操作数：
  * <p>
- * 第一个是uint16，来自字节码，第二个是要赋值给静态变量的值，从操作数栈弹出
+ * 1. 属性的常量池索引（字节码） 2. 要赋值给静态变量的值（操作数栈）
  * </p>
  */
 public class Putstatic extends BaseIndex16 {
@@ -46,7 +46,7 @@ public class Putstatic extends BaseIndex16 {
         }
         // 2.2 解析后的字段是final字段，则只能在类初始化方法 <clinit> 中给它赋值
         if (field.isFinal()) {
-            if (!(currentClazz == clazz && currentMethod.getName().equals(CLINIT))) {
+            if (!(currentClazz == clazz && currentMethod.getMethodName().equals(CLINIT))) {
                 throw new IllegalAccessError();
             }
         }
