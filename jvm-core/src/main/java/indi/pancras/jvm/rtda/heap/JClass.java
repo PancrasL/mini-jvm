@@ -6,11 +6,12 @@ import java.util.List;
 import indi.pancras.jvm.classfile.ClassFile;
 import indi.pancras.jvm.classfile.field.FieldInfo;
 import indi.pancras.jvm.classfile.method.MethodInfo;
-import indi.pancras.jvm.rtda.JClassLoader;
 import indi.pancras.jvm.rtda.AccessFlag;
+import indi.pancras.jvm.rtda.JClassLoader;
 import indi.pancras.jvm.rtda.Reference;
 import indi.pancras.jvm.rtda.RuntimeConstantPool;
 import indi.pancras.jvm.rtda.Slot;
+import indi.pancras.jvm.utils.LookupUtil;
 import indi.pancras.jvm.utils.SlotsUtil;
 import lombok.Getter;
 import lombok.Setter;
@@ -84,14 +85,7 @@ public class JClass {
      * @return static method or null
      */
     private Method getStaticMethod(String methodName, String descriptor) {
-        for (Method method : methods) {
-            if (method.isStatic()) {
-                if (method.getMethodName().equals(methodName) && method.getDescriptor().equals(descriptor)) {
-                    return method;
-                }
-            }
-        }
-        return null;
+        return LookupUtil.lookupStaticMethodInClass(this, methodName, descriptor);
     }
 
     public boolean canBeAccessedBy(JClass other) {

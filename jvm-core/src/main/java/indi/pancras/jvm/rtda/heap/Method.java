@@ -30,6 +30,10 @@ public class Method {
         }
     }
 
+    public boolean canBeAccessedBy(JClass d) {
+        return false;
+    }
+
     public boolean isPublic() {
         return (accessFlags & AccessFlag.ACC_PUBLIC) != 0;
     }
@@ -77,4 +81,5 @@ public class Method {
     public boolean isStrict() {
         return (accessFlags & AccessFlag.ACC_STRICT) != 0;
     }
+
 }
