@@ -7,9 +7,11 @@ import indi.pancras.jvm.classfile.ClassFile;
 import indi.pancras.jvm.classfile.field.FieldInfo;
 import indi.pancras.jvm.classfile.method.MethodInfo;
 import indi.pancras.jvm.rtda.JClassLoader;
-import indi.pancras.jvm.rtda.base.AccessFlag;
-import indi.pancras.jvm.rtda.base.Reference;
-import indi.pancras.jvm.rtda.base.Slot;
+import indi.pancras.jvm.rtda.AccessFlag;
+import indi.pancras.jvm.rtda.Reference;
+import indi.pancras.jvm.rtda.RuntimeConstantPool;
+import indi.pancras.jvm.rtda.Slot;
+import indi.pancras.jvm.utils.SlotsUtil;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -165,50 +167,43 @@ public class JClass {
 
     // 静态属性赋值
     public void setInt(int slotId, int val) {
-        staticFields[slotId] = new Slot(val);
+        SlotsUtil.setInt(staticFields, slotId, val);
     }
 
     public int getInt(int slotId) {
-        return staticFields[slotId].getVal();
+        return SlotsUtil.getInt(staticFields, slotId);
     }
 
     public void setFloat(int slotId, float val) {
-        setInt(slotId, Float.floatToIntBits(val));
+        SlotsUtil.setFloat(staticFields, slotId, val);
     }
 
     public float getFloat(int slotId) {
-        int val = staticFields[slotId].getVal();
-        return Float.intBitsToFloat(val);
+        return SlotsUtil.getFloat(staticFields, slotId);
     }
 
     public void setLong(int slotId, long val) {
-        int low = (int) (val);
-        int high = (int) (val >> 32);
-        setInt(slotId, high);
-        setInt(slotId + 1, low);
+        SlotsUtil.setLong(staticFields, slotId, val);
     }
 
     public long getLong(int slotId) {
-        int high = staticFields[slotId].getVal();
-        int low = staticFields[slotId].getVal();
-        return (((long) high) << 32) | ((long) low & 0x0ffffffffL);
+        return SlotsUtil.getLong(staticFields, slotId);
     }
 
     public void setDouble(int slotId, double val) {
-        setLong(slotId, Double.doubleToLongBits(val));
+        SlotsUtil.setDouble(staticFields, slotId, val);
     }
 
     public double getDouble(int slotId) {
-        long val = getLong(slotId);
-        return Double.longBitsToDouble(val);
+        return SlotsUtil.getDouble(staticFields, slotId);
     }
 
     public void setRef(int slotId, Reference ref) {
-        staticFields[slotId] = new Slot(ref);
+        SlotsUtil.setRef(staticFields, slotId, ref);
     }
 
     public Reference getRef(int slotId) {
-        return staticFields[slotId].getRef();
+        return SlotsUtil.getRef(staticFields, slotId);
     }
 
     //类属性判断

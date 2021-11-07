@@ -1,7 +1,7 @@
 package indi.pancras.jvm.instruction.store;
 
 import indi.pancras.jvm.instruction.BaseIndex8;
-import indi.pancras.jvm.rtda.Frame;
+import indi.pancras.jvm.rtda.stack.Frame;
 
 public class Istore extends BaseIndex8 {
     @Override

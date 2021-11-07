@@ -1,27 +1,27 @@
 package indi.pancras.jvm.rtda.heap;
 
 import indi.pancras.jvm.classfile.field.FieldInfo;
-import indi.pancras.jvm.rtda.base.AccessFlag;
-import indi.pancras.jvm.rtda.base.DescriptorFlag;
+import indi.pancras.jvm.rtda.AccessFlag;
+import indi.pancras.jvm.rtda.DescriptorFlag;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 public class Field {
+
     private final JClass clazz;
-
     private final short accessFlags;
-    private final String name;
+    private final String fieldName;
     private final String descriptor;
+    private final int constValueIndex;
 
-    private int constValueIndex;
     @Setter
     private int slotId;
 
     public Field(JClass clazz, FieldInfo info) {
         this.clazz = clazz;
         this.accessFlags = info.getAccessFlags();
-        this.name = info.getName();
+        this.fieldName = info.getName();
         this.descriptor = info.getDescriptor();
         this.constValueIndex = info.getConstValueIndex();
     }

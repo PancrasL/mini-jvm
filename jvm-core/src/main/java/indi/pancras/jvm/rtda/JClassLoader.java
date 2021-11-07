@@ -8,11 +8,8 @@ import java.util.Map;
 import indi.pancras.jvm.classfile.ClassFile;
 import indi.pancras.jvm.classfile.ClassReader;
 import indi.pancras.jvm.classpath.Classpath;
-import indi.pancras.jvm.rtda.base.DescriptorFlag;
-import indi.pancras.jvm.rtda.base.Slot;
 import indi.pancras.jvm.rtda.heap.Field;
 import indi.pancras.jvm.rtda.heap.JClass;
-import indi.pancras.jvm.rtda.heap.RuntimeConstantPool;
 
 public class JClassLoader {
     private static final String OBJECT_CLASS_NAME = "java/lang/Object";

@@ -1,5 +1,6 @@
-package indi.pancras.jvm.rtda;
+package indi.pancras.jvm.rtda.stack;
 
+import indi.pancras.jvm.rtda.JThread;
 import indi.pancras.jvm.rtda.heap.Method;
 import indi.pancras.jvm.rtda.stack.LocalVars;
 import indi.pancras.jvm.rtda.stack.OperandStack;

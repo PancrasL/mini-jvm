@@ -1,7 +1,7 @@
 package indi.pancras.jvm.instruction.store;
 
 import indi.pancras.jvm.instruction.BaseNoOperands;
-import indi.pancras.jvm.rtda.Frame;
+import indi.pancras.jvm.rtda.stack.Frame;
 
 public class Dstore1 extends BaseNoOperands {
     @Override

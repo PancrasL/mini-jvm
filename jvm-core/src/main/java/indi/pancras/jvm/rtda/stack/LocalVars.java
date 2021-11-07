@@ -1,7 +1,8 @@
 package indi.pancras.jvm.rtda.stack;
 
-import indi.pancras.jvm.rtda.base.Reference;
-import indi.pancras.jvm.rtda.base.Slot;
+import indi.pancras.jvm.rtda.Reference;
+import indi.pancras.jvm.rtda.Slot;
+import indi.pancras.jvm.utils.SlotsUtil;
 
 public class LocalVars {
     private final Slot[] slots;
@@ -11,49 +12,43 @@ public class LocalVars {
     }
 
     public void setInt(int index, int val) {
-        slots[index] = new Slot(val);
+        SlotsUtil.setInt(slots, index, val);
     }
 
     public int getInt(int index) {
-        return slots[index].getVal();
+        return SlotsUtil.getInt(slots, index);
     }
 
     public void setFloat(int index, float val) {
-        setInt(index, Float.floatToIntBits(val));
+        SlotsUtil.setFloat(slots, index, val);
     }
 
     public float getFloat(int index) {
-        int bits = getInt(index);
-        return Float.intBitsToFloat(bits);
+        return SlotsUtil.getFloat(slots, index);
     }
 
     public void setLong(int index, long val) {
-        slots[index] = new Slot((int) (val >> 32));
-        slots[index + 1] = new Slot((int) (val));
+        SlotsUtil.setLong(slots, index, val);
     }
 
     public long getLong(int index) {
-        int high = slots[index].getVal();
-        int low = slots[index + 1].getVal();
-        return (((long) high) << 32) | ((long) low & 0x0ffffffffL);
+        return SlotsUtil.getLong(slots, index);
     }
 
     public void setDouble(int index, double val) {
-        long bits = Double.doubleToLongBits(val);
-        setLong(index, bits);
+        SlotsUtil.setDouble(slots, index, val);
     }
 
     public double getDouble(int index) {
-        long bits = getLong(index);
-        return Double.longBitsToDouble(bits);
+        return SlotsUtil.getDouble(slots, index);
     }
 
     public void setRef(int index, Reference ref) {
-        slots[index] = new Slot(ref);
+        SlotsUtil.setRef(slots, index, ref);
     }
 
     public Reference getRef(int index) {
-        return slots[index].getRef();
+        return SlotsUtil.getRef(slots, index);
     }
 
     @Override

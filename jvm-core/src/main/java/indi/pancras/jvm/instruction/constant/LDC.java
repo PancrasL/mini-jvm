@@ -1,8 +1,8 @@
 package indi.pancras.jvm.instruction.constant;
 
 import indi.pancras.jvm.instruction.BaseIndex8;
-import indi.pancras.jvm.rtda.Frame;
-import indi.pancras.jvm.rtda.heap.RuntimeConstantPool;
+import indi.pancras.jvm.rtda.stack.Frame;
+import indi.pancras.jvm.rtda.RuntimeConstantPool;
 import indi.pancras.jvm.rtda.stack.OperandStack;
 
 

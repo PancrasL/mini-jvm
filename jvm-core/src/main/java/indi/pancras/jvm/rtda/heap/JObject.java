@@ -1,7 +1,8 @@
 package indi.pancras.jvm.rtda.heap;
 
-import indi.pancras.jvm.rtda.base.Reference;
-import indi.pancras.jvm.rtda.base.Slot;
+import indi.pancras.jvm.rtda.Reference;
+import indi.pancras.jvm.rtda.Slot;
+import indi.pancras.jvm.utils.SlotsUtil;
 
 public class JObject {
     private final JClass clazz;
@@ -23,49 +24,42 @@ public class JObject {
     }
 
     public void setInt(int slotId, int val) {
-        fields[slotId] = new Slot(val);
+        SlotsUtil.setInt(fields, slotId, val);
     }
 
     public int getInt(int slotId) {
-        return fields[slotId].getVal();
+        return SlotsUtil.getInt(fields, slotId);
     }
 
     public void setFloat(int slotId, float val) {
-        setInt(slotId, Float.floatToIntBits(val));
+        SlotsUtil.setFloat(fields, slotId, val);
     }
 
     public float getFloat(int slotId) {
-        int val = fields[slotId].getVal();
-        return Float.intBitsToFloat(val);
+        return SlotsUtil.getFloat(fields, slotId);
     }
 
     public void setLong(int slotId, long val) {
-        int low = (int) (val);
-        int high = (int) (val >> 32);
-        setInt(slotId, high);
-        setInt(slotId + 1, low);
+        SlotsUtil.setLong(fields, slotId, val);
     }
 
     public long getLong(int slotId) {
-        int high = fields[slotId].getVal();
-        int low = fields[slotId + 1].getVal();
-        return (((long) high) << 32) | ((long) low & 0x0ffffffffL);
+        return SlotsUtil.getLong(fields, slotId);
     }
 
     public void setDouble(int slotId, double val) {
-        setLong(slotId, Double.doubleToLongBits(val));
+        SlotsUtil.setDouble(fields, slotId, val);
     }
 
     public double getDouble(int slotId) {
-        long val = getLong(slotId);
-        return Double.longBitsToDouble(val);
+        return SlotsUtil.getDouble(fields, slotId);
     }
 
     public void setRef(int slotId, Reference ref) {
-        fields[slotId] = new Slot(ref);
+        SlotsUtil.setRef(fields, slotId, ref);
     }
 
     public Reference getRef(int slotId) {
-        return fields[slotId].getRef();
+        return SlotsUtil.getRef(fields, slotId);
     }
 }

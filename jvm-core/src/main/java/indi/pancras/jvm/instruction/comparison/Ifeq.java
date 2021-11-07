@@ -1,7 +1,7 @@
 package indi.pancras.jvm.instruction.comparison;
 
 import indi.pancras.jvm.instruction.BaseBranch;
-import indi.pancras.jvm.rtda.Frame;
+import indi.pancras.jvm.rtda.stack.Frame;
 import indi.pancras.jvm.rtda.stack.OperandStack;
 
 public class Ifeq extends BaseBranch {

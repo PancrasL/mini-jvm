@@ -2,6 +2,7 @@ package indi.pancras.jvm.rtda;
 
 import java.util.Stack;
 
+import indi.pancras.jvm.rtda.stack.Frame;
 import lombok.Getter;
 import lombok.Setter;
 

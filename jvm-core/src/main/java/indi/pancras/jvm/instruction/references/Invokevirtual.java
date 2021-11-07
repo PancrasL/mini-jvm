@@ -1,7 +1,7 @@
 package indi.pancras.jvm.instruction.references;
 
 import indi.pancras.jvm.instruction.BaseIndex16;
-import indi.pancras.jvm.rtda.Frame;
+import indi.pancras.jvm.rtda.stack.Frame;
 
 public class Invokevirtual extends BaseIndex16 {
     @Override

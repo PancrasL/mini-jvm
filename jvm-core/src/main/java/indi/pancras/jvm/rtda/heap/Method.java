@@ -2,7 +2,7 @@ package indi.pancras.jvm.rtda.heap;
 
 import indi.pancras.jvm.classfile.attribute.attrinfo.CodeAttr;
 import indi.pancras.jvm.classfile.method.MethodInfo;
-import indi.pancras.jvm.rtda.base.AccessFlag;
+import indi.pancras.jvm.rtda.AccessFlag;
 import lombok.Getter;
 
 @Getter

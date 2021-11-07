@@ -2,7 +2,7 @@ package indi.pancras.jvm.instruction.math;
 
 import indi.pancras.jvm.instruction.BaseNoOperands;
 import indi.pancras.jvm.instruction.BytecodeReader;
-import indi.pancras.jvm.rtda.Frame;
+import indi.pancras.jvm.rtda.stack.Frame;
 import indi.pancras.jvm.rtda.stack.OperandStack;
 
 public class Fmul extends BaseNoOperands {

@@ -2,7 +2,7 @@ package indi.pancras.jvm.instruction.extend;
 
 import indi.pancras.jvm.instruction.BytecodeReader;
 import indi.pancras.jvm.instruction.Instruction;
-import indi.pancras.jvm.rtda.Frame;
+import indi.pancras.jvm.rtda.stack.Frame;
 
 public class Multianewarray implements Instruction {
     @Override

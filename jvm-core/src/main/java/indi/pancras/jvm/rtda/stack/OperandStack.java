@@ -1,7 +1,7 @@
 package indi.pancras.jvm.rtda.stack;
 
-import indi.pancras.jvm.rtda.base.Reference;
-import indi.pancras.jvm.rtda.base.Slot;
+import indi.pancras.jvm.rtda.Reference;
+import indi.pancras.jvm.rtda.Slot;
 
 public class OperandStack {
     private final Slot[] slots;

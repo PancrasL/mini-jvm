@@ -1,4 +1,4 @@
-package indi.pancras.jvm.rtda.base;
+package indi.pancras.jvm.rtda;
 
 public class Slot {
     private final int val;

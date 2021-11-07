@@ -1,9 +1,9 @@
-package indi.pancras.jvm.rtda.heap.symbolref;
+package indi.pancras.jvm.rtda.symbolref;
 
 import indi.pancras.jvm.classfile.pool.poolinfo.FieldRefInfo;
 import indi.pancras.jvm.rtda.heap.Field;
 import indi.pancras.jvm.rtda.heap.JClass;
-import indi.pancras.jvm.rtda.heap.RuntimeConstantPool;
+import indi.pancras.jvm.rtda.RuntimeConstantPool;
 
 public class FieldRef extends SymbolRef {
     private final String fieldName;
@@ -43,7 +43,7 @@ public class FieldRef extends SymbolRef {
 
     private Field lookupField(JClass clazz, String fieldName, String descriptor) {
         for (Field field : clazz.getFields()) {
-            if (field.getName().equals(fieldName) && field.getDescriptor().equals(descriptor)) {
+            if (field.getFieldName().equals(fieldName) && field.getDescriptor().equals(descriptor)) {
                 return field;
             }
         }

@@ -1,8 +1,8 @@
 package indi.pancras.jvm.instruction.load;
 
 import indi.pancras.jvm.instruction.BaseNoOperands;
-import indi.pancras.jvm.rtda.Frame;
-import indi.pancras.jvm.rtda.base.Reference;
+import indi.pancras.jvm.rtda.stack.Frame;
+import indi.pancras.jvm.rtda.Reference;
 
 
 public class Aload1 extends BaseNoOperands {

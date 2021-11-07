@@ -23,7 +23,7 @@ class InterpreterTest {
         String className = "indi.pancras.jvm.testclass.StaticField";
         JClass clazz = classLoader.loadClass(className);
         for (Field field : clazz.getFields()) {
-            System.out.println(field.getName());
+            System.out.println(field.getFieldName());
         }
     }
 

@@ -1,6 +1,6 @@
 package indi.pancras.jvm.instruction;
 
-import indi.pancras.jvm.rtda.Frame;
+import indi.pancras.jvm.rtda.stack.Frame;
 
 /**
  * 跳转指令的基类，offset字段存放跳转偏移量

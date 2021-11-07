@@ -1,11 +1,12 @@
-package indi.pancras.jvm.rtda.heap;
+package indi.pancras.jvm.rtda;
 
 import indi.pancras.jvm.classfile.pool.BaseConstantInfo;
 import indi.pancras.jvm.classfile.pool.ConstantPool;
 import indi.pancras.jvm.classfile.pool.poolinfo.*;
-import indi.pancras.jvm.rtda.heap.symbolref.ClassRef;
-import indi.pancras.jvm.rtda.heap.symbolref.FieldRef;
-import indi.pancras.jvm.rtda.heap.symbolref.MethodRef;
+import indi.pancras.jvm.rtda.heap.JClass;
+import indi.pancras.jvm.rtda.symbolref.ClassRef;
+import indi.pancras.jvm.rtda.symbolref.FieldRef;
+import indi.pancras.jvm.rtda.symbolref.MethodRef;
 
 /**
  * 运行时常量池

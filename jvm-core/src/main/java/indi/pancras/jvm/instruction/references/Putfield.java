@@ -1,12 +1,12 @@
 package indi.pancras.jvm.instruction.references;
 
 import indi.pancras.jvm.instruction.BaseIndex16;
-import indi.pancras.jvm.rtda.Frame;
-import indi.pancras.jvm.rtda.base.Reference;
+import indi.pancras.jvm.rtda.stack.Frame;
+import indi.pancras.jvm.rtda.Reference;
 import indi.pancras.jvm.rtda.heap.Field;
 import indi.pancras.jvm.rtda.heap.JClass;
 import indi.pancras.jvm.rtda.heap.Method;
-import indi.pancras.jvm.rtda.heap.symbolref.FieldRef;
+import indi.pancras.jvm.rtda.symbolref.FieldRef;
 import indi.pancras.jvm.rtda.stack.OperandStack;
 
 /**

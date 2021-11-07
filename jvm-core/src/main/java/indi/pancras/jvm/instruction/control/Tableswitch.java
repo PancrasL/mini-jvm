@@ -2,7 +2,7 @@ package indi.pancras.jvm.instruction.control;
 
 import indi.pancras.jvm.instruction.BaseBranch;
 import indi.pancras.jvm.instruction.BytecodeReader;
-import indi.pancras.jvm.rtda.Frame;
+import indi.pancras.jvm.rtda.stack.Frame;
 import indi.pancras.jvm.rtda.JThread;
 import indi.pancras.jvm.rtda.stack.OperandStack;
 

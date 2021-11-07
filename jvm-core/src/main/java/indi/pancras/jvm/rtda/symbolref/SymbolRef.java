@@ -1,7 +1,7 @@
-package indi.pancras.jvm.rtda.heap.symbolref;
+package indi.pancras.jvm.rtda.symbolref;
 
 import indi.pancras.jvm.rtda.heap.JClass;
-import indi.pancras.jvm.rtda.heap.RuntimeConstantPool;
+import indi.pancras.jvm.rtda.RuntimeConstantPool;
 
 public abstract class SymbolRef {
     /**
