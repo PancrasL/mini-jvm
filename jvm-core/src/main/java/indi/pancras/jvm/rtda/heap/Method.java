@@ -3,6 +3,7 @@ package indi.pancras.jvm.rtda.heap;
 import indi.pancras.jvm.classfile.attribute.attrinfo.CodeAttr;
 import indi.pancras.jvm.classfile.method.MethodInfo;
 import indi.pancras.jvm.rtda.AccessFlag;
+import indi.pancras.jvm.rtda.DescriptorFlag;
 import lombok.Getter;
 
 @Getter
@@ -16,6 +17,7 @@ public class Method {
     private int maxStack;
     private int maxLocals;
     private byte[] code;
+    private int argSlotCount;
 
     public Method(JClass clazz, MethodInfo info) {
         this.clazz = clazz;
@@ -28,10 +30,23 @@ public class Method {
             this.maxLocals = codeAttr.getMaxLocals();
             this.code = codeAttr.getCode();
         }
+        // 计算参数槽数量
+        argSlotCount = calArgSlotCount();
     }
 
-    public boolean canBeAccessedBy(JClass d) {
-        return false;
+    public boolean canBeAccessedBy(JClass other) {
+        if (isPublic()) {
+            return true;
+        }
+        if (isProtected()) {
+            return clazz == other ||
+                    clazz.getPackageName().equals(other.getPackageName()) ||
+                    other.isSubClassOf(clazz);
+        }
+        if (isPrivate()) {
+            return clazz == other;
+        }
+        return clazz.getPackageName().equals(other.getPackageName());
     }
 
     public boolean isPublic() {
@@ -82,4 +97,19 @@ public class Method {
         return (accessFlags & AccessFlag.ACC_STRICT) != 0;
     }
 
+    private int calArgSlotCount() {
+        int slotCount = 0;
+        MethodDescriptor parsedDescriptor = new MethodDescriptor(descriptor);
+        for (String paramType : parsedDescriptor.getParamTypes()) {
+            slotCount++;
+            if (paramType.equals(DescriptorFlag.LONG_FLAG) || paramType.equals(DescriptorFlag.DOUBLE_FLAG)) {
+                slotCount++;
+            }
+        }
+        // 非静态方法，需要多预留一个槽保存this引用
+        if (!isStatic()) {
+            slotCount++;
+        }
+        return slotCount;
+    }
 }
