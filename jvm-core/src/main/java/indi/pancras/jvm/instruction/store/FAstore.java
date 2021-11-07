@@ -17,6 +17,6 @@ public class FAstore extends BaseIndex8 {
 
     @Override
     public void execute(Frame frame) {
-        // TODO
+        throw new RuntimeException("Not implement: " + getOpName());
     }
 }

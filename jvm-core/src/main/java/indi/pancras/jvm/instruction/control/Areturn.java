@@ -1,6 +1,8 @@
 package indi.pancras.jvm.instruction.control;
 
 import indi.pancras.jvm.instruction.BaseNoOperands;
+import indi.pancras.jvm.rtda.JThread;
+import indi.pancras.jvm.rtda.Reference;
 import indi.pancras.jvm.rtda.stack.Frame;
 
 public class Areturn extends BaseNoOperands {
@@ -16,6 +18,10 @@ public class Areturn extends BaseNoOperands {
 
     @Override
     public void execute(Frame frame) {
-        // TODO
+        JThread thread = frame.getJThread();
+        Frame currentFrame = thread.popFrame();
+        Frame invokerFrame = thread.topFrame();
+        Reference val = currentFrame.getOperandStack().popRef();
+        invokerFrame.getOperandStack().pushRef(val);
     }
 }

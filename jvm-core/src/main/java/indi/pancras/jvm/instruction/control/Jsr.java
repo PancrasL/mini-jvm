@@ -17,6 +17,6 @@ public class Jsr extends BaseNoOperands {
 
     @Override
     public void execute(Frame frame) {
-
+        throw new RuntimeException("Not implement: " + getOpName());
     }
 }

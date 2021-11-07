@@ -19,6 +19,6 @@ public class Return extends BaseNoOperands {
 
     @Override
     public void execute(Frame frame) {
-        // TODO
+        frame.getJThread().popFrame();
     }
 }

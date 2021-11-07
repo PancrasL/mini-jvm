@@ -22,6 +22,6 @@ public class Jsrw implements Instruction {
 
     @Override
     public void execute(Frame frame) {
-        // TODO
+        throw new RuntimeException("Not implement: " + getOpName());
     }
 }
