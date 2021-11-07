@@ -1,8 +1,10 @@
 package indi.pancras.jvm.rtda.symbolref;
 
 import indi.pancras.jvm.classfile.pool.poolinfo.InterfaceMethodRefInfo;
-import indi.pancras.jvm.rtda.heap.Method;
 import indi.pancras.jvm.rtda.RuntimeConstantPool;
+import indi.pancras.jvm.rtda.heap.JClass;
+import indi.pancras.jvm.rtda.heap.Method;
+import indi.pancras.jvm.utils.LookupUtil;
 import lombok.Getter;
 
 @Getter
@@ -13,8 +15,40 @@ public class InterfaceMethodRef extends SymbolRef {
 
     public InterfaceMethodRef(RuntimeConstantPool pool, InterfaceMethodRefInfo info) {
         super(pool, pool.getClassName(info.getClassIndex()));
-        String[] ss = pool.getNameAndType(info.getNameAndTypeIndex());
-        methodName = ss[0];
-        descriptor = ss[1];
+        String[] nameAndType = pool.getNameAndType(info.getNameAndTypeIndex());
+        methodName = nameAndType[0];
+        descriptor = nameAndType[1];
+    }
+
+    public Method getTargetMethod() {
+        if (method == null) {
+            method = resolveMethodRef();
+        }
+        return method;
+    }
+
+    private Method resolveMethodRef() {
+        JClass d = pool.getClazz();
+        JClass c = getTargetClazz();
+
+        if (!c.isInterface()) {
+            throw new IncompatibleClassChangeError();
+        }
+
+        Method m = lookupInterfaceMethod(c, this.methodName, this.descriptor);
+        if (m == null) {
+            throw new NoSuchMethodError();
+        }
+        if (!m.canBeAccessedBy(d)) {
+            throw new IllegalAccessError();
+        }
+        return m;
+    }
+
+    /**
+     * @return method or null
+     */
+    private Method lookupInterfaceMethod(JClass c, String methodName, String descriptor) {
+        return LookupUtil.lookupMethodInInterface(c, methodName, descriptor, true);
     }
 }

@@ -1,24 +1,23 @@
 package indi.pancras.jvm.utils;
 
-import java.util.List;
-
 import indi.pancras.jvm.rtda.heap.JClass;
 import indi.pancras.jvm.rtda.heap.Method;
 
 public class LookupUtil {
 
-    public static Method lookupMethodInClass(JClass clazz, String methodName, String descriptor) {
-        for (JClass c = clazz; c != null; c = clazz.getSuperClass()) {
-            for (Method method : c.getMethods()) {
-                if (method.getMethodName().equals(methodName) && method.getDescriptor().equals(descriptor)) {
-                    return method;
-                }
+    public static Method lookupMethodInClass(JClass clazz, String methodName, String descriptor, Boolean recur) {
+        if (clazz == null) {
+            return null;
+        }
+        for (Method method : clazz.getMethods()) {
+            if (method.getMethodName().equals(methodName) && method.getDescriptor().equals(descriptor)) {
+                return method;
             }
         }
-        return null;
+        return recur ? lookupMethodInClass(clazz.getSuperClass(), methodName, descriptor, true) : null;
     }
 
-    public static Method lookupStaticMethodInClass(JClass clazz, String methodName, String descriptor){
+    public static Method lookupStaticMethodInClass(JClass clazz, String methodName, String descriptor) {
         for (Method method : clazz.getMethods()) {
             if (method.isStatic()) {
                 if (method.getMethodName().equals(methodName) && method.getDescriptor().equals(descriptor)) {
@@ -29,16 +28,18 @@ public class LookupUtil {
         return null;
     }
 
-    public static Method lookupMethodInInterfaces(List<JClass> ifaces, String methodName, String descriptor) {
-        for (JClass iface : ifaces) {
-            for (Method method : iface.getMethods()) {
-                if (method.getMethodName().equals(methodName) && method.getDescriptor().equals(descriptor)) {
-                    return method;
-                }
+    public static Method lookupMethodInInterface(JClass iface, String methodName, String descriptor, Boolean recur) {
+        // 首先在当前接口的方法中查找
+        for (Method method : iface.getMethods()) {
+            if (method.getMethodName().equals(methodName) && method.getDescriptor().equals(descriptor)) {
+                return method;
             }
-            Method m = lookupMethodInInterfaces(iface.getInterfaces(), methodName, descriptor);
-            if (m != null) {
-                return m;
+        }
+
+        // 如果递归查找，则在当前接口的父接口中查找
+        if (recur) {
+            for (JClass i : iface.getInterfaces()) {
+                lookupMethodInInterface(i, methodName, descriptor, true);
             }
         }
         return null;

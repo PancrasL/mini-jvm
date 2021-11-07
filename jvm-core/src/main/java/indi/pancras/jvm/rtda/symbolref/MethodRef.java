@@ -4,6 +4,7 @@ import indi.pancras.jvm.classfile.pool.poolinfo.MethodRefInfo;
 import indi.pancras.jvm.rtda.RuntimeConstantPool;
 import indi.pancras.jvm.rtda.heap.JClass;
 import indi.pancras.jvm.rtda.heap.Method;
+import indi.pancras.jvm.utils.LookupUtil;
 import lombok.Getter;
 
 @Getter
@@ -44,7 +45,10 @@ public class MethodRef extends SymbolRef {
         return m;
     }
 
+    /**
+     * @return method or null
+     */
     private Method lookupMethod(JClass c, String methodName, String descriptor) {
-        return null;
+        return LookupUtil.lookupMethodInClass(c, methodName, descriptor, true);
     }
 }
