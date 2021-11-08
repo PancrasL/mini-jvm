@@ -159,47 +159,6 @@ public class JClass {
         return false;
     }
 
-    // 静态属性赋值
-    public void setInt(int slotId, int val) {
-        SlotsUtil.setInt(staticFields, slotId, val);
-    }
-
-    public int getInt(int slotId) {
-        return SlotsUtil.getInt(staticFields, slotId);
-    }
-
-    public void setFloat(int slotId, float val) {
-        SlotsUtil.setFloat(staticFields, slotId, val);
-    }
-
-    public float getFloat(int slotId) {
-        return SlotsUtil.getFloat(staticFields, slotId);
-    }
-
-    public void setLong(int slotId, long val) {
-        SlotsUtil.setLong(staticFields, slotId, val);
-    }
-
-    public long getLong(int slotId) {
-        return SlotsUtil.getLong(staticFields, slotId);
-    }
-
-    public void setDouble(int slotId, double val) {
-        SlotsUtil.setDouble(staticFields, slotId, val);
-    }
-
-    public double getDouble(int slotId) {
-        return SlotsUtil.getDouble(staticFields, slotId);
-    }
-
-    public void setRef(int slotId, Reference ref) {
-        SlotsUtil.setRef(staticFields, slotId, ref);
-    }
-
-    public Reference getRef(int slotId) {
-        return SlotsUtil.getRef(staticFields, slotId);
-    }
-
     //类属性判断
     public boolean isPublic() {
         return (accessFlags & AccessFlag.ACC_PUBLIC) != 0;

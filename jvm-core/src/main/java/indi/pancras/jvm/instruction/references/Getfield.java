@@ -2,12 +2,14 @@ package indi.pancras.jvm.instruction.references;
 
 import indi.pancras.jvm.instruction.BaseIndex16;
 import indi.pancras.jvm.rtda.DescriptorFlag;
-import indi.pancras.jvm.rtda.stack.Frame;
 import indi.pancras.jvm.rtda.Reference;
+import indi.pancras.jvm.rtda.Slot;
 import indi.pancras.jvm.rtda.heap.Field;
 import indi.pancras.jvm.rtda.heap.JClass;
-import indi.pancras.jvm.rtda.symbolref.FieldRef;
+import indi.pancras.jvm.rtda.stack.Frame;
 import indi.pancras.jvm.rtda.stack.OperandStack;
+import indi.pancras.jvm.rtda.symbolref.FieldRef;
+import indi.pancras.jvm.utils.SlotsUtil;
 
 /**
  * 获取对象的实例变量值，然后放入操作数栈，需要两个操作数：
@@ -48,6 +50,7 @@ public class Getfield extends BaseIndex16 {
 
         String descriptor = field.getDescriptor();
         int slotId = field.getSlotId();
+        Slot[] slots = ref.getTarget().getFields();
         switch (descriptor.charAt(0)) {
             // 占用1个槽
             case DescriptorFlag.BOOLEAN_FLAG:
@@ -55,21 +58,21 @@ public class Getfield extends BaseIndex16 {
             case DescriptorFlag.CHAR_FLAG:
             case DescriptorFlag.SHORT_FLAG:
             case DescriptorFlag.INT_FLAG:
-                operandStack.pushInt(ref.getTarget().getInt(slotId));
+                operandStack.pushInt(SlotsUtil.getInt(slots, slotId));
                 break;
             case DescriptorFlag.FLOAT_FLAG:
-                operandStack.pushFloat(ref.getTarget().getFloat(slotId));
+                operandStack.pushFloat(SlotsUtil.getFloat(slots, slotId));
                 break;
             case DescriptorFlag.OBJECT_FLAG:
             case DescriptorFlag.ARRAY_FLAG:
-                operandStack.pushRef(ref.getTarget().getRef(slotId));
+                operandStack.pushRef(SlotsUtil.getRef(slots, slotId));
                 break;
             // 占用2个槽
             case DescriptorFlag.LONG_FLAG:
-                operandStack.pushLong(ref.getTarget().getLong(slotId));
+                operandStack.pushLong(SlotsUtil.getLong(slots, slotId));
                 break;
             case DescriptorFlag.DOUBLE_FLAG:
-                operandStack.pushDouble(ref.getTarget().getDouble(slotId));
+                operandStack.pushDouble(SlotsUtil.getDouble(slots, slotId));
                 break;
             default:
                 throw new VerifyError("Illegal descriptor: " + descriptor);

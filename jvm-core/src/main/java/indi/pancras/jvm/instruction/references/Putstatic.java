@@ -2,13 +2,15 @@ package indi.pancras.jvm.instruction.references;
 
 import indi.pancras.jvm.instruction.BaseIndex16;
 import indi.pancras.jvm.rtda.DescriptorFlag;
-import indi.pancras.jvm.rtda.stack.Frame;
+import indi.pancras.jvm.rtda.RuntimeConstantPool;
+import indi.pancras.jvm.rtda.Slot;
 import indi.pancras.jvm.rtda.heap.Field;
 import indi.pancras.jvm.rtda.heap.JClass;
 import indi.pancras.jvm.rtda.heap.Method;
-import indi.pancras.jvm.rtda.RuntimeConstantPool;
-import indi.pancras.jvm.rtda.symbolref.FieldRef;
+import indi.pancras.jvm.rtda.stack.Frame;
 import indi.pancras.jvm.rtda.stack.OperandStack;
+import indi.pancras.jvm.rtda.symbolref.FieldRef;
+import indi.pancras.jvm.utils.SlotsUtil;
 
 /**
  * 给类的某个静态变量赋值，包含两个操作数：
@@ -54,6 +56,7 @@ public class Putstatic extends BaseIndex16 {
 
         // 3. 执行赋值操作
         String descriptor = field.getDescriptor();
+        Slot[] slots = clazz.getStaticFields();
         int slotId = field.getSlotId();
         OperandStack operandStack = frame.getOperandStack();
         switch (descriptor.charAt(0)) {
@@ -63,21 +66,21 @@ public class Putstatic extends BaseIndex16 {
             case DescriptorFlag.CHAR_FLAG:
             case DescriptorFlag.SHORT_FLAG:
             case DescriptorFlag.INT_FLAG:
-                clazz.setInt(slotId, operandStack.popInt());
+                SlotsUtil.setInt(slots, slotId, operandStack.popInt());
                 break;
             case DescriptorFlag.FLOAT_FLAG:
-                clazz.setFloat(slotId, operandStack.popFloat());
+                SlotsUtil.setFloat(slots, slotId, operandStack.popFloat());
                 break;
             case DescriptorFlag.OBJECT_FLAG:
             case DescriptorFlag.ARRAY_FLAG:
-                clazz.setRef(slotId, operandStack.popRef());
+                SlotsUtil.setRef(slots, slotId, operandStack.popRef());
                 break;
             // 占用2个槽
             case DescriptorFlag.LONG_FLAG:
-                clazz.setLong(slotId, operandStack.popLong());
+                SlotsUtil.setLong(slots, slotId, operandStack.popLong());
                 break;
             case DescriptorFlag.DOUBLE_FLAG:
-                clazz.setDouble(slotId, operandStack.popDouble());
+                SlotsUtil.setDouble(slots, slotId, operandStack.popDouble());
                 break;
             default:
                 throw new VerifyError("Illegal descriptor: " + descriptor);

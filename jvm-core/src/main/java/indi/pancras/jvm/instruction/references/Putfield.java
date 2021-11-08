@@ -9,6 +9,7 @@ import indi.pancras.jvm.rtda.heap.Method;
 import indi.pancras.jvm.rtda.stack.Frame;
 import indi.pancras.jvm.rtda.stack.OperandStack;
 import indi.pancras.jvm.rtda.symbolref.FieldRef;
+import indi.pancras.jvm.utils.SlotsUtil;
 
 /**
  * 给实例变量赋值，包含3个操作数：
@@ -63,7 +64,7 @@ public class Putfield extends BaseIndex16 {
                 if (ref.targetIsNull()) {
                     throw new NullPointerException();
                 }
-                ref.getTarget().setInt(slotId, val);
+                SlotsUtil.setInt(ref.getTarget().getFields(), slotId, val);
             }
             break;
             case DescriptorFlag.FLOAT_FLAG: {
@@ -72,7 +73,7 @@ public class Putfield extends BaseIndex16 {
                 if (ref.targetIsNull()) {
                     throw new NullPointerException();
                 }
-                ref.getTarget().setFloat(slotId, val);
+                SlotsUtil.setFloat(ref.getTarget().getFields(), slotId, val);
             }
             break;
             case DescriptorFlag.OBJECT_FLAG:
@@ -82,7 +83,7 @@ public class Putfield extends BaseIndex16 {
                 if (ref.targetIsNull()) {
                     throw new NullPointerException();
                 }
-                ref.getTarget().setRef(slotId, val);
+                SlotsUtil.setRef(ref.getTarget().getFields(), slotId, val);
             }
             break;
             // 占用2个槽
@@ -92,7 +93,7 @@ public class Putfield extends BaseIndex16 {
                 if (ref.targetIsNull()) {
                     throw new NullPointerException();
                 }
-                ref.getTarget().setLong(slotId, val);
+                SlotsUtil.setLong(ref.getTarget().getFields(), slotId, val);
             }
             break;
             case DescriptorFlag.DOUBLE_FLAG: {
@@ -101,7 +102,7 @@ public class Putfield extends BaseIndex16 {
                 if (ref.targetIsNull()) {
                     throw new NullPointerException();
                 }
-                ref.getTarget().setDouble(slotId, val);
+                SlotsUtil.setDouble(ref.getTarget().getFields(), slotId, val);
             }
             break;
             default:
