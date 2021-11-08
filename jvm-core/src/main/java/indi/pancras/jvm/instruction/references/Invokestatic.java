@@ -1,10 +1,12 @@
 package indi.pancras.jvm.instruction.references;
 
-import indi.pancras.jvm.instruction.BytecodeReader;
-import indi.pancras.jvm.instruction.Instruction;
+import indi.pancras.jvm.instruction.BaseIndex16;
+import indi.pancras.jvm.rtda.RuntimeConstantPool;
+import indi.pancras.jvm.rtda.heap.Method;
 import indi.pancras.jvm.rtda.stack.Frame;
+import indi.pancras.jvm.utils.InstructionUtil;
 
-public class Invokestatic implements Instruction {
+public class Invokestatic extends BaseIndex16 {
     @Override
     public int getOpCode() {
         return 0xb8;
@@ -16,12 +18,12 @@ public class Invokestatic implements Instruction {
     }
 
     @Override
-    public void fetchOperands(BytecodeReader reader) {
-
-    }
-
-    @Override
     public void execute(Frame frame) {
-        throw new RuntimeException("Not implement: " + getOpName());
+        RuntimeConstantPool pool = frame.getMethod().getClazz().getConstantPool();
+        Method method = pool.getMethodRef(index).getTargetMethod();
+        if (!method.isStatic()) {
+            throw new IncompatibleClassChangeError();
+        }
+        InstructionUtil.invokeMethod(frame, method);
     }
 }

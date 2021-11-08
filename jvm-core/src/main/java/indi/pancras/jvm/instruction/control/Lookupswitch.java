@@ -35,15 +35,15 @@ public class Lookupswitch extends BaseBranch {
     @Override
     public void execute(Frame frame) {
         OperandStack operandStack = frame.getOperandStack();
-        JThread JThread = frame.getJThread();
+        JThread thread = frame.getThread();
         int key = operandStack.popInt();
         for (int i = 0; i < npairs * 2; i += 2) {
             if (matchOffsets[i] == key) {
                 offset = matchOffsets[i + 1];
-                JThread.setPc(offset);
+                thread.setPc(offset);
                 return;
             }
         }
-        JThread.setPc(defaultOffset);
+        thread.setPc(defaultOffset);
     }
 }

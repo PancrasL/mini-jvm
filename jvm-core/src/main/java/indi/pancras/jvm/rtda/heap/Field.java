@@ -78,6 +78,6 @@ public class Field {
     }
 
     public boolean isLongOrDouble() {
-        return descriptor.equals(DescriptorFlag.LONG_FLAG) || descriptor.equals(DescriptorFlag.DOUBLE_FLAG);
+        return descriptor.charAt(0) == DescriptorFlag.LONG_FLAG || descriptor.charAt(0) == DescriptorFlag.DOUBLE_FLAG;
     }
 }

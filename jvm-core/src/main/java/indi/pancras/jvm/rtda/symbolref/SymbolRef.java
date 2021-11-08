@@ -15,7 +15,6 @@ public abstract class SymbolRef {
     /**
      * 解析后的类结构体指针
      */
-    // TODO
     protected JClass clazz;
 
     public SymbolRef(RuntimeConstantPool pool, String className) {

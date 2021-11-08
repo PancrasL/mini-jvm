@@ -18,7 +18,7 @@ public class Areturn extends BaseNoOperands {
 
     @Override
     public void execute(Frame frame) {
-        JThread thread = frame.getJThread();
+        JThread thread = frame.getThread();
         Frame currentFrame = thread.popFrame();
         Frame invokerFrame = thread.topFrame();
         Reference val = currentFrame.getOperandStack().popRef();

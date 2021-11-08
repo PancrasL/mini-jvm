@@ -25,7 +25,12 @@ public class StaticField implements Closeable {
         int a = 1;
     }
 
-    @Override public void close() {
+    public Double test(int a, Double b) {
+        return a + b;
+    }
+
+    @Override
+    public void close() {
         // do nothing
     }
 }

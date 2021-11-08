@@ -17,7 +17,7 @@ public class Method {
     private int maxStack;
     private int maxLocals;
     private byte[] code;
-    private int argSlotCount;
+    private final int argSlotCount;
 
     public Method(JClass clazz, MethodInfo info) {
         this.clazz = clazz;
@@ -32,6 +32,22 @@ public class Method {
         }
         // 计算参数槽数量
         argSlotCount = calArgSlotCount();
+    }
+
+    private int calArgSlotCount() {
+        int slotCount = 0;
+        MethodDescriptor parsedDescriptor = new MethodDescriptor(descriptor);
+        for (String paramType : parsedDescriptor.getParamTypes()) {
+            slotCount++;
+            if (paramType.charAt(0) == DescriptorFlag.LONG_FLAG || paramType.charAt(0) == DescriptorFlag.DOUBLE_FLAG) {
+                slotCount++;
+            }
+        }
+        // 非静态方法，需要多预留一个槽保存this引用
+        if (!isStatic()) {
+            slotCount++;
+        }
+        return slotCount;
     }
 
     public boolean canBeAccessedBy(JClass other) {
@@ -97,19 +113,4 @@ public class Method {
         return (accessFlags & AccessFlag.ACC_STRICT) != 0;
     }
 
-    private int calArgSlotCount() {
-        int slotCount = 0;
-        MethodDescriptor parsedDescriptor = new MethodDescriptor(descriptor);
-        for (String paramType : parsedDescriptor.getParamTypes()) {
-            slotCount++;
-            if (paramType.equals(DescriptorFlag.LONG_FLAG) || paramType.equals(DescriptorFlag.DOUBLE_FLAG)) {
-                slotCount++;
-            }
-        }
-        // 非静态方法，需要多预留一个槽保存this引用
-        if (!isStatic()) {
-            slotCount++;
-        }
-        return slotCount;
-    }
 }

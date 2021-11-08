@@ -10,6 +10,7 @@ import indi.pancras.jvm.classfile.ClassReader;
 import indi.pancras.jvm.classpath.Classpath;
 import indi.pancras.jvm.rtda.heap.Field;
 import indi.pancras.jvm.rtda.heap.JClass;
+import indi.pancras.jvm.utils.SlotsUtil;
 
 public class JClassLoader {
     private static final String OBJECT_CLASS_NAME = "java/lang/Object";
@@ -151,28 +152,28 @@ public class JClassLoader {
             if (field.isStatic() && field.isFinal()) {
                 int index = field.getConstValueIndex();
                 int slotId = field.getSlotId();
+                Slot[] slots = clazz.getStaticFields();
                 if (index > 0) {
-                    switch (field.getDescriptor()) {
+                    switch (field.getDescriptor().charAt(0)) {
                         case DescriptorFlag.BOOLEAN_FLAG:
                         case DescriptorFlag.BYTE_FLAG:
                         case DescriptorFlag.CHAR_FLAG:
                         case DescriptorFlag.SHORT_FLAG:
                         case DescriptorFlag.INT_FLAG:
-                            clazz.setInt(slotId, pool.getInt(index));
+                            SlotsUtil.setInt(slots, slotId, pool.getInt(index));
                             break;
                         case DescriptorFlag.FLOAT_FLAG:
-                            clazz.setFloat(slotId, pool.getFloat(index));
+                            SlotsUtil.setFloat(slots, slotId, pool.getFloat(index));
                             break;
                         case DescriptorFlag.LONG_FLAG:
-                            clazz.setLong(slotId, pool.getLong(index));
+                            SlotsUtil.setLong(slots, slotId, pool.getLong(index));
                             break;
                         case DescriptorFlag.DOUBLE_FLAG:
-                            clazz.setDouble(slotId, pool.getDouble(index));
+                            SlotsUtil.setDouble(slots, slotId, pool.getDouble(index));
                             break;
                         case DescriptorFlag.OBJECT_FLAG:
-                            break;
                         default:
-                            break;
+                            throw new RuntimeException("Not implemented.");
                     }
                 }
             }

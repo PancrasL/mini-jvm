@@ -12,6 +12,16 @@ public class OperandStack {
         top = 0;
     }
 
+    /**
+     * 返回距离操作数栈顶开始的第count个引用（如0返回栈顶元素，1返回栈顶下面的元素）
+     *
+     * @param count count
+     * @return reference or null
+     */
+    public Reference getRefFromTop(int count) {
+        return count < top ? null : slots[top - count - 1].getRef();
+    }
+
     public void pushInt(int value) {
         slots[top++] = new Slot(value);
     }

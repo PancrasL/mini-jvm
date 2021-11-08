@@ -51,6 +51,9 @@ public class LocalVars {
         return SlotsUtil.getRef(slots, index);
     }
 
+    public void setSlot(int index, Slot slot){
+        SlotsUtil.setSlot(slots, index, slot);
+    }
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

@@ -58,4 +58,7 @@ public class SlotsUtil {
         return slots[index].getRef();
     }
 
+    public static void setSlot(Slot[] slots, int index, Slot slot) {
+        slots[index] = slot;
+    }
 }

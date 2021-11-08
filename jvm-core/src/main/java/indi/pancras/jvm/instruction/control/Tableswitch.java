@@ -43,7 +43,7 @@ public class Tableswitch extends BaseBranch {
         } else {
             offset = defaultOffset;
         }
-        JThread JThread = frame.getJThread();
-        JThread.setPc(offset);
+        JThread thread = frame.getThread();
+        thread.setPc(offset);
     }
 }

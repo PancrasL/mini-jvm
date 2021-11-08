@@ -17,7 +17,7 @@ public class Freturn extends BaseNoOperands {
 
     @Override
     public void execute(Frame frame) {
-        JThread thread = frame.getJThread();
+        JThread thread = frame.getThread();
         Frame currentFrame = thread.popFrame();
         Frame invokerFrame = thread.topFrame();
         float val = currentFrame.getOperandStack().popFloat();
