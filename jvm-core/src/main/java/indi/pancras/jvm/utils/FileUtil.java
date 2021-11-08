@@ -1,6 +1,9 @@
 package indi.pancras.jvm.utils;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -34,5 +37,9 @@ public class FileUtil {
             return new ArrayList<>(0);
         }
         return Arrays.asList(files);
+    }
+
+    public static byte[] readFile(String filename) throws IOException {
+        return Files.readAllBytes(Paths.get(filename));
     }
 }
