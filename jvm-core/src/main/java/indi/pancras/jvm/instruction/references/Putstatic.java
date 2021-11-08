@@ -1,6 +1,7 @@
 package indi.pancras.jvm.instruction.references;
 
 import indi.pancras.jvm.instruction.BaseIndex16;
+import indi.pancras.jvm.rtda.DescriptorFlag;
 import indi.pancras.jvm.rtda.stack.Frame;
 import indi.pancras.jvm.rtda.heap.Field;
 import indi.pancras.jvm.rtda.heap.JClass;
@@ -12,7 +13,7 @@ import indi.pancras.jvm.rtda.stack.OperandStack;
 /**
  * 给类的某个静态变量赋值，包含两个操作数：
  * <p>
- * 1. 属性的常量池索引（字节码） 2. 要赋值给静态变量的值（操作数栈）
+ * 1. 属性的常量池索引（字节码） 2. 变量值（操作数栈）
  * </p>
  */
 public class Putstatic extends BaseIndex16 {
@@ -57,29 +58,29 @@ public class Putstatic extends BaseIndex16 {
         OperandStack operandStack = frame.getOperandStack();
         switch (descriptor.charAt(0)) {
             // 占用1个槽
-            case 'Z':
-            case 'B':
-            case 'C':
-            case 'S':
-            case 'I':
+            case DescriptorFlag.BOOLEAN_FLAG:
+            case DescriptorFlag.BYTE_FLAG:
+            case DescriptorFlag.CHAR_FLAG:
+            case DescriptorFlag.SHORT_FLAG:
+            case DescriptorFlag.INT_FLAG:
                 clazz.setInt(slotId, operandStack.popInt());
                 break;
-            case 'F':
+            case DescriptorFlag.FLOAT_FLAG:
                 clazz.setFloat(slotId, operandStack.popFloat());
                 break;
-            case 'L':
-            case '[':
+            case DescriptorFlag.OBJECT_FLAG:
+            case DescriptorFlag.ARRAY_FLAG:
                 clazz.setRef(slotId, operandStack.popRef());
                 break;
             // 占用2个槽
-            case 'J':
+            case DescriptorFlag.LONG_FLAG:
                 clazz.setLong(slotId, operandStack.popLong());
                 break;
-            case 'D':
+            case DescriptorFlag.DOUBLE_FLAG:
                 clazz.setDouble(slotId, operandStack.popDouble());
                 break;
             default:
-                throw new RuntimeException("Illegal descriptor: " + descriptor);
+                throw new VerifyError("Illegal descriptor: " + descriptor);
         }
     }
 }

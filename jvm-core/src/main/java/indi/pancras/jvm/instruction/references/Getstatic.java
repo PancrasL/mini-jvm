@@ -1,6 +1,7 @@
 package indi.pancras.jvm.instruction.references;
 
 import indi.pancras.jvm.instruction.BaseIndex16;
+import indi.pancras.jvm.rtda.DescriptorFlag;
 import indi.pancras.jvm.rtda.stack.Frame;
 import indi.pancras.jvm.rtda.heap.Field;
 import indi.pancras.jvm.rtda.heap.JClass;
@@ -45,29 +46,29 @@ public class Getstatic extends BaseIndex16 {
         OperandStack operandStack = frame.getOperandStack();
         switch (descriptor.charAt(0)) {
             // 占用1个槽
-            case 'Z':
-            case 'B':
-            case 'C':
-            case 'S':
-            case 'I':
+            case DescriptorFlag.BOOLEAN_FLAG:
+            case DescriptorFlag.BYTE_FLAG:
+            case DescriptorFlag.CHAR_FLAG:
+            case DescriptorFlag.SHORT_FLAG:
+            case DescriptorFlag.INT_FLAG:
                 operandStack.pushInt(clazz.getInt(slotId));
                 break;
-            case 'F':
+            case DescriptorFlag.FLOAT_FLAG:
                 operandStack.pushFloat(clazz.getFloat(slotId));
                 break;
-            case 'L':
-            case '[':
+            case DescriptorFlag.OBJECT_FLAG:
+            case DescriptorFlag.ARRAY_FLAG:
                 operandStack.pushRef(clazz.getRef(slotId));
                 break;
             // 占用2个槽
-            case 'J':
+            case DescriptorFlag.LONG_FLAG:
                 operandStack.pushLong(clazz.getLong(slotId));
                 break;
-            case 'D':
+            case DescriptorFlag.DOUBLE_FLAG:
                 operandStack.pushDouble(clazz.getDouble(slotId));
                 break;
             default:
-                throw new RuntimeException("Illegal descriptor: " + descriptor);
+                throw new VerifyError("Illegal descriptor: " + descriptor);
         }
     }
 }

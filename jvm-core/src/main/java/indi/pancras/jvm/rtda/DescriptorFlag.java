@@ -1,15 +1,15 @@
 package indi.pancras.jvm.rtda;
 
 public interface DescriptorFlag {
-    String VOID_FLAG = "V";
-    String BOOLEAN_FLAG = "Z";
-    String BYTE_FLAG = "B";
-    String CHAR_FLAG = "C";
-    String SHORT_FLAG = "S";
-    String INT_FLAG = "I";
-    String FLOAT_FLAG = "F";
-    String LONG_FLAG = "J";
-    String DOUBLE_FLAG = "D";
-    String OBJECT_FLAG = "L";
-    String ARRAY_FLAG = "[";
+    char VOID_FLAG = 'V';
+    char BOOLEAN_FLAG = 'Z';
+    char BYTE_FLAG = 'B';
+    char CHAR_FLAG = 'C';
+    char SHORT_FLAG = 'S';
+    char INT_FLAG = 'I';
+    char FLOAT_FLAG = 'F';
+    char LONG_FLAG = 'J';
+    char DOUBLE_FLAG = 'D';
+    char OBJECT_FLAG = 'L';
+    char ARRAY_FLAG = '[';
 }
