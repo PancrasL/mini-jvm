@@ -46,6 +46,8 @@ public class InterfaceMethodRef extends SymbolRef {
     }
 
     /**
+     * 在类c的接口中查找方法名为methodName，方法描述符为descriptor的方法
+     *
      * @return method or null
      */
     private Method lookupInterfaceMethod(JClass c, String methodName, String descriptor) {
