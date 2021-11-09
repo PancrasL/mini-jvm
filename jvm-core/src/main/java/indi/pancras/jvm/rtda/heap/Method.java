@@ -8,6 +8,7 @@ import lombok.Getter;
 
 @Getter
 public class Method {
+    // 方法所属于的类
     private final JClass clazz;
 
     private final short accessFlags;
@@ -63,6 +64,10 @@ public class Method {
             return clazz == other;
         }
         return clazz.getPackageName().equals(other.getPackageName());
+    }
+
+    public boolean isConstructor(){
+        return methodName.equals("<init>");
     }
 
     public boolean isPublic() {
