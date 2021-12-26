@@ -1,9 +1,12 @@
 package indi.pancras.jvm.rtda.symbolref;
 
-import indi.pancras.jvm.rtda.heap.JClass;
 import indi.pancras.jvm.rtda.RuntimeConstantPool;
+import indi.pancras.jvm.rtda.heap.JClass;
 
-public abstract class SymbolRef {
+/**
+ * @author PancrasL
+ */
+public abstract class BaseSymbolRef {
     /**
      * 符号引用所在的运行时常量池指针
      */
@@ -17,7 +20,7 @@ public abstract class SymbolRef {
      */
     protected JClass clazz;
 
-    public SymbolRef(RuntimeConstantPool pool, String className) {
+    public BaseSymbolRef(RuntimeConstantPool pool, String className) {
         this.pool = pool;
         this.className = className;
     }

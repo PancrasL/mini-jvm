@@ -7,10 +7,9 @@ import lombok.ToString;
 
 @ToString
 public class MethodDescriptor {
+    private final String descriptor;
     private String[] paramTypes;
     private String returnType;
-
-    private String descriptor;
     private int offset;
 
     public MethodDescriptor(String descriptor) {

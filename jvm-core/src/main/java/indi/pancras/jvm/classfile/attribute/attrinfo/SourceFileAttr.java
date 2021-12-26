@@ -5,7 +5,7 @@ import indi.pancras.jvm.classfile.attribute.BaseAttr;
 
 
 public class SourceFileAttr extends BaseAttr {
-    private short sourceFileIndex;
+    private final short sourceFileIndex;
 
     public SourceFileAttr(ClassReader reader) {
         sourceFileIndex = reader.readShort();

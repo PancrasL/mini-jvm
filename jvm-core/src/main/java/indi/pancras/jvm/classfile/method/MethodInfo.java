@@ -9,13 +9,13 @@ import lombok.Getter;
 
 @Getter
 public class MethodInfo {
-    private short accessFlags;
-    private short nameIndex;
-    private short descriptorIndex;
-    private BaseAttr[] attributes;
+    private final short accessFlags;
+    private final short nameIndex;
+    private final short descriptorIndex;
+    private final BaseAttr[] attributes;
 
-    private ClassReader reader;
-    private ConstantPool pool;
+    private final ClassReader reader;
+    private final ConstantPool pool;
 
     public MethodInfo(ClassReader reader, ConstantPool pool) {
         accessFlags = reader.readShort();

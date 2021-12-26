@@ -4,7 +4,7 @@ import indi.pancras.jvm.classfile.pool.BaseConstantInfo;
 
 
 public class StringInfo extends BaseConstantInfo {
-    private short stringIndex;
+    private final short stringIndex;
 
     public StringInfo(int tag, short stringIndex) {
         super(tag);

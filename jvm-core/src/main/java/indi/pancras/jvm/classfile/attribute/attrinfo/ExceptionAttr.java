@@ -5,7 +5,7 @@ import indi.pancras.jvm.classfile.attribute.BaseAttr;
 
 
 public class ExceptionAttr extends BaseAttr {
-    private short[] exceptionIndexTbl;
+    private final short[] exceptionIndexTbl;
 
     public ExceptionAttr(ClassReader reader) {
         short cnt = reader.readShort();

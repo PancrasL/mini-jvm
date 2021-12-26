@@ -1,10 +1,10 @@
 package indi.pancras.jvm.instruction.references;
 
 import indi.pancras.jvm.instruction.BaseIndex16;
-import indi.pancras.jvm.rtda.stack.Frame;
 import indi.pancras.jvm.rtda.Reference;
-import indi.pancras.jvm.rtda.heap.JClass;
 import indi.pancras.jvm.rtda.RuntimeConstantPool;
+import indi.pancras.jvm.rtda.heap.JClass;
+import indi.pancras.jvm.rtda.stack.Frame;
 import indi.pancras.jvm.rtda.stack.OperandStack;
 
 public class Checkcast extends BaseIndex16 {

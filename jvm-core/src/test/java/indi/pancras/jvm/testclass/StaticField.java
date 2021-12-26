@@ -18,8 +18,8 @@ public class StaticField implements Closeable {
     private static final String STRING_VAL = "hello";
     private static final Object OBJECT_VAL = new Date();
 
-    private int intValue = 100;
-    private double doubleValue = 10.5D;
+    private final int intValue = 100;
+    private final double doubleValue = 10.5D;
 
     public static void main(String[] args) {
         int a = 1;

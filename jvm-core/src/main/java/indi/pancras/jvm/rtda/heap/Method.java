@@ -14,11 +14,10 @@ public class Method {
     private final short accessFlags;
     private final String methodName;
     private final String descriptor;
-
+    private final int argSlotCount;
     private int maxStack;
     private int maxLocals;
     private byte[] code;
-    private final int argSlotCount;
 
     public Method(JClass clazz, MethodInfo info) {
         this.clazz = clazz;

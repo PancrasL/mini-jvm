@@ -1,8 +1,6 @@
 package indi.pancras.jvm.rtda.heap;
 
-import indi.pancras.jvm.rtda.Reference;
 import indi.pancras.jvm.rtda.Slot;
-import indi.pancras.jvm.utils.SlotsUtil;
 import lombok.Getter;
 
 @Getter

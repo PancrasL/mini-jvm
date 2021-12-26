@@ -5,7 +5,7 @@ import indi.pancras.jvm.classfile.attribute.BaseAttr;
 
 
 public class LineNumberTableAttr extends BaseAttr {
-    private LineNumberTableEntry[] lineNumberTable;
+    private final LineNumberTableEntry[] lineNumberTable;
 
     public LineNumberTableAttr(ClassReader reader) {
         short cnt = reader.readShort();

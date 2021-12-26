@@ -5,7 +5,7 @@ import indi.pancras.jvm.classfile.attribute.BaseAttr;
 
 
 public class LocalVariableTableAttr extends BaseAttr {
-    private LocalVariableTableEntry[] localVariableTbl;
+    private final LocalVariableTableEntry[] localVariableTbl;
 
     public LocalVariableTableAttr(ClassReader reader) {
         short cnt = reader.readShort();

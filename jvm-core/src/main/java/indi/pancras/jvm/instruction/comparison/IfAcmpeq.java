@@ -1,8 +1,8 @@
 package indi.pancras.jvm.instruction.comparison;
 
 import indi.pancras.jvm.instruction.BaseBranch;
-import indi.pancras.jvm.rtda.stack.Frame;
 import indi.pancras.jvm.rtda.Reference;
+import indi.pancras.jvm.rtda.stack.Frame;
 import indi.pancras.jvm.rtda.stack.OperandStack;
 
 public class IfAcmpeq extends BaseBranch {

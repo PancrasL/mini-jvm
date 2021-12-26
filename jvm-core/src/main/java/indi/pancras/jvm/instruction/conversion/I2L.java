@@ -18,6 +18,6 @@ public class I2L extends BaseNoOperands {
     @Override
     public void execute(Frame frame) {
         OperandStack operandStack = frame.getOperandStack();
-        operandStack.pushLong((long) operandStack.popInt());
+        operandStack.pushLong(operandStack.popInt());
     }
 }
