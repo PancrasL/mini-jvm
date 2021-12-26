@@ -98,7 +98,8 @@ public class JClass {
      * @return true or false
      */
     public boolean isAssignableFrom(JClass other) {
-        if (this.equals(other)) {
+        // 是同一个类对象
+        if (this == other) {
             return true;
         }
         // 判断该类是否为某个类的子类
@@ -119,7 +120,8 @@ public class JClass {
      */
     public boolean isSubClassOf(JClass other) {
         for (JClass c = this.superClass; c != null; c = c.superClass) {
-            if (c.equals(other)) {
+            // 是同一个类对象
+            if (c == other) {
                 return true;
             }
         }
@@ -136,7 +138,7 @@ public class JClass {
         // 从当前类的接口中、父类的接口中以及当前类的接口的父类接口中查找
         for (JClass c = this; c != null; c = c.superClass) {
             for (JClass iface : c.getInterfaces()) {
-                if (iface.equals(otheriFace) || iface.isSubInterfaceOf(otheriFace)) {
+                if (iface == otheriFace || iface.isSubInterfaceOf(otheriFace)) {
                     return true;
                 }
             }
@@ -152,7 +154,7 @@ public class JClass {
      */
     public boolean isSubInterfaceOf(JClass otheriFace) {
         for (JClass iface : interfaces) {
-            return iface.equals(otheriFace) || iface.isSubInterfaceOf(otheriFace);
+            return iface == otheriFace || iface.isSubInterfaceOf(otheriFace);
         }
         return false;
     }

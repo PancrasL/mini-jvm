@@ -31,7 +31,7 @@ public class Reference {
             return false;
         }
         Reference reference = (Reference) o;
-        return Objects.equals(target, reference.target);
+        return target == reference.target;
     }
 
     @Override
