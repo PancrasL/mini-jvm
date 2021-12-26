@@ -7,7 +7,7 @@ import indi.pancras.jvm.rtda.heap.Method;
 import indi.pancras.jvm.utils.LookupUtil;
 import lombok.Getter;
 
-public class MethodRef extends SymbolRef {
+public class MethodRef extends BaseSymbolRef {
     @Getter
     private final String methodName;
     @Getter

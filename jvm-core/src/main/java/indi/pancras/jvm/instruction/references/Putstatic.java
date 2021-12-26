@@ -19,7 +19,7 @@ import indi.pancras.jvm.utils.SlotsUtil;
  * </p>
  */
 public class Putstatic extends BaseIndex16 {
-    private static String CLINIT = "<clinit>";
+    private static final String CLINIT = "<clinit>";
 
     @Override
     public int getOpCode() {

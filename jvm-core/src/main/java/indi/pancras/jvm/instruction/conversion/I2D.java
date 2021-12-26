@@ -18,6 +18,6 @@ public class I2D extends BaseNoOperands {
     @Override
     public void execute(Frame frame) {
         OperandStack operandStack = frame.getOperandStack();
-        operandStack.pushDouble((double) operandStack.popInt());
+        operandStack.pushDouble(operandStack.popInt());
     }
 }

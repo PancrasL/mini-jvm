@@ -8,7 +8,7 @@ import indi.pancras.jvm.utils.LookupUtil;
 import lombok.Getter;
 
 @Getter
-public class InterfaceMethodRef extends SymbolRef {
+public class InterfaceMethodRef extends BaseSymbolRef {
     private final String methodName;
     private final String descriptor;
     private Method method;

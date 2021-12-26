@@ -1,8 +1,8 @@
 package indi.pancras.jvm.instruction.extend;
 
 import indi.pancras.jvm.instruction.BaseBranch;
-import indi.pancras.jvm.rtda.stack.Frame;
 import indi.pancras.jvm.rtda.Reference;
+import indi.pancras.jvm.rtda.stack.Frame;
 import indi.pancras.jvm.rtda.stack.OperandStack;
 
 public class Ifnull extends BaseBranch {

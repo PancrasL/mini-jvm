@@ -4,8 +4,8 @@ import indi.pancras.jvm.classfile.pool.BaseConstantInfo;
 
 
 public class InvokeDynamicInfo extends BaseConstantInfo {
-    private short bootstrapMethodAttrIndex;
-    private short nameAndTypeIndex;
+    private final short bootstrapMethodAttrIndex;
+    private final short nameAndTypeIndex;
 
     public InvokeDynamicInfo(int tag, short bootstrapMethodAttrIndex, short nameAndTypeIndex) {
         super(tag);

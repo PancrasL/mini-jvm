@@ -18,6 +18,6 @@ public class F2D extends BaseNoOperands {
     @Override
     public void execute(Frame frame) {
         OperandStack operandStack = frame.getOperandStack();
-        operandStack.pushDouble((double) operandStack.popFloat());
+        operandStack.pushDouble(operandStack.popFloat());
     }
 }

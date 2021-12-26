@@ -8,11 +8,9 @@ import indi.pancras.jvm.classfile.field.FieldInfo;
 import indi.pancras.jvm.classfile.method.MethodInfo;
 import indi.pancras.jvm.rtda.AccessFlag;
 import indi.pancras.jvm.rtda.JClassLoader;
-import indi.pancras.jvm.rtda.Reference;
 import indi.pancras.jvm.rtda.RuntimeConstantPool;
 import indi.pancras.jvm.rtda.Slot;
 import indi.pancras.jvm.utils.LookupUtil;
-import indi.pancras.jvm.utils.SlotsUtil;
 import lombok.Getter;
 import lombok.Setter;
 

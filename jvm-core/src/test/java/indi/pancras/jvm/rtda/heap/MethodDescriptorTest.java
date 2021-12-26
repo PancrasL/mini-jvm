@@ -2,7 +2,7 @@ package indi.pancras.jvm.rtda.heap;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MethodDescriptorTest {
 
@@ -16,7 +16,7 @@ class MethodDescriptorTest {
         String descriptor1 = "([[Ljava/lang/String;[CII[CIII)[Ljava/lang/String;";
         parsedDes = new MethodDescriptor(descriptor1);
         assertEquals(8, parsedDes.getParamTypes().length);
-        assertEquals("[Ljava/lang/String;",parsedDes.getReturnType());
+        assertEquals("[Ljava/lang/String;", parsedDes.getReturnType());
     }
 
 }

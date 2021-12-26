@@ -7,14 +7,14 @@ import lombok.Getter;
 
 @Getter
 public class CodeAttr extends BaseAttr {
-    private short maxStack;
-    private short maxLocals;
-    private byte[] code;
-    private ExceptionTableEntry[] exceptionTable;
-    private BaseAttr[] attributes;
+    private final short maxStack;
+    private final short maxLocals;
+    private final byte[] code;
+    private final ExceptionTableEntry[] exceptionTable;
+    private final BaseAttr[] attributes;
 
-    private ClassReader reader;
-    private ConstantPool pool;
+    private final ClassReader reader;
+    private final ConstantPool pool;
 
     public CodeAttr(ClassReader reader, ConstantPool pool) {
         maxStack = reader.readShort();
@@ -29,10 +29,10 @@ public class CodeAttr extends BaseAttr {
     }
 
     private static class ExceptionTableEntry {
-        private int startPc;
-        private int endPc;
-        private int handlerPc;
-        private int catchType;
+        private final int startPc;
+        private final int endPc;
+        private final int handlerPc;
+        private final int catchType;
 
         private ExceptionTableEntry(ClassReader reader) {
             this.startPc = reader.readShort();

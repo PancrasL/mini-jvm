@@ -1,11 +1,11 @@
 package indi.pancras.jvm.rtda.symbolref;
 
 import indi.pancras.jvm.classfile.pool.poolinfo.FieldRefInfo;
+import indi.pancras.jvm.rtda.RuntimeConstantPool;
 import indi.pancras.jvm.rtda.heap.Field;
 import indi.pancras.jvm.rtda.heap.JClass;
-import indi.pancras.jvm.rtda.RuntimeConstantPool;
 
-public class FieldRef extends SymbolRef {
+public class FieldRef extends BaseSymbolRef {
     private final String fieldName;
     private final String descriptor;
     private Field field;

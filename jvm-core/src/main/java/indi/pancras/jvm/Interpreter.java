@@ -3,9 +3,9 @@ package indi.pancras.jvm;
 import indi.pancras.jvm.instruction.BytecodeReader;
 import indi.pancras.jvm.instruction.Instruction;
 import indi.pancras.jvm.instruction.InstructionFactory;
-import indi.pancras.jvm.rtda.stack.Frame;
 import indi.pancras.jvm.rtda.JThread;
 import indi.pancras.jvm.rtda.heap.Method;
+import indi.pancras.jvm.rtda.stack.Frame;
 
 /**
  * 解释器，执行某个方法

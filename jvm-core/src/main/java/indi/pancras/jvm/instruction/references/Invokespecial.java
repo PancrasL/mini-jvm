@@ -28,14 +28,14 @@ public class Invokespecial extends BaseIndex16 {
         Method targetMethod = methodRef.getTargetMethod();
         JClass targetClazz = methodRef.getTargetClazz();
         // 如果从符号引用中解析出来的类是C，方法是M，如果方法是构造函数，则声明M的类必须是C
-        if (targetMethod.getMethodName().equals("<init>") && !targetMethod.getClazz().equals(methodRef.getTargetClazz())) {
+        if ("<init>".equals(targetMethod.getMethodName()) && !targetMethod.getClazz().equals(methodRef.getTargetClazz())) {
             throw new NoSuchMethodError();
         }
         if (targetMethod.isStatic()) {
             throw new IncompatibleClassChangeError();
         }
         Reference ref = frame.getOperandStack().getRefFromTop(targetMethod.getArgSlotCount());
-        if(ref.targetIsNull()){
+        if (ref.targetIsNull()) {
             throw new NullPointerException();
         }
     }

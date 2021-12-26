@@ -4,8 +4,8 @@ import indi.pancras.jvm.classfile.pool.BaseConstantInfo;
 
 
 public class MethodHandleInfo extends BaseConstantInfo {
-    private byte referenceKind;
-    private short referenceIndex;
+    private final byte referenceKind;
+    private final short referenceIndex;
 
     public MethodHandleInfo(int tag, byte referenceKind, short referenceIndex) {
         super(tag);
