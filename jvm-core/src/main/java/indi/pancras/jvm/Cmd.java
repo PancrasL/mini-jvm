@@ -17,19 +17,19 @@ import lombok.ToString;
 @ToString
 public class Cmd {
     @Parameter(names = {"-?", "-h", "--help"}, description = "print help info", help = true)
-    private final boolean helpFlag = false;
+    private boolean helpFlag = false;
 
     @Parameter(names = {"-v", "--version"}, description = "print version info")
-    private final boolean versionFlag = false;
+    private boolean versionFlag = false;
 
     @Parameter(names = {"-cp", "--classpath"}, description = "classpath option")
-    private final String classpath = "";
+    private String classpath = "";
 
     @Parameter(names = {"-jre", "--jreOption"}, description = "jre path option")
-    private final String jreOption = "";
+    private String jreOption = "";
 
     @Parameter(description = "main class and args")
-    private final List<String> mainClassAndArgs = new ArrayList<>();
+    private List<String> mainClassAndArgs = new ArrayList<>();
 
     public static Cmd parseCmd(String[] args) {
         Cmd cmd = new Cmd();
