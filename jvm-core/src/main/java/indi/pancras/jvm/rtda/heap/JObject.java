@@ -8,9 +8,9 @@ public class JObject {
     private final JClass clazz;
     private final Slot[] fields;
 
-    public JObject(JClass clazz, int slotCount) {
+    public JObject(JClass clazz) {
         this.clazz = clazz;
-        this.fields = new Slot[slotCount];
+        this.fields = new Slot[clazz.getInstanceSlotCount()];
     }
 
     /**

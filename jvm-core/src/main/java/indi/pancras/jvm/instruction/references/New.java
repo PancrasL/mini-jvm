@@ -34,7 +34,7 @@ public class New extends BaseIndex16 {
             throw new InstantiationError();
         }
         // 创建一个对象
-        JObject obj = new JObject(clazz, clazz.getInstanceSlotCount());
+        JObject obj = new JObject(clazz);
         // 创建该对象的引用
         Reference ref = new Reference(obj);
         // 引用入栈
