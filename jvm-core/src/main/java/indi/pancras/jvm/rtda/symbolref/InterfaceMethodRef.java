@@ -20,14 +20,14 @@ public class InterfaceMethodRef extends BaseSymbolRef {
         descriptor = nameAndType[1];
     }
 
-    public Method getTargetMethod() {
+    public Method resolvedMethod() {
         if (method == null) {
-            method = resolveMethodRef();
+            method = resolveInterfaceMethodRef();
         }
         return method;
     }
 
-    private Method resolveMethodRef() {
+    private Method resolveInterfaceMethodRef() {
         JClass d = pool.getClazz();
         JClass c = getTargetClazz();
 

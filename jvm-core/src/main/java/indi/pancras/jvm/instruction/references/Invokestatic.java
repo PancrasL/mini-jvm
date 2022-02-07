@@ -4,7 +4,7 @@ import indi.pancras.jvm.instruction.BaseIndex16;
 import indi.pancras.jvm.rtda.RuntimeConstantPool;
 import indi.pancras.jvm.rtda.heap.Method;
 import indi.pancras.jvm.rtda.stack.Frame;
-import indi.pancras.jvm.utils.InstructionUtil;
+import indi.pancras.jvm.instruction.base.MethodInvokeLogic;
 
 public class Invokestatic extends BaseIndex16 {
     @Override
@@ -20,10 +20,10 @@ public class Invokestatic extends BaseIndex16 {
     @Override
     public void execute(Frame frame) {
         RuntimeConstantPool pool = frame.getMethod().getClazz().getConstantPool();
-        Method method = pool.getMethodRef(index).getTargetMethod();
-        if (!method.isStatic()) {
+        Method method = pool.getMethodRef(index).resolvedMethod();
+        if (!method.isStatic()) {// method必须是静态方法
             throw new IncompatibleClassChangeError();
         }
-        InstructionUtil.invokeMethod(frame, method);
+        MethodInvokeLogic.invokeMethod(frame, method);
     }
 }

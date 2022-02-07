@@ -1,6 +1,7 @@
 package indi.pancras.jvm.instruction.references;
 
 import indi.pancras.jvm.instruction.BaseIndex16;
+import indi.pancras.jvm.instruction.base.ClassInitLogic;
 import indi.pancras.jvm.rtda.DescriptorFlag;
 import indi.pancras.jvm.rtda.RuntimeConstantPool;
 import indi.pancras.jvm.rtda.Slot;
@@ -41,7 +42,11 @@ public class Putstatic extends BaseIndex16 {
         FieldRef fieldRef = currentPool.getFieldRef(index);
         Field field = fieldRef.getTargetField();
         JClass clazz = field.getClazz();
-
+        if (!clazz.isInitStarted()) {
+            frame.revertNextPc();
+            ClassInitLogic.initClass(frame.getThread(), clazz);
+            return;
+        }
         // 2. 安全验证
         // 2.1 解析后的字段不是静态字段，抛出异常
         if (!field.isStatic()) {

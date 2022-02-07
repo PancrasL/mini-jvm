@@ -1,7 +1,7 @@
 package indi.pancras.jvm.instruction.extend;
 
 import indi.pancras.jvm.instruction.BaseBranch;
-import indi.pancras.jvm.instruction.BytecodeReader;
+import indi.pancras.jvm.instruction.base.BytecodeReader;
 import indi.pancras.jvm.rtda.stack.Frame;
 
 public class Gotow extends BaseBranch {

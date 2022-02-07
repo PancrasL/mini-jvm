@@ -1,4 +1,4 @@
-package indi.pancras.jvm.instruction;
+package indi.pancras.jvm.instruction.base;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,8 +8,10 @@ import lombok.Setter;
 @Setter
 public class BytecodeReader {
     private byte[] code;
-
     private int pc;
+
+    public BytecodeReader() {
+    }
 
     public BytecodeReader(byte[] code, int pc) {
         this.code = code;

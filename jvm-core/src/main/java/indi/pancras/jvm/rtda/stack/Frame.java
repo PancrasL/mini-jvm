@@ -24,6 +24,10 @@ public class Frame {
         this.operandStack = new OperandStack(method.getMaxStack());
     }
 
+    public void revertNextPc(){
+        this.nextPc = thread.getPc();
+    }
+
     @Override
     public String toString() {
         return "LocalVars: " + localVars +

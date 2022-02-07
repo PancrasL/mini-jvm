@@ -7,6 +7,7 @@ import indi.pancras.jvm.classfile.pool.poolinfo.DoubleInfo;
 import indi.pancras.jvm.classfile.pool.poolinfo.FieldRefInfo;
 import indi.pancras.jvm.classfile.pool.poolinfo.FloatInfo;
 import indi.pancras.jvm.classfile.pool.poolinfo.IntegerInfo;
+import indi.pancras.jvm.classfile.pool.poolinfo.InterfaceMethodRefInfo;
 import indi.pancras.jvm.classfile.pool.poolinfo.LongInfo;
 import indi.pancras.jvm.classfile.pool.poolinfo.MethodRefInfo;
 import indi.pancras.jvm.classfile.pool.poolinfo.NameAndTypeInfo;
@@ -15,6 +16,7 @@ import indi.pancras.jvm.classfile.pool.poolinfo.Utf8Info;
 import indi.pancras.jvm.rtda.heap.JClass;
 import indi.pancras.jvm.rtda.symbolref.ClassRef;
 import indi.pancras.jvm.rtda.symbolref.FieldRef;
+import indi.pancras.jvm.rtda.symbolref.InterfaceMethodRef;
 import indi.pancras.jvm.rtda.symbolref.MethodRef;
 
 /**
@@ -121,6 +123,14 @@ public class RuntimeConstantPool {
             return new MethodRef(this, (MethodRefInfo) info);
         }
         throw new RuntimeException("Illegal index, info is not MethodRefInfo");
+    }
+
+    public InterfaceMethodRef getInterfaceMethodRef(int index) {
+        BaseConstantInfo info = pool.getConstantInfo(index);
+        if (info instanceof InterfaceMethodRefInfo) {
+            return new InterfaceMethodRef(this, (InterfaceMethodRefInfo) info);
+        }
+        throw new RuntimeException("Illegal index, info is not InterfaceMethodRefInfo");
     }
 
     public String getConstantValueType(int index) {

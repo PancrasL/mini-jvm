@@ -1,5 +1,7 @@
 package indi.pancras.jvm.instruction;
 
+import indi.pancras.jvm.instruction.base.BytecodeReader;
+
 /**
  * 无操作数指令的基类
  *

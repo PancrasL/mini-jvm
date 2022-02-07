@@ -4,7 +4,6 @@ import java.io.File;
 
 import indi.pancras.jvm.classpath.impl.WildcardEntry;
 import indi.pancras.jvm.utils.FileUtil;
-import indi.pancras.jvm.utils.SystemUtil;
 
 public class Classpath {
     private Entry bootClasspath;
@@ -64,7 +63,7 @@ public class Classpath {
         } else if (FileUtil.dirExists("./jre")) {
             return "./jre";
         }
-        String javaHome = SystemUtil.getEnv("JAVA_HOME");
+        String javaHome = System.getenv("JAVA_HOME");
         if (javaHome != null) {
             return new File(javaHome, "/jre").getAbsolutePath();
         }

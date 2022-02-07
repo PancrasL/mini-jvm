@@ -1,6 +1,7 @@
 package indi.pancras.jvm.instruction.references;
 
 import indi.pancras.jvm.instruction.BaseIndex16;
+import indi.pancras.jvm.instruction.base.ClassInitLogic;
 import indi.pancras.jvm.rtda.DescriptorFlag;
 import indi.pancras.jvm.rtda.RuntimeConstantPool;
 import indi.pancras.jvm.rtda.Slot;
@@ -35,6 +36,11 @@ public class Getstatic extends BaseIndex16 {
         FieldRef fieldRef = currentPool.getFieldRef(index);
         Field field = fieldRef.getTargetField();
         JClass clazz = field.getClazz();
+        if (!clazz.isInitStarted()) {
+            frame.revertNextPc();
+            ClassInitLogic.initClass(frame.getThread(), clazz);
+            return;
+        }
 
         // 2. 安全验证
         // 2.1 解析后的字段不是静态字段，抛出异常
@@ -54,21 +60,21 @@ public class Getstatic extends BaseIndex16 {
             case DescriptorFlag.CHAR_FLAG:
             case DescriptorFlag.SHORT_FLAG:
             case DescriptorFlag.INT_FLAG:
-                operandStack.pushInt(SlotsUtil.getInt(slots, index));
+                operandStack.pushInt(SlotsUtil.getInt(slots, slotId));
                 break;
             case DescriptorFlag.FLOAT_FLAG:
-                operandStack.pushFloat(SlotsUtil.getFloat(slots, index));
+                operandStack.pushFloat(SlotsUtil.getFloat(slots, slotId));
                 break;
             case DescriptorFlag.OBJECT_FLAG:
             case DescriptorFlag.ARRAY_FLAG:
-                operandStack.pushRef(SlotsUtil.getRef(slots, index));
+                operandStack.pushRef(SlotsUtil.getRef(slots, slotId));
                 break;
             // 占用2个槽
             case DescriptorFlag.LONG_FLAG:
-                operandStack.pushLong(SlotsUtil.getLong(slots, index));
+                operandStack.pushLong(SlotsUtil.getLong(slots, slotId));
                 break;
             case DescriptorFlag.DOUBLE_FLAG:
-                operandStack.pushDouble(SlotsUtil.getDouble(slots, index));
+                operandStack.pushDouble(SlotsUtil.getDouble(slots, slotId));
                 break;
             default:
                 throw new VerifyError("Illegal descriptor: " + descriptor);

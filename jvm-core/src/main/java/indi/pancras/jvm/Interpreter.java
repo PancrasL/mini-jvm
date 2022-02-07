@@ -1,17 +1,18 @@
 package indi.pancras.jvm;
 
-import indi.pancras.jvm.instruction.BytecodeReader;
+import indi.pancras.jvm.instruction.base.BytecodeReader;
 import indi.pancras.jvm.instruction.Instruction;
 import indi.pancras.jvm.instruction.InstructionFactory;
 import indi.pancras.jvm.rtda.JThread;
 import indi.pancras.jvm.rtda.heap.Method;
 import indi.pancras.jvm.rtda.stack.Frame;
+import indi.pancras.jvm.rtda.stack.OperandStack;
 
 /**
  * 解释器，执行某个方法
  */
 public class Interpreter {
-    public static void execute(Method method) {
+    public static void interpret(Method method, boolean logInst) {
         if (method == null) {
             throw new IllegalArgumentException("Method is null");
         }
@@ -19,29 +20,43 @@ public class Interpreter {
         Frame frame = new Frame(thread, method);
         thread.pushFrame(frame);
 
-        executeCode(thread);
+        executeCode(thread, logInst);
     }
 
-    private static void executeCode(JThread thread) {
-        Frame frame = thread.popFrame();
-        byte[] code = frame.getMethod().getCode();
-        BytecodeReader reader = new BytecodeReader(code, frame.getNextPc());
-        int opCode;
-        do {
+    private static void executeCode(JThread thread, boolean logInst) {
+        BytecodeReader reader = new BytecodeReader();
+        while (!thread.isStackEmpty()) {
+            Frame frame = thread.topFrame();
             int pc = frame.getNextPc();
             thread.setPc(pc);
 
             // decode
-            reader.reset(code, pc);
-            opCode = reader.read8();
+            reader.reset(frame.getMethod().getCode(), pc);
+            int opCode = reader.read8();
             Instruction instruction = InstructionFactory.getByOpcode(opCode);
             instruction.fetchOperands(reader);
-            System.out.printf("pc: %d, opName: %s%n", frame.getNextPc(), instruction.getOpName());
             frame.setNextPc(reader.getPc());
-
+            // log
+            if (logInst) {
+                logInstruction(frame, instruction);
+            }
             // execute
             instruction.execute(frame);
-            System.out.println(frame);
-        } while (opCode != 0xb1);
+            //logOperandStack(frame);
+        }
+    }
+
+    private static void logInstruction(Frame frame, Instruction inst) {
+        Method method = frame.getMethod();
+        String className = method.getClazz().getClassName();
+        String methodName = method.getMethodName();
+        int pc = frame.getThread().getPc();
+        String msg = String.format("%s.%s # %2d %s\n", className, methodName, pc, inst.getOpName());
+        System.out.println(msg);
+    }
+
+    private static void logOperandStack(Frame frame){
+        OperandStack operandStack = frame.getOperandStack();
+        System.out.println(operandStack);
     }
 }
