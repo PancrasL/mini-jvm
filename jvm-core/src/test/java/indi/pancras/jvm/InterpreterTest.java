@@ -13,6 +13,18 @@ class InterpreterTest {
     JClassLoader classLoader = new JClassLoader(classpath);
 
     @Test
+    void testInvoke() {
+        String className = "indi.pancras.jvm.testclass.InvokeDemo";
+        excuteMain(className);
+    }
+
+    @Test
+    void testFibonacci(){
+        String className = "indi.pancras.jvm.testclass.FibonacciTest";
+        excuteMain(className);
+    }
+
+    @Test
     void testGaussSum() {
         String className = "indi.pancras.jvm.testclass.GaussSum";
         excuteMain(className);
@@ -37,7 +49,7 @@ class InterpreterTest {
         JClass mainClass = classLoader.loadClass(className);
         Method mainMethod = mainClass.getMainMethod();
         try {
-            Interpreter.execute(mainMethod);
+            Interpreter.interpret(mainMethod, true);
         } catch (RuntimeException e) {
             e.printStackTrace();
         }

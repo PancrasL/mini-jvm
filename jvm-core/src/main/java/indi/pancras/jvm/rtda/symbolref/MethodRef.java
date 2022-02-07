@@ -21,13 +21,15 @@ public class MethodRef extends BaseSymbolRef {
         descriptor = nameAndType[1];
     }
 
-    public Method getTargetMethod() {
+    public Method resolvedMethod() {
         if (method == null) {
             method = resolveMethodRef();
         }
         return method;
     }
 
+    // 在类d中调用c.method
+    // 需要保证d有权限访问c.method
     private Method resolveMethodRef() {
         JClass d = pool.getClazz();
         JClass c = getTargetClazz();

@@ -1,7 +1,7 @@
 package indi.pancras.jvm.instruction.constant;
 
 import indi.pancras.jvm.instruction.BaseNoOperands;
-import indi.pancras.jvm.instruction.BytecodeReader;
+import indi.pancras.jvm.instruction.base.BytecodeReader;
 import indi.pancras.jvm.rtda.stack.Frame;
 
 

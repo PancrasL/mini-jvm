@@ -191,7 +191,7 @@ public class JClassLoader {
     }
 
     private void resolveSuperClass(JClass clazz) {
-        if (!clazz.getSuperClassName().equals(OBJECT_CLASS_NAME)) {
+        if (!clazz.getClassName().equals(OBJECT_CLASS_NAME)) {
             JClass c = clazz.getClassLoader().loadClass(clazz.getSuperClassName());
             clazz.setSuperClass(c);
         }

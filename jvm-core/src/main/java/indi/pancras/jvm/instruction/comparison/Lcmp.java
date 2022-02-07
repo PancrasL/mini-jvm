@@ -20,7 +20,7 @@ public class Lcmp extends BaseNoOperands {
         OperandStack operandStack = frame.getOperandStack();
         long v2 = operandStack.popLong();
         long v1 = operandStack.popLong();
-        if (v1 < v2) {
+        if (v1 > v2) {
             operandStack.pushInt(1);
         } else if (v1 == v2) {
             operandStack.pushInt(0);

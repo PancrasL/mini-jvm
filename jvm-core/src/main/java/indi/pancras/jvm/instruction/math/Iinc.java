@@ -1,7 +1,7 @@
 package indi.pancras.jvm.instruction.math;
 
 import indi.pancras.jvm.instruction.BaseIndex8;
-import indi.pancras.jvm.instruction.BytecodeReader;
+import indi.pancras.jvm.instruction.base.BytecodeReader;
 import indi.pancras.jvm.rtda.stack.Frame;
 import indi.pancras.jvm.rtda.stack.LocalVars;
 import lombok.Setter;

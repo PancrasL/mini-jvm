@@ -38,6 +38,9 @@ public class ClassFile {
     }
 
     public String getSuperClassName() {
+        if (superClassIndex == 0) {// java.lang.Object没有父类
+            return "";
+        }
         ClassInfo info = (ClassInfo) constantPool.getConstantInfo(superClassIndex);
         return constantPool.getUtf8(info.getClassNameIndex());
     }

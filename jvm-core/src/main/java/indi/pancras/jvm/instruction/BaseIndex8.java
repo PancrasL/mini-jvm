@@ -1,5 +1,6 @@
 package indi.pancras.jvm.instruction;
 
+import indi.pancras.jvm.instruction.base.BytecodeReader;
 import lombok.Setter;
 
 /**

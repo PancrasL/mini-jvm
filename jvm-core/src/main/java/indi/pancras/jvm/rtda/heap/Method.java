@@ -8,6 +8,7 @@ import lombok.Getter;
 
 @Getter
 public class Method {
+    // 方法所属于的类
     private final JClass clazz;
 
     private final short accessFlags;
@@ -33,6 +34,10 @@ public class Method {
         argSlotCount = calArgSlotCount();
     }
 
+    /**
+     * 计算方法的参数在局部变量表中占用多少位置，特别地，需要为非静态方法预留一个this参数位置
+     * @return
+     */
     private int calArgSlotCount() {
         int slotCount = 0;
         MethodDescriptor parsedDescriptor = new MethodDescriptor(descriptor);
@@ -62,6 +67,10 @@ public class Method {
             return clazz == other;
         }
         return clazz.getPackageName().equals(other.getPackageName());
+    }
+
+    public boolean isConstructor(){
+        return methodName.equals("<init>");
     }
 
     public boolean isPublic() {
@@ -112,4 +121,12 @@ public class Method {
         return (accessFlags & AccessFlag.ACC_STRICT) != 0;
     }
 
+    @Override
+    public String toString() {
+        return "Method{" +
+                "clazz=" + clazz +
+                ", methodName='" + methodName + '\'' +
+                ", descriptor='" + descriptor + '\'' +
+                '}';
+    }
 }

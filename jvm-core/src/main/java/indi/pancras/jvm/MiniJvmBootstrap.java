@@ -24,6 +24,6 @@ public class MiniJvmBootstrap {
         JClass mainClass = classLoader.loadClass(cmd.getMainClass());
         Method mainMethod = mainClass.getMainMethod();
 
-        Interpreter.execute(mainMethod);
+        Interpreter.interpret(mainMethod, true);
     }
 }

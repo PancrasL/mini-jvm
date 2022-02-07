@@ -37,4 +37,8 @@ public class JThread {
     public Frame topFrame() {
         return stack.peek();
     }
+
+    public boolean isStackEmpty(){
+        return stack.isEmpty();
+    }
 }

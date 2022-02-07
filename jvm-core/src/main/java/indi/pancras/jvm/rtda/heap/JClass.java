@@ -43,6 +43,9 @@ public class JClass {
     private int staticSlotCount;
     @Setter
     private Slot[] staticFields;
+    // 标识类是否被初始化
+    @Setter
+    private boolean initStarted;
 
     public JClass(ClassFile classFile) {
         this.classFile = classFile;
@@ -65,7 +68,6 @@ public class JClass {
         }
         this.constantPool = new RuntimeConstantPool(this, classFile.getConstantPool());
     }
-
 
     public String getPackageName() {
         int i = className.lastIndexOf('/');
@@ -190,5 +192,20 @@ public class JClass {
 
     public boolean isEnum() {
         return (accessFlags & AccessFlag.ACC_ENUM) != 0;
+    }
+
+    public boolean isSuperClassOf(JClass other) {
+        return other.isSubClassOf(this);
+    }
+
+    @Override
+    public String toString() {
+        return "JClass{" +
+                "className='" + className + '\'' +
+                '}';
+    }
+
+    public Method getClinitMethod() {
+        return getStaticMethod("<clinit>", "()V");
     }
 }
