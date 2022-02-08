@@ -1,10 +1,12 @@
 package indi.pancras.jvm.instruction.store;
 
-import indi.pancras.jvm.instruction.BaseIndex8;
+import indi.pancras.jvm.instruction.BaseNoOperands;
+import indi.pancras.jvm.rtda.Reference;
 import indi.pancras.jvm.rtda.stack.Frame;
+import indi.pancras.jvm.rtda.stack.OperandStack;
 
 
-public class FAstore extends BaseIndex8 {
+public class FAstore extends BaseNoOperands {
     @Override
     public int getOpCode() {
         return 0x51;
@@ -17,6 +19,11 @@ public class FAstore extends BaseIndex8 {
 
     @Override
     public void execute(Frame frame) {
-        throw new RuntimeException("Not implement: " + getOpName());
+        OperandStack stack = frame.getOperandStack();
+        float val = stack.popFloat();
+        int index = stack.popInt();
+        Reference ref = stack.popRef();
+
+        ref.getTarget().floats()[index] = val;
     }
 }

@@ -30,7 +30,7 @@ public class FieldRef extends BaseSymbolRef {
         // 如果字段查找失败，则虚拟机抛出NoSuchFieldError异常。
         // 如果查找成功，但D没有足够的权限访问该字段，则虚拟机抛出IllegalAccessError异常。
         JClass d = pool.getClazz();
-        JClass c = getTargetClazz();
+        JClass c = resolvedClass();
         field = lookupField(c, fieldName, descriptor);
         if (field == null) {
             throw new NoSuchFieldError(fieldName + descriptor);

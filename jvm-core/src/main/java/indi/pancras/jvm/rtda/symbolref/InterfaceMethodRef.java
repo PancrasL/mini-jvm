@@ -29,7 +29,7 @@ public class InterfaceMethodRef extends BaseSymbolRef {
 
     private Method resolveInterfaceMethodRef() {
         JClass d = pool.getClazz();
-        JClass c = getTargetClazz();
+        JClass c = resolvedClass();
 
         if (!c.isInterface()) {
             throw new IncompatibleClassChangeError();

@@ -30,7 +30,7 @@ public class Checkcast extends BaseIndex16 {
 
         // 进行判断
         RuntimeConstantPool currentPool = frame.getMethod().getClazz().getConstantPool();
-        JClass clazz = currentPool.getClassRef(index).getTargetClazz();
+        JClass clazz = currentPool.getClassRef(index).resolvedClass();
         if (!ref.getTarget().isInstanceOf(clazz)) {
             throw new ClassCastException();
         }

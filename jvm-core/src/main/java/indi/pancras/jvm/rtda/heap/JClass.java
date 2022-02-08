@@ -1,13 +1,16 @@
 package indi.pancras.jvm.rtda.heap;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import indi.pancras.jvm.classfile.ClassFile;
 import indi.pancras.jvm.classfile.field.FieldInfo;
 import indi.pancras.jvm.classfile.method.MethodInfo;
 import indi.pancras.jvm.rtda.AccessFlag;
 import indi.pancras.jvm.rtda.JClassLoader;
+import indi.pancras.jvm.rtda.Reference;
 import indi.pancras.jvm.rtda.RuntimeConstantPool;
 import indi.pancras.jvm.rtda.Slot;
 import indi.pancras.jvm.utils.LookupUtil;
@@ -15,36 +18,30 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter
+@Setter
 public class JClass {
     /**
      * 通过ClassFile获取
      */
-    private final ClassFile classFile;
-    private final int accessFlags;
-    private final String className;
-    private final String superClassName;
-    private final List<String> interfaceNames;
-    private final List<Field> fields;
-    private final List<Method> methods;
-    private final RuntimeConstantPool constantPool;
+    private ClassFile classFile;
+    private int accessFlags;
+    private String className;
+    private String superClassName;
+    private List<String> interfaceNames;
+    private List<Field> fields;
+    private List<Method> methods;
+    private RuntimeConstantPool constantPool;
 
     /**
      * 需要外部注入
      */
-    @Setter
     private JClassLoader classLoader;
-    @Setter
     private JClass superClass;
-    @Setter
     private List<JClass> interfaces;
-    @Setter
     private int instanceSlotCount;
-    @Setter
     private int staticSlotCount;
-    @Setter
     private Slot[] staticFields;
     // 标识类是否被初始化
-    @Setter
     private boolean initStarted;
 
     public JClass(ClassFile classFile) {
@@ -67,6 +64,14 @@ public class JClass {
             methods.add(new Method(this, info));
         }
         this.constantPool = new RuntimeConstantPool(this, classFile.getConstantPool());
+    }
+
+    public JClass() {
+    }
+
+    // 创建一个当前类的空实例
+    public JObject newInstance() {
+        return new JObject(this);
     }
 
     public String getPackageName() {
@@ -207,5 +212,125 @@ public class JClass {
 
     public Method getClinitMethod() {
         return getStaticMethod("<clinit>", "()V");
+    }
+
+    public JObject newArray(int count) {
+        if (!this.isArray()) {
+            throw new RuntimeException("Not array class: " + className);
+        }
+        switch (className) {
+            case "[Z":
+                return new JObject(this, count, new byte[count]);
+            case "[B":
+                return new JObject(this, count, new byte[count]);
+            case "[C":
+                return new JObject(this, count, new char[count]);
+            case "[S":
+                return new JObject(this, count, new short[count]);
+            case "[I":
+                return new JObject(this, count, new int[count]);
+            case "[J":
+                return new JObject(this, count, new long[count]);
+            case "[F":
+                return new JObject(this, count, new float[count]);
+            case "[D":
+                return new JObject(this, count, new double[count]);
+            default:
+                return new JObject(this, count, new Reference[count]);
+        }
+    }
+
+    private boolean isArray() {
+        return className.charAt(0) == '[';
+    }
+
+    private static final Map<String, String> primitiveTypes = new HashMap<>();
+
+    static {
+        primitiveTypes.put("void", "V");
+        primitiveTypes.put("boolean", "Z");
+        primitiveTypes.put("byte", "B");
+        primitiveTypes.put("short", "S");
+        primitiveTypes.put("int", "I");
+        primitiveTypes.put("long", "J");
+        primitiveTypes.put("char", "C");
+        primitiveTypes.put("float", "F");
+        primitiveTypes.put("double", "D");
+    }
+
+    /**
+     * 返回与类对应的数组类
+     *
+     * @return clazz[]，clazz为当前类
+     */
+    public JClass arrayClass() {
+        String arrayClassName = getArrayClassName(className);
+        return classLoader.loadClass(arrayClassName);
+    }
+
+    private String getArrayClassName(String className) {
+        String descriptor;
+        // 如果是数组类名，描述符就是类名，直接返回
+        if (className.charAt(0) == '[') {
+            descriptor = className;
+        }
+        // 如果是基本类型名，返回对应的类型描述符
+        else if (primitiveTypes.containsKey(className)) {
+            descriptor = primitiveTypes.get(className);
+        }
+        // 普通类名，加上分号构成类型描述符
+        else {
+            descriptor = "L" + className + ";";
+        }
+        return "[" + descriptor;
+    }
+
+    /**
+     * 根据数组类型名推测出数组元素类名，然后用类加载器加载元素类
+     *
+     * @return
+     */
+    public JClass componentClass() {
+        String componentClassName = getComponentClassName(this.className);
+        return classLoader.loadClass(componentClassName);
+    }
+
+    private String getComponentClassName(String className) {
+        if (className.charAt(0) == '[') {
+            String componentTypeDescriptor = className.substring(1);
+            return toClassName(componentTypeDescriptor);
+        }
+        throw new RuntimeException("Not array: " + className);
+    }
+
+    private String toClassName(String descriptor) {
+        // array，如果以[开头，肯定是数组，描述符即是类名
+        if (descriptor.charAt(0) == '[') {
+            return descriptor;
+        }
+        // object，如果以L开头，肯定是类型描述符，去掉开头的L和结尾的分号
+        if (descriptor.charAt(0) == 'L') {
+            return descriptor.substring(1, descriptor.length() - 1);
+        }
+        // primitive
+        for (Map.Entry<String, String> entry : primitiveTypes.entrySet()) {
+            if (entry.getValue().equals(descriptor)) {
+                return entry.getKey();
+            }
+        }
+        throw new RuntimeException("Invalid descriptor: " + descriptor);
+    }
+
+    public Field getField(String name, String descriptor, boolean isStatic) {
+        for (JClass clazz = this; clazz != null; clazz = clazz.superClass) {
+            for (Field field : clazz.fields) {
+                if (field.isStatic() == isStatic
+                        && field.getFieldName().equals(name)
+                        && field.getDescriptor().equals(descriptor)) {
+                    return field;
+                }
+            }
+        }
+        return null;
     }
 }

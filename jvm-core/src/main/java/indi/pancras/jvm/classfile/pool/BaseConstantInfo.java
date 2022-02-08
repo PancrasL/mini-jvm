@@ -9,6 +9,7 @@ import indi.pancras.jvm.classfile.pool.poolinfo.IntegerInfo;
 import indi.pancras.jvm.classfile.pool.poolinfo.InterfaceMethodRefInfo;
 import indi.pancras.jvm.classfile.pool.poolinfo.InvokeDynamicInfo;
 import indi.pancras.jvm.classfile.pool.poolinfo.LongInfo;
+import indi.pancras.jvm.classfile.pool.poolinfo.MethodHandleInfo;
 import indi.pancras.jvm.classfile.pool.poolinfo.MethodRefInfo;
 import indi.pancras.jvm.classfile.pool.poolinfo.MethodTypeInfo;
 import indi.pancras.jvm.classfile.pool.poolinfo.NameAndTypeInfo;
@@ -77,8 +78,8 @@ public abstract class BaseConstantInfo {
             }
             case ConstantPoolTag.CONSTANT_TAG_METHODHANDLE: {
                 byte referenceKind = reader.readByte();
-                short referenceIndex = reader.readByte();
-                return new MethodRefInfo(tag, referenceKind, referenceIndex);
+                short referenceIndex = reader.readShort();
+                return new MethodHandleInfo(tag, referenceKind, referenceIndex);
             }
             case ConstantPoolTag.CONSTANT_TAG_METHODTYPE: {
                 short descriptorIndex = reader.readShort();
@@ -92,6 +93,6 @@ public abstract class BaseConstantInfo {
             default:
                 break;
         }
-        throw new ClassFormatError("Constant pool tag error!");
+        throw new ClassFormatError("Constant pool tag error!：" + tag);
     }
 }

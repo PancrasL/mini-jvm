@@ -32,7 +32,7 @@ public class MethodRef extends BaseSymbolRef {
     // 需要保证d有权限访问c.method
     private Method resolveMethodRef() {
         JClass d = pool.getClazz();
-        JClass c = getTargetClazz();
+        JClass c = resolvedClass();
 
         if (c.isInterface()) {
             throw new IncompatibleClassChangeError();

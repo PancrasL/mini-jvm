@@ -1,12 +1,12 @@
 package indi.pancras.jvm.instruction.references;
 
 import indi.pancras.jvm.instruction.BaseIndex16;
+import indi.pancras.jvm.instruction.base.MethodInvokeLogic;
 import indi.pancras.jvm.rtda.Reference;
 import indi.pancras.jvm.rtda.heap.JClass;
 import indi.pancras.jvm.rtda.heap.Method;
 import indi.pancras.jvm.rtda.stack.Frame;
 import indi.pancras.jvm.rtda.symbolref.MethodRef;
-import indi.pancras.jvm.instruction.base.MethodInvokeLogic;
 import indi.pancras.jvm.utils.LookupUtil;
 
 // 私有方法、初始化方法（<init>(),<clinit>())
@@ -29,7 +29,7 @@ public class Invokespecial extends BaseIndex16 {
 
         // 2. 获取待触发的方法
         Method targetMethod = methodRef.resolvedMethod();
-        JClass targetClazz = methodRef.getTargetClazz();
+        JClass targetClazz = methodRef.resolvedClass();
         // 3.1 构造方法，则声明该方法的类必须一致
         if (targetMethod.isConstructor()) {
             if (!targetMethod.getClazz().equals(targetClazz)) {

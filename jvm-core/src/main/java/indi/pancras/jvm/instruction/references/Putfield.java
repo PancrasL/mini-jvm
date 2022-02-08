@@ -64,7 +64,7 @@ public class Putfield extends BaseIndex16 {
                 if (ref.targetIsNull()) {
                     throw new NullPointerException();
                 }
-                SlotsUtil.setInt(ref.getTarget().getFields(), slotId, val);
+                SlotsUtil.setInt(ref.getTarget().getSlots(), slotId, val);
             }
             break;
             case DescriptorFlag.FLOAT_FLAG: {
@@ -73,7 +73,7 @@ public class Putfield extends BaseIndex16 {
                 if (ref.targetIsNull()) {
                     throw new NullPointerException();
                 }
-                SlotsUtil.setFloat(ref.getTarget().getFields(), slotId, val);
+                SlotsUtil.setFloat(ref.getTarget().getSlots(), slotId, val);
             }
             break;
             case DescriptorFlag.OBJECT_FLAG:
@@ -83,7 +83,7 @@ public class Putfield extends BaseIndex16 {
                 if (ref.targetIsNull()) {
                     throw new NullPointerException();
                 }
-                SlotsUtil.setRef(ref.getTarget().getFields(), slotId, val);
+                SlotsUtil.setRef(ref.getTarget().getSlots(), slotId, val);
             }
             break;
             // 占用2个槽
@@ -93,7 +93,7 @@ public class Putfield extends BaseIndex16 {
                 if (ref.targetIsNull()) {
                     throw new NullPointerException();
                 }
-                SlotsUtil.setLong(ref.getTarget().getFields(), slotId, val);
+                SlotsUtil.setLong(ref.getTarget().getSlots(), slotId, val);
             }
             break;
             case DescriptorFlag.DOUBLE_FLAG: {
@@ -102,7 +102,7 @@ public class Putfield extends BaseIndex16 {
                 if (ref.targetIsNull()) {
                     throw new NullPointerException();
                 }
-                SlotsUtil.setDouble(ref.getTarget().getFields(), slotId, val);
+                SlotsUtil.setDouble(ref.getTarget().getSlots(), slotId, val);
             }
             break;
             default:

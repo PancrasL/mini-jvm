@@ -1,10 +1,12 @@
 package indi.pancras.jvm.instruction.load;
 
-import indi.pancras.jvm.instruction.BaseIndex8;
+import indi.pancras.jvm.instruction.BaseNoOperands;
+import indi.pancras.jvm.rtda.Reference;
 import indi.pancras.jvm.rtda.stack.Frame;
+import indi.pancras.jvm.rtda.stack.OperandStack;
 
 
-public class DAload extends BaseIndex8 {
+public class DAload extends BaseNoOperands {
     @Override
     public int getOpCode() {
         return 0x31;
@@ -17,6 +19,9 @@ public class DAload extends BaseIndex8 {
 
     @Override
     public void execute(Frame frame) {
-        throw new RuntimeException("Not implement: " + getOpName());
+        OperandStack stack = frame.getOperandStack();
+        int index = stack.popInt();
+        Reference arrRef = stack.popRef();
+        stack.pushDouble(arrRef.getTarget().doubles()[index]);
     }
 }

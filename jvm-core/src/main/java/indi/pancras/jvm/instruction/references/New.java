@@ -23,7 +23,7 @@ public class New extends BaseIndex16 {
     public void execute(Frame frame) {
         // 通过int16的索引从常量池中取出类符号引用，进而通过符号引用获取到类变量
         RuntimeConstantPool pool = frame.getMethod().getClazz().getConstantPool();
-        JClass clazz = pool.getClassRef(index).getTargetClazz();
+        JClass clazz = pool.getClassRef(index).resolvedClass();
         if(!clazz.isInitStarted()){
             frame.revertNextPc();
             ClassInitLogic.initClass(frame.getThread(), clazz);

@@ -41,9 +41,6 @@ public class ConstantPool {
     }
 
     public BaseConstantInfo getConstantInfo(int index) {
-        if(index == 0){
-            System.out.println("zero");
-        }
         return constantInfos[index];
     }
 }

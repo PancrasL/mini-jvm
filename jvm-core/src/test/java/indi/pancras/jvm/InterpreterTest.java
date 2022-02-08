@@ -13,21 +13,39 @@ class InterpreterTest {
     JClassLoader classLoader = new JClassLoader(classpath);
 
     @Test
-    void testInvoke() {
-        String className = "indi.pancras.jvm.testclass.InvokeDemo";
-        excuteMain(className);
+    void testString() {
+        String className = "indi.pancras.jvm.testclass.StringTest";
+        excuteMain(className, false);
     }
 
     @Test
-    void testFibonacci(){
+    void testMultiarray() {
+        String className = "indi.pancras.jvm.testclass.MultiarrayTest";
+        excuteMain(className, false);
+    }
+
+    @Test
+    void testBubbleSort() {
+        String className = "indi.pancras.jvm.testclass.BubbleSortTest";
+        excuteMain(className, false);
+    }
+
+    @Test
+    void testInvoke() {
+        String className = "indi.pancras.jvm.testclass.InvokeDemo";
+        excuteMain(className, true);
+    }
+
+    @Test
+    void testFibonacci() {
         String className = "indi.pancras.jvm.testclass.FibonacciTest";
-        excuteMain(className);
+        excuteMain(className, false);
     }
 
     @Test
     void testGaussSum() {
         String className = "indi.pancras.jvm.testclass.GaussSum";
-        excuteMain(className);
+        excuteMain(className, true);
     }
 
     @Test
@@ -42,14 +60,14 @@ class InterpreterTest {
     @Test
     void testMyObject() {
         String className = "indi.pancras.jvm.testclass.MyObject";
-        excuteMain(className);
+        excuteMain(className, true);
     }
 
-    private void excuteMain(String className) {
+    private void excuteMain(String className, boolean logInst) {
         JClass mainClass = classLoader.loadClass(className);
         Method mainMethod = mainClass.getMainMethod();
         try {
-            Interpreter.interpret(mainMethod, true);
+            Interpreter.interpret(mainMethod, logInst);
         } catch (RuntimeException e) {
             e.printStackTrace();
         }

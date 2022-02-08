@@ -50,7 +50,7 @@ public class Getfield extends BaseIndex16 {
 
         String descriptor = field.getDescriptor();
         int slotId = field.getSlotId();
-        Slot[] slots = ref.getTarget().getFields();
+        Slot[] slots = ref.getTarget().getSlots();
         switch (descriptor.charAt(0)) {
             // 占用1个槽
             case DescriptorFlag.BOOLEAN_FLAG:

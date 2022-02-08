@@ -30,7 +30,7 @@ public abstract class BaseSymbolRef {
      *
      * @return 解析后的类变量
      */
-    public JClass getTargetClazz() {
+    public JClass resolvedClass() {
         if (clazz == null) {
             clazz = resolveClassRef();
         }

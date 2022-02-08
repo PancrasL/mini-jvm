@@ -73,12 +73,20 @@ public class RuntimeConstantPool {
         throw new RuntimeException("Illegal index, info is not DoubleInfo");
     }
 
+    public String getString(int index) {
+        BaseConstantInfo info = pool.getConstantInfo(index);
+        if (info instanceof StringInfo) {
+            return getUtf8(((StringInfo) info).getStringIndex());
+        }
+        throw new RuntimeException("Illegal index, info is not StringInfo: " + info);
+    }
+
     public String getUtf8(int index) {
         BaseConstantInfo info = pool.getConstantInfo(index);
         if (info instanceof Utf8Info) {
             return info.toString();
         }
-        throw new RuntimeException("Illegal index, info is not Utf8Info");
+        throw new RuntimeException("Illegal index, info is not Utf8Info: " + info);
     }
 
     public String getClassName(int index) {
@@ -86,7 +94,7 @@ public class RuntimeConstantPool {
         if (info instanceof ClassInfo) {
             return getUtf8(((ClassInfo) info).getClassNameIndex());
         }
-        throw new RuntimeException("Illegal index, info is not ClassInfo");
+        throw new RuntimeException("Illegal index, info is not ClassInfo: " + info);
     }
 
     public String[] getNameAndType(int index) {
@@ -98,7 +106,7 @@ public class RuntimeConstantPool {
             ss[1] = getUtf8(nameAndTypeInfo.getDescriptorIndex());
             return ss;
         }
-        throw new RuntimeException("Illegal index, info is not NameAndTypeInfo");
+        throw new RuntimeException("Illegal index, info is not NameAndTypeInfo: " + info);
     }
 
     public ClassRef getClassRef(int index) {
@@ -106,7 +114,7 @@ public class RuntimeConstantPool {
         if (info instanceof ClassInfo) {
             return new ClassRef(this, (ClassInfo) info);
         }
-        throw new RuntimeException("Illegal index, info is not ClassInfo");
+        throw new RuntimeException("Illegal index, info is not ClassInfo: " + info);
     }
 
     public FieldRef getFieldRef(int index) {
@@ -114,7 +122,7 @@ public class RuntimeConstantPool {
         if (info instanceof FieldRefInfo) {
             return new FieldRef(this, (FieldRefInfo) info);
         }
-        throw new RuntimeException("Illegal index, info is not FieldRefInfo");
+        throw new RuntimeException("Illegal index, info is not FieldRefInfo: " + info);
     }
 
     public MethodRef getMethodRef(int index) {
@@ -122,7 +130,7 @@ public class RuntimeConstantPool {
         if (info instanceof MethodRefInfo) {
             return new MethodRef(this, (MethodRefInfo) info);
         }
-        throw new RuntimeException("Illegal index, info is not MethodRefInfo");
+        throw new RuntimeException("Illegal index, info is not MethodRefInfo: " + info);
     }
 
     public InterfaceMethodRef getInterfaceMethodRef(int index) {
@@ -130,7 +138,7 @@ public class RuntimeConstantPool {
         if (info instanceof InterfaceMethodRefInfo) {
             return new InterfaceMethodRef(this, (InterfaceMethodRefInfo) info);
         }
-        throw new RuntimeException("Illegal index, info is not InterfaceMethodRefInfo");
+        throw new RuntimeException("Illegal index, info is not InterfaceMethodRefInfo: " + info);
     }
 
     public String getConstantValueType(int index) {

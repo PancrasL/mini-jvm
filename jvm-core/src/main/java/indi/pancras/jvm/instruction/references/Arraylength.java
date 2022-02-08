@@ -1,10 +1,11 @@
 package indi.pancras.jvm.instruction.references;
 
-import indi.pancras.jvm.instruction.base.BytecodeReader;
-import indi.pancras.jvm.instruction.Instruction;
+import indi.pancras.jvm.instruction.BaseNoOperands;
+import indi.pancras.jvm.rtda.Reference;
 import indi.pancras.jvm.rtda.stack.Frame;
+import indi.pancras.jvm.rtda.stack.OperandStack;
 
-public class Arraylength implements Instruction {
+public class Arraylength extends BaseNoOperands {
     @Override
     public int getOpCode() {
         return 0xbe;
@@ -16,12 +17,10 @@ public class Arraylength implements Instruction {
     }
 
     @Override
-    public void fetchOperands(BytecodeReader reader) {
-
-    }
-
-    @Override
     public void execute(Frame frame) {
-        throw new RuntimeException("Not implement: " + getOpName());
+        OperandStack stack = frame.getOperandStack();
+        Reference arrRef = stack.popRef();
+        int arrayLength = arrRef.getTarget().getArrayLength();
+        stack.pushInt(arrayLength);
     }
 }

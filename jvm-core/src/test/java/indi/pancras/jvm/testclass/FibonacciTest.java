@@ -3,7 +3,7 @@ package indi.pancras.jvm.testclass;
 public class FibonacciTest {
     public static void main(String[] args) {
         long x = fibonacci(30);
-        //System.out.println(x);
+        System.out.println(x);
     }
 
     private static long fibonacci(long n) {

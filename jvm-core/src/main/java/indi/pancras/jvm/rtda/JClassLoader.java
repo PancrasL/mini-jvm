@@ -1,6 +1,7 @@
 package indi.pancras.jvm.rtda;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,8 @@ import indi.pancras.jvm.classfile.ClassReader;
 import indi.pancras.jvm.classpath.Classpath;
 import indi.pancras.jvm.rtda.heap.Field;
 import indi.pancras.jvm.rtda.heap.JClass;
+import indi.pancras.jvm.rtda.heap.JObject;
+import indi.pancras.jvm.rtda.heap.StringPool;
 import indi.pancras.jvm.utils.SlotsUtil;
 
 public class JClassLoader {
@@ -33,8 +36,10 @@ public class JClassLoader {
         if (classMap.containsKey(className)) {
             return classMap.get(className);
         }
-        JClass clazz = loadNonArrayClass(className);
-        return clazz;
+        if (className.charAt(0) == '[') {
+            return loadArrayClass(className);
+        }
+        return loadNonArrayClass(className);
     }
 
     private JClass loadNonArrayClass(String className) {
@@ -43,10 +48,27 @@ public class JClassLoader {
         // 加载
         JClass clazz = defineClass(bytes);
         // 链接
-        if (className.contains("Static")) {
-            int a = 1;
-        }
         link(clazz);
+        return clazz;
+    }
+
+    private JClass loadArrayClass(String className) {
+        JClass clazz = new JClass();
+        clazz.setAccessFlags(AccessFlag.ACC_PUBLIC);
+        clazz.setClassName(className);
+        clazz.setClassLoader(this);
+        clazz.setSuperClassName("java.lang.Object");
+        clazz.setSuperClass(loadClass("java.lang.Object"));
+        clazz.setInterfaceNames(Arrays.asList(
+                "java.lang.Clonable",
+                "java.io.Serializable"
+        ));
+        clazz.setInterfaces(Arrays.asList(
+                this.loadClass("java.lang.Cloneable"),
+                this.loadClass("java.io.Serializable")
+        ));
+        clazz.setInitStarted(true);
+        classMap.put(className, clazz);
         return clazz;
     }
 
@@ -154,24 +176,27 @@ public class JClassLoader {
                 int slotId = field.getSlotId();
                 Slot[] slots = clazz.getStaticFields();
                 if (index > 0) {
-                    switch (field.getDescriptor().charAt(0)) {
-                        case DescriptorFlag.BOOLEAN_FLAG:
-                        case DescriptorFlag.BYTE_FLAG:
-                        case DescriptorFlag.CHAR_FLAG:
-                        case DescriptorFlag.SHORT_FLAG:
-                        case DescriptorFlag.INT_FLAG:
+                    switch (field.getDescriptor()) {
+                        case "Z":
+                        case "B":
+                        case "C":
+                        case "S":
+                        case "I":
                             SlotsUtil.setInt(slots, slotId, pool.getInt(index));
                             break;
-                        case DescriptorFlag.FLOAT_FLAG:
+                        case "F":
                             SlotsUtil.setFloat(slots, slotId, pool.getFloat(index));
                             break;
-                        case DescriptorFlag.LONG_FLAG:
+                        case "J":
                             SlotsUtil.setLong(slots, slotId, pool.getLong(index));
                             break;
-                        case DescriptorFlag.DOUBLE_FLAG:
+                        case "D":
                             SlotsUtil.setDouble(slots, slotId, pool.getDouble(index));
                             break;
-                        case DescriptorFlag.OBJECT_FLAG:
+                        case "Ljava/lang/String;":
+                            JObject jStr = StringPool.getJString(clazz.getClassLoader(), pool.getUtf8(index));
+                            SlotsUtil.setRef(slots, slotId, new Reference(jStr));
+                        case "L":
                         default:
                             throw new RuntimeException("Not implemented.");
                     }
