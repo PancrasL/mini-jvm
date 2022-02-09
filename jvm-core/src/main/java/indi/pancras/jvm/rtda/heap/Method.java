@@ -14,6 +14,7 @@ public class Method {
     private final short accessFlags;
     private final String methodName;
     private final String descriptor;
+    private final MethodDescriptor parsedDescriptor;
     private final int argSlotCount;
     private int maxStack;
     private int maxLocals;
@@ -24,6 +25,7 @@ public class Method {
         this.accessFlags = info.getAccessFlags();
         this.methodName = info.getName();
         this.descriptor = info.getDescriptor();
+        this.parsedDescriptor = new MethodDescriptor(descriptor);
         CodeAttr codeAttr = info.getCodeAttr();
         if (codeAttr != null) {
             this.maxStack = codeAttr.getMaxStack();
@@ -32,15 +34,43 @@ public class Method {
         }
         // 计算参数槽数量
         argSlotCount = calArgSlotCount();
+        if (this.isNative()) {
+            injectCodeAttribute(parsedDescriptor.getReturnType());
+        }
+    }
+
+    private void injectCodeAttribute(String returnType) {
+        maxStack = 4;
+        maxLocals = argSlotCount;
+        switch (returnType.charAt(0)) {
+            case 'V':
+                code = new byte[]{(byte) 0xfe, (byte) 0xb1}; // return
+                break;
+            case 'L':
+            case '[':
+                code = new byte[]{(byte) 0xfe, (byte) 0xb0}; // areturn
+                break;
+            case 'D':
+                code = new byte[]{(byte) 0xfe, (byte) 0xaf}; // dreturn
+                break;
+            case 'F':
+                code = new byte[]{(byte) 0xfe, (byte) 0xae};// freturn
+                break;
+            case 'J':
+                code = new byte[]{(byte) 0xfe, (byte) 0xad}; // lreturn
+                break;
+            default:
+                code = new byte[]{(byte) 0xfe, (byte) 0xac}; // ireturn
+        }
     }
 
     /**
      * 计算方法的参数在局部变量表中占用多少位置，特别地，需要为非静态方法预留一个this参数位置
+     *
      * @return
      */
     private int calArgSlotCount() {
         int slotCount = 0;
-        MethodDescriptor parsedDescriptor = new MethodDescriptor(descriptor);
         for (String paramType : parsedDescriptor.getParamTypes()) {
             slotCount++;
             if (paramType.charAt(0) == DescriptorFlag.LONG_FLAG || paramType.charAt(0) == DescriptorFlag.DOUBLE_FLAG) {
@@ -69,7 +99,7 @@ public class Method {
         return clazz.getPackageName().equals(other.getPackageName());
     }
 
-    public boolean isConstructor(){
+    public boolean isConstructor() {
         return methodName.equals("<init>");
     }
 

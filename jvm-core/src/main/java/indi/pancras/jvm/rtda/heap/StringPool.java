@@ -1,24 +1,33 @@
 package indi.pancras.jvm.rtda.heap;
 
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 import indi.pancras.jvm.rtda.JClassLoader;
 import indi.pancras.jvm.rtda.Reference;
 
 public class StringPool {
-    private static final HashMap<String, JObject> map = new HashMap<>();
+    private static final HashMap<String, Reference> map = new HashMap<>();
 
-    public static JObject getJString(JClassLoader loader, String rawStr) {
+    public static Reference getJString(JClassLoader loader, String rawStr) {
         if (map.containsKey(rawStr)) {
             return map.get(rawStr);
         }
-        byte[] bytes = rawStr.getBytes(StandardCharsets.UTF_8);
-        JObject jChars = new JObject(loader.loadClass("[C"), bytes.length, bytes);
+        char[] chars = rawStr.toCharArray();
+        JObject charArr = new JObject(loader.loadClass("[C"), chars.length, ArrayType.CHAR, chars);
 
         JObject jStr = loader.loadClass("java.lang.String").newInstance();
-        jStr.setRefVar("value", "[C", new Reference(jChars));
-        map.put(rawStr, jStr);
-        return jStr;
+        jStr.setFieldValue("value", "[C", new Reference(charArr));
+        Reference ref = new Reference(jStr);
+        map.put(rawStr, ref);
+        return ref;
+    }
+
+    public static Reference internString(JObject jStr) {
+        String s = new String(jStr.bytes());
+        if (map.containsKey(s)) {
+            return map.get(s);
+        }
+        map.put(s, new Reference(jStr));
+        return map.get(s);
     }
 }

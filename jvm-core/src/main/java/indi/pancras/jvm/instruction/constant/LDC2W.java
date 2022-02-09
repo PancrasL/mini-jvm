@@ -1,6 +1,7 @@
 package indi.pancras.jvm.instruction.constant;
 
 import indi.pancras.jvm.instruction.BaseIndex16;
+import indi.pancras.jvm.rtda.ConstantValueType;
 import indi.pancras.jvm.rtda.RuntimeConstantPool;
 import indi.pancras.jvm.rtda.stack.Frame;
 import indi.pancras.jvm.rtda.stack.OperandStack;
@@ -21,12 +22,12 @@ public class LDC2W extends BaseIndex16 {
     public void execute(Frame frame) {
         OperandStack operandStack = frame.getOperandStack();
         RuntimeConstantPool pool = frame.getMethod().getClazz().getConstantPool();
-        String type = pool.getConstantValueType(index);
+        ConstantValueType type = pool.getConstantValueType(index);
         switch (type) {
-            case "long":
+            case LONG:
                 operandStack.pushLong(pool.getLong(index));
                 break;
-            case "double":
+            case DOUBLE:
                 operandStack.pushDouble(pool.getDouble(index));
                 break;
             default:

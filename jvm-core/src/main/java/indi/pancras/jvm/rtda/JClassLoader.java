@@ -11,6 +11,7 @@ import indi.pancras.jvm.classfile.ClassReader;
 import indi.pancras.jvm.classpath.Classpath;
 import indi.pancras.jvm.rtda.heap.Field;
 import indi.pancras.jvm.rtda.heap.JClass;
+import indi.pancras.jvm.rtda.heap.JClassNameHelper;
 import indi.pancras.jvm.rtda.heap.JObject;
 import indi.pancras.jvm.rtda.heap.StringPool;
 import indi.pancras.jvm.utils.SlotsUtil;
@@ -26,20 +27,68 @@ public class JClassLoader {
     public JClassLoader(Classpath classpath) {
         this.classpath = classpath;
         this.classMap = new HashMap<>();
+        loadBasicClasses();
+        loadPrimitiveClasses();
     }
 
     /**
-     * @param className 类的全限定名，形如java.lang.String或者java/lang/String
+     * 加载java.lang.Class类，及其父类java.lang.Object
+     */
+    private void loadBasicClasses() {
+        // 将每一个加载到方法区中的类都和一个类对象关联
+        JClass jlClassClass = loadClass("java.lang.Class");
+        for (JClass clazz : classMap.values()) {
+            if (clazz.getClazzObj() == null) {// 如果当前类没有关联类对象，则将该类关联到一个Class对象
+                JObject clazzObj = jlClassClass.newInstance();
+                clazzObj.setExtra(clazz);
+                clazz.setClazzObj(new Reference(clazzObj));
+            }
+        }
+    }
+
+    /**
+     * 加载void、int、short等基本数据类型的类
+     */
+    private void loadPrimitiveClasses() {
+        for (String type : JClassNameHelper.primitiveTypes.keySet()) {
+            loadPrimitiveClass(type);
+        }
+    }
+
+    private void loadPrimitiveClass(String type) {
+        JClass primitiveClass = new JClass();
+        primitiveClass.setAccessFlags(AccessFlag.ACC_PUBLIC);
+        primitiveClass.setClassName(type);
+        primitiveClass.setClassLoader(this);
+        primitiveClass.setInitStarted(true);
+        JObject classObj = classMap.get("java/lang/Class").newInstance();
+        classObj.setExtra(primitiveClass);
+        primitiveClass.setClazzObj(new Reference(classObj));
+        classMap.put(type, primitiveClass);
+    }
+
+    /**
+     * @param className 类的全限定名，形如java.lang.String
      * @return 类变量
      */
     public JClass loadClass(String className) {
-        if (classMap.containsKey(className)) {
+        className = className.replace('.', '/');
+        if (classMap.containsKey(className)) {// already loaded
             return classMap.get(className);
         }
-        if (className.charAt(0) == '[') {
-            return loadArrayClass(className);
+        JClass clazz;
+        if (className.charAt(0) == '[') {// array class
+            clazz = loadArrayClass(className);
+        } else {
+            clazz = loadNonArrayClass(className);// non array class
         }
-        return loadNonArrayClass(className);
+        if (classMap.containsKey("java/lang/Class")) {// 为当前加载的类关联上类对象
+            JClass jlClassClass = classMap.get("java/lang/Class");
+            JObject classObj = jlClassClass.newInstance();
+            classObj.setExtra(clazz);
+            clazz.setClazzObj(new Reference(classObj));
+        }
+        return clazz;
     }
 
     private JClass loadNonArrayClass(String className) {
@@ -194,11 +243,12 @@ public class JClassLoader {
                             SlotsUtil.setDouble(slots, slotId, pool.getDouble(index));
                             break;
                         case "Ljava/lang/String;":
-                            JObject jStr = StringPool.getJString(clazz.getClassLoader(), pool.getUtf8(index));
-                            SlotsUtil.setRef(slots, slotId, new Reference(jStr));
+                            Reference jStr = StringPool.getJString(clazz.getClassLoader(), pool.getString(index));
+                            SlotsUtil.setRef(slots, slotId, jStr);
+                            break;
                         case "L":
                         default:
-                            throw new RuntimeException("Not implemented.");
+                            throw new RuntimeException("Not implemented: " + field.getDescriptor());
                     }
                 }
             }

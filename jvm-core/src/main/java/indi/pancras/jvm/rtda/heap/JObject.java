@@ -4,24 +4,40 @@ import indi.pancras.jvm.rtda.Reference;
 import indi.pancras.jvm.rtda.Slot;
 import indi.pancras.jvm.utils.SlotsUtil;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 public class JObject {
-    // 标识是否为数组对象
-    private final boolean isArrObj;
-
+    /**
+     * 普通对象
+     */
+    // 类指针
     private final JClass clazz;
     // 属性值
     private final Slot[] slots;
-    // 数组对象该字段有效
+    /**
+     * 数组对象
+     */
     private final Object data;
+    private final ArrayType type;
     private final int arrayLength;
+
+    /**
+     * JObject实例的额外信息
+     */
+    // 当JObject是类对象时，extra指向该类JClass。
+    // 例如，java.lang.Object的类对象，clazz指向java.lang.Class，extra指向java.lang.Object
+    @Setter
+    private JClass extra;
 
     public JObject(JClass clazz) {
         this.clazz = clazz;
         this.slots = new Slot[clazz.getInstanceSlotCount()];
+        for (int i = 0; i < slots.length; i++) {
+            slots[i] = new Slot();
+        }
 
-        this.isArrObj = false;
+        this.type = ArrayType.NONE_ARRAY;
         this.data = null;
         this.arrayLength = -1;
     }
@@ -39,8 +55,8 @@ public class JObject {
     /**
      * 数组对象的相关方法
      */
-    public JObject(JClass clazz, int arrayLength, Object data) {
-        this.isArrObj = true;
+    public JObject(JClass clazz, int arrayLength, ArrayType type, Object data) {
+        this.type = type;
         this.clazz = clazz;
         this.arrayLength = arrayLength;
         this.data = data;
@@ -80,19 +96,19 @@ public class JObject {
     }
 
     public int getArrayLength() {
-        if (!isArrObj) {
+        if (type == ArrayType.NONE_ARRAY) {
             throw new RuntimeException("Obj is not array.");
         }
         return arrayLength;
     }
 
     // reflection
-    public Reference getRefVar(String name, String descriptor) {
+    public Reference getFieldValue(String name, String descriptor) {
         Field field = clazz.getField(name, descriptor, false);
         return SlotsUtil.getRef(slots, field.getSlotId());
     }
 
-    public void setRefVar(String name, String descriptor, Reference ref) {
+    public void setFieldValue(String name, String descriptor, Reference ref) {
         Field field = clazz.getField(name, descriptor, false);
         SlotsUtil.setRef(slots, field.getSlotId(), ref);
     }

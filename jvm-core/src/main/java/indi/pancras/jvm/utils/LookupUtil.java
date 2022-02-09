@@ -23,6 +23,7 @@ public class LookupUtil {
                 return method;
             }
         }
+
         return recur ? lookupMethodInClass(clazz.getSuperClass(), methodName, descriptor, true) : null;
     }
 

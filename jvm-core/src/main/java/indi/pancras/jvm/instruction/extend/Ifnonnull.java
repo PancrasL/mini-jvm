@@ -20,7 +20,7 @@ public class Ifnonnull extends BaseBranch {
     public void execute(Frame frame) {
         OperandStack operandStack = frame.getOperandStack();
         Reference obj = operandStack.popRef();
-        if (!obj.targetIsNull()) {
+        if (obj != null && !obj.targetIsNull()) {
             branch(frame, offset);
         }
     }

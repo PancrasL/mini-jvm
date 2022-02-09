@@ -40,7 +40,7 @@ public class Invokevirtual extends BaseIndex16 {
             }
             throw new NullPointerException("ref is null");
         }
-        Method methodToBeInvoked = LookupUtil.lookupMethodInClass(currentClazz, methodRef.getMethodName(), methodRef.getDescriptor(), true);
+        Method methodToBeInvoked = LookupUtil.lookupMethodInClass(ref.getTarget().getClazz(), methodRef.getMethodName(), methodRef.getDescriptor(), true);
         MethodInvokeLogic.invokeMethod(frame, methodToBeInvoked);
     }
 
@@ -68,7 +68,7 @@ public class Invokevirtual extends BaseIndex16 {
                 break;
             case "(Ljava/lang/String;)V":
                 JObject jStr = stack.popRef().getTarget();
-                byte[] values = jStr.getRefVar("value", "[C").getTarget().bytes();
+                byte[] values = jStr.getFieldValue("value", "[C").getTarget().bytes();
                 String s = new String(values);
                 System.out.println(s);
                 break;

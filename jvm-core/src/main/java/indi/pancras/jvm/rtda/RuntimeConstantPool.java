@@ -141,20 +141,20 @@ public class RuntimeConstantPool {
         throw new RuntimeException("Illegal index, info is not InterfaceMethodRefInfo: " + info);
     }
 
-    public String getConstantValueType(int index) {
+    public ConstantValueType getConstantValueType(int index) {
         BaseConstantInfo constantInfo = pool.getConstantInfo(index);
         if (constantInfo instanceof IntegerInfo) {
-            return "int";
+            return ConstantValueType.INT;
         } else if (constantInfo instanceof LongInfo) {
-            return "long";
+            return ConstantValueType.LONG;
         } else if (constantInfo instanceof FloatInfo) {
-            return "float";
+            return ConstantValueType.FLOAT;
         } else if (constantInfo instanceof DoubleInfo) {
-            return "double";
+            return ConstantValueType.DOUBLE;
         } else if (constantInfo instanceof StringInfo) {
-            return "string";
+            return ConstantValueType.STRING;
         } else if (constantInfo instanceof ClassInfo) {
-            return "ref";
+            return ConstantValueType.REF;
         }
         throw new RuntimeException("Not value type");
     }

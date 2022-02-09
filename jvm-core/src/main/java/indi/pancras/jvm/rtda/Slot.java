@@ -5,6 +5,12 @@ public class Slot {
     private final Reference ref;
     private final boolean isRef;
 
+    public Slot() {
+        val = 0;
+        ref = null;
+        isRef = false;
+    }
+
     public Slot(int val) {
         this.val = val;
         this.ref = null;

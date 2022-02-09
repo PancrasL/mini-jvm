@@ -55,6 +55,9 @@ public class SlotsUtil {
     }
 
     public static Reference getRef(Slot[] slots, int index) {
+        if (slots[index] == null) {
+            return new Reference(null);
+        }
         return slots[index].getRef();
     }
 

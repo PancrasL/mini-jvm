@@ -30,10 +30,10 @@ public class BytecodeReader {
     }
 
     public int read16() {
-        int b1 = code[pc];
-        int b2 = code[pc + 1];
+        int b1 = code[pc] & 0xFF;
+        int b2 = code[pc + 1] & 0xFF;
         pc += 2;
-        return b1 << 8 | b2;
+        return (b1 << 8 | b2) & 0xFFFF;
     }
 
     public int read32() {

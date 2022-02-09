@@ -1,7 +1,10 @@
 package indi.pancras.jvm.rtda.stack;
 
+import java.util.Arrays;
+
 import indi.pancras.jvm.rtda.Reference;
 import indi.pancras.jvm.rtda.Slot;
+import indi.pancras.jvm.rtda.heap.JObject;
 import indi.pancras.jvm.utils.SlotsUtil;
 
 public class LocalVars {
@@ -55,16 +58,14 @@ public class LocalVars {
         SlotsUtil.setSlot(slots, index, slot);
     }
 
+    public JObject getThis() {
+        return getRef(0).getTarget();
+    }
+
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("\n");
-        // Slot[]结构
-        sb.append("  Slot:\n");
-        for (int i = 0; i < slots.length; i++) {
-            String s = slots[i] == null ? "null" : slots[i].toString();
-            sb.append(String.format("    %2d, %5s\n", i, s));
-        }
-        return sb.toString();
+        return "LocalVars{" +
+                "slots=" + Arrays.toString(slots) +
+                '}';
     }
 }

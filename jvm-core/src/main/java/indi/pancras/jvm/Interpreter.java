@@ -1,8 +1,9 @@
 package indi.pancras.jvm;
 
-import indi.pancras.jvm.instruction.base.BytecodeReader;
 import indi.pancras.jvm.instruction.Instruction;
 import indi.pancras.jvm.instruction.InstructionFactory;
+import indi.pancras.jvm.instruction.base.BytecodeReader;
+import indi.pancras.jvm.natives.NativeRegistry;
 import indi.pancras.jvm.rtda.JThread;
 import indi.pancras.jvm.rtda.heap.Method;
 import indi.pancras.jvm.rtda.stack.Frame;
@@ -13,6 +14,7 @@ import indi.pancras.jvm.rtda.stack.OperandStack;
  */
 public class Interpreter {
     public static void interpret(Method method, boolean logInst) {
+        NativeRegistry.init();
         if (method == null) {
             throw new IllegalArgumentException("Method is null");
         }
@@ -55,7 +57,7 @@ public class Interpreter {
         System.out.println(msg);
     }
 
-    private static void logOperandStack(Frame frame){
+    private static void logOperandStack(Frame frame) {
         OperandStack operandStack = frame.getOperandStack();
         System.out.println(operandStack);
     }

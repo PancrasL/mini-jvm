@@ -1,5 +1,7 @@
 package indi.pancras.jvm.rtda.stack;
 
+import java.util.Arrays;
+
 import indi.pancras.jvm.rtda.Reference;
 import indi.pancras.jvm.rtda.Slot;
 
@@ -91,16 +93,9 @@ public class OperandStack {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append('[');
-        for (int i = 0; i < top; i++) {
-            sb.append(slots[i]);
-            if (i != top - 1) {
-                sb.append(", ");
-            }
-        }
-        sb.append(']');
-
-        return sb.toString();
+        return "OperandStack{" +
+                "slots=" + Arrays.toString(slots) +
+                ", top=" + top +
+                '}';
     }
 }

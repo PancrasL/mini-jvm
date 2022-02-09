@@ -1,10 +1,10 @@
 package indi.pancras.jvm.instruction.constant;
 
 import indi.pancras.jvm.instruction.BaseIndex8;
+import indi.pancras.jvm.rtda.ConstantValueType;
 import indi.pancras.jvm.rtda.Reference;
 import indi.pancras.jvm.rtda.RuntimeConstantPool;
 import indi.pancras.jvm.rtda.heap.JClass;
-import indi.pancras.jvm.rtda.heap.JObject;
 import indi.pancras.jvm.rtda.heap.StringPool;
 import indi.pancras.jvm.rtda.stack.Frame;
 import indi.pancras.jvm.rtda.stack.OperandStack;
@@ -26,22 +26,24 @@ public class LDC extends BaseIndex8 {
         OperandStack operandStack = frame.getOperandStack();
         JClass clazz = frame.getMethod().getClazz();
         RuntimeConstantPool pool = clazz.getConstantPool();
-        String type = pool.getConstantValueType(index);
+        ConstantValueType type = pool.getConstantValueType(index);
         switch (type) {
-            case "int":
+            case INT:
                 operandStack.pushInt(pool.getInt(index));
                 break;
-            case "float":
+            case FLOAT:
                 operandStack.pushFloat(pool.getFloat(index));
                 break;
-            case "string":
-                JObject jStr = StringPool.getJString(clazz.getClassLoader(), pool.getString(index));
-                operandStack.pushRef(new Reference(jStr));
+            case STRING:
+                Reference jStr = StringPool.getJString(clazz.getClassLoader(), pool.getString(index));
+                operandStack.pushRef(jStr);
                 break;
-            case "ref":
-                throw new RuntimeException("Haven't implemented");
+            case REF:
+                Reference clazzObj = pool.getClassRef(index).resolvedClass().getClazzObj();
+                operandStack.pushRef(clazzObj);
+                break;
             default:
-                throw new ClassFormatError();
+                throw new ClassFormatError(type.toString());
         }
     }
 }

@@ -31,14 +31,5 @@ public class MethodInvokeLogic {
                 newFrame.getLocalVars().setSlot(i, slot);
             }
         }
-
-        // hack!
-        if (method.isNative()) {
-            if (method.getMethodName().equals("registerNatives")) {
-                thread.popFrame();
-            } else {
-                throw new RuntimeException("Native method: " + method);
-            }
-        }
     }
 }

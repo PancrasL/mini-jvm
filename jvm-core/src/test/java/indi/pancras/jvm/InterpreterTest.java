@@ -13,6 +13,12 @@ class InterpreterTest {
     JClassLoader classLoader = new JClassLoader(classpath);
 
     @Test
+    void testGetClass() {
+        String className = "indi.pancras.jvm.testclass.GetClassTest";
+        excuteMain(className, false);
+    }
+
+    @Test
     void testString() {
         String className = "indi.pancras.jvm.testclass.StringTest";
         excuteMain(className, false);

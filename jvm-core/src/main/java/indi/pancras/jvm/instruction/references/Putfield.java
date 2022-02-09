@@ -42,11 +42,6 @@ public class Putfield extends BaseIndex16 {
         if (field.isStatic()) {
             throw new IncompatibleClassChangeError();
         }
-        if (field.isFinal()) {
-            if (!(currentClazz != field.getClazz() && currentMethod.getClazz().getClassName().equals(INIT))) {
-                throw new IllegalAccessError();
-            }
-        }
 
         // 3. 执行赋值
         String descriptor = field.getDescriptor();
